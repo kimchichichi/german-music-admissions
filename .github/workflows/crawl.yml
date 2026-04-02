@@ -1,6 +1,6 @@
 name: german-music-crawl            
                              
-  on:           
+on:           
     schedule:
       - cron: "0 0 * * 1"             
     workflow_dispatch:                
@@ -12,8 +12,8 @@ name: german-music-crawl
           required: false
           default: 'false'
           type: boolean
-                                      
-  jobs:
+                                                           
+jobs:
     crawl:                            
       runs-on: ubuntu-latest
       timeout-minutes: 60
