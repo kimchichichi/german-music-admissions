@@ -1,0 +1,80 @@
+name: 독일음대-입시정보-자동수집
+
+on:
+  schedule:
+    # 매주 월요일 00:00 UTC = 한국시간 09:00
+    - cron: "0 0 * * 1"
+  workflow_dispatch:
+    inputs:
+      force_extract:
+        description: '변경 없어도 AI 추출 강제 실행'
+        required: false
+        default: 'false'
+        type: boolean
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: 📥 코드 체크아웃
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 📂 이전 해시·로그 파일 복원
+        uses: actions/cache@v4
+        with:
+          path: |
+            page_hashes.json
+            crawl_log.json
+          key: crawl-cache-${{ github.run_id }}
+          restore-keys: |
+            crawl-cache-
+
+      - name: 🐍 Python 3.11 설정
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: 📦 의존성 설치
+        run: pip install -r requirements.txt
+
+      - name: 🔍 크롤링 파이프라인 실행
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          EMAIL_SENDER:      ${{ secrets.EMAIL_SENDER }}
+          EMAIL_PASSWORD:    ${{ secrets.EMAIL_PASSWORD }}
+          EMAIL_RECEIVER:    ${{ secrets.EMAIL_RECEIVER }}
+        run: python crawl_pipeline.py
+
+      - name: 💾 업데이트된 universities.json 커밋
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add universities.json crawl_log.json
+          git diff --staged --quiet || git commit -m "🎵 자동 크롤링: $(date '+%Y-%m-%d') 업데이트"
+          git push
+        continue-on-error: true
+
+      - name: 📊 결과 아티팩트 저장
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: crawl-results-${{ github.run_number }}
+          path: |
+            universities.json
+            crawl_log.json
+            page_hashes.json
+          retention-days: 90
+
+      - name: 💾 해시 캐시 저장
+        uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: |
+            page_hashes.json
+            crawl_log.json
+          key: crawl-cache-${{ github.run_id }}
