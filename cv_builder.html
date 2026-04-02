@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>입시 서류 작성 도우미 — 독일 음대 입시 DB</title>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,700;0,900;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --pink:      #F472A0;
+  --pink-lt:   #F8A8C4;
+  --pink-bg:   #FFF0F5;
+  --mint:      #3DD9A4;
+  --mint-lt:   #E6FAF4;
+  --purple:    #7B6CF6;
+  --purple-bg: #F0EFFE;
+  --teal:      #4ECDC4;
+  --bg:        #F7F8FC;
+  --paper:     #FFFFFF;
+  --ink:       #1A1F2E;
+  --ink2:      #2D3748;
+  --muted:     #718096;
+  --border:    #E8EDF2;
+  --tag-bg:    #F0F4F8;
+  --red:       #E53E3E;
+  --green:     #38A169;
+  --blue:      #3182CE;
+  --serif:  'Merriweather', Georgia, serif;
+  --sans:   'Plus Jakarta Sans', 'Noto Sans KR', sans-serif;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-font-smoothing:antialiased; }
+
+/* ══ TOP NAV ══ */
+.topnav {
+  background: var(--ink);
+  height: 44px;
+  display: flex; align-items: center;
+  padding: 0 clamp(16px,4vw,48px);
+}
+.topnav-brand {
+  font-family: var(--serif); font-size: 13px; font-weight: 700;
+  color: #fff; display: flex; align-items: center; gap: 8px;
+  text-decoration: none; flex: 1;
+}
+.topnav-brand .flag { display:inline-flex; flex-direction:column; width:20px; height:14px; border-radius:2px; overflow:hidden; flex-shrink:0; }
+.topnav-brand .flag span { flex:1; display:block; }
+.topnav-brand .flag .f1 { background:#1C1C1C; }
+.topnav-brand .flag .f2 { background:#CC0000; }
+.topnav-brand .flag .f3 { background:#FFCC00; }
+.topnav-links { display:flex; gap:4px; align-items:center; }
+.topnav-link { padding:6px 14px; font-size:12px; font-weight:600; color:rgba(255,255,255,.65); border-radius:8px; cursor:pointer; transition:.15s; text-decoration:none; border:none; background:none; font-family:var(--sans); }
+.topnav-link:hover { background:rgba(255,255,255,.1); color:#fff; }
+.topnav-link.active { color:#fff; background:rgba(255,255,255,.12); }
+
+/* ══ PAGE HERO ══ */
+.page-hero {
+  background: linear-gradient(135deg, #1A1F2E 0%, #2D2150 60%, #1A3A2E 100%);
+  padding: clamp(32px,5vw,52px) clamp(20px,5vw,80px) clamp(28px,4vw,44px);
+  position: relative; overflow: hidden;
+}
+.page-hero::before { content:''; position:absolute; width:400px; height:400px; background:radial-gradient(circle, rgba(244,114,160,.15) 0%, transparent 70%); top:-100px; right:-60px; pointer-events:none; }
+.page-hero-inner { max-width: 900px; margin: 0 auto; position:relative; z-index:1; }
+.page-hero-badge { display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.15); border-radius:20px; padding:5px 14px; margin-bottom:14px; font-size:11px; font-weight:700; color:var(--mint); letter-spacing:.06em; text-transform:uppercase; }
+.page-hero h1 { font-family:var(--serif); font-size:clamp(22px,3.5vw,38px); font-weight:900; color:#fff; line-height:1.25; margin-bottom:10px; }
+.page-hero h1 em { font-style:italic; background:linear-gradient(90deg,var(--pink) 0%,var(--purple) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.page-hero p { font-size:14px; color:rgba(255,255,255,.6); line-height:1.7; max-width:560px; }
+
+/* ══ MAIN LAYOUT ══ */
+.page-layout {
+  max-width: 1100px; margin: 0 auto;
+  padding: 28px clamp(16px,4vw,48px) 80px;
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+@media(max-width:860px) { .page-layout { grid-template-columns: 1fr; } }
+
+/* ══ FORM PANEL ══ */
+.form-panel {
+  background: #fff;
+  border: 1.5px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  position: sticky;
+  top: 20px;
+}
+.form-panel-hd {
+  padding: 18px 20px 14px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+.form-panel-hd h2 { font-family:var(--serif); font-size:16px; font-weight:700; color:var(--ink); margin-bottom:3px; }
+.form-panel-hd p { font-size:11px; color:var(--muted); }
+.form-scroll { padding: 16px 20px; max-height: calc(100vh - 260px); overflow-y:auto; }
+
+/* 폼 섹션 헤더 */
+.fsec { margin-bottom: 18px; }
+.fsec-title {
+  font-size: 10px; font-weight: 700; color: var(--muted);
+  letter-spacing: .08em; text-transform: uppercase;
+  padding: 10px 0 8px;
+  border-top: 1px solid var(--border);
+  margin-bottom: 10px;
+  display: flex; align-items: center; gap: 6px;
+}
+.fsec-title:first-child { border-top: none; padding-top: 0; }
+.fsec-title span { font-size: 14px; }
+.frow { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+.frow.full { grid-template-columns: 1fr; }
+.fg { display: flex; flex-direction: column; gap: 4px; margin-bottom: 8px; }
+.fl { font-size: 11px; font-weight: 600; color: var(--ink2); }
+.fi, .fta, .fsel {
+  padding: 9px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  font-family: var(--sans); font-size: 13px;
+  color: var(--ink); background: #fff;
+  outline: none; transition: .15s;
+  width: 100%;
+}
+.fi:focus, .fta:focus, .fsel:focus { border-color: var(--pink); box-shadow: 0 0 0 3px var(--pink-bg); }
+.fi::placeholder, .fta::placeholder { color: #B0BAC8; }
+.fta { resize: vertical; min-height: 72px; line-height: 1.5; }
+.fsel { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23718096' fill='none' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 10px center; padding-right:28px; cursor:pointer; }
+
+/* 악기 반복 항목 */
+.entry-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 8px; }
+.entry-item { display: flex; gap: 6px; align-items: center; }
+.entry-item .fi { flex: 1; }
+.entry-remove { width: 28px; height: 28px; border-radius: 8px; border: 1.5px solid var(--border); background: #fff; color: var(--red); font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: .15s; flex-shrink: 0; }
+.entry-remove:hover { background: #FFF5F5; border-color: var(--red); }
+.btn-add { display: flex; align-items: center; gap: 5px; padding: 7px 12px; border: 1.5px dashed var(--border); border-radius: 10px; font-size: 12px; font-weight: 600; color: var(--muted); cursor: pointer; background: none; font-family: var(--sans); transition: .15s; width: 100%; justify-content: center; }
+.btn-add:hover { border-color: var(--pink); color: var(--pink); background: var(--pink-bg); }
+
+/* 문서 유형 선택 탭 */
+.doc-tabs { display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap; }
+.doc-tab { padding: 7px 14px; border: 1.5px solid var(--border); border-radius: 20px; font-size: 12px; font-weight: 600; color: var(--muted); cursor: pointer; background: #fff; font-family: var(--sans); transition: .15s; }
+.doc-tab.on { border-color: var(--pink); color: var(--pink); background: var(--pink-bg); }
+
+/* 생성 버튼 */
+.btn-generate {
+  width: 100%; padding: 14px;
+  background: var(--pink); color: #fff;
+  border: none; border-radius: 12px;
+  font-size: 14px; font-weight: 700;
+  font-family: var(--sans); cursor: pointer;
+  transition: .15s; margin-top: 4px;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  box-shadow: 0 4px 16px rgba(244,114,160,.35);
+}
+.btn-generate:hover { background: #e05590; transform: translateY(-1px); }
+.btn-generate:disabled { background: #CBD5E0; box-shadow: none; cursor: not-allowed; transform: none; }
+.form-footer { padding: 14px 20px; border-top: 1px solid var(--border); background: var(--bg); }
+.tip-box { background: var(--mint-lt); border: 1px solid rgba(61,217,164,.2); border-radius: 10px; padding: 10px 12px; font-size: 11px; color: var(--ink2); line-height: 1.6; margin-bottom: 12px; }
+
+/* ══ OUTPUT PANEL ══ */
+.output-panel { min-height: 500px; }
+.output-empty {
+  background: #fff; border: 1.5px dashed var(--border);
+  border-radius: 20px; padding: 60px 32px;
+  text-align: center; color: var(--muted);
+}
+.output-empty-icon { font-size: 40px; opacity: .25; margin-bottom: 12px; }
+.output-empty h3 { font-family: var(--serif); font-size: 16px; font-weight: 700; color: var(--ink2); margin-bottom: 8px; }
+.output-empty p { font-size: 13px; line-height: 1.6; }
+
+/* 출력 카드 */
+.output-card {
+  background: #fff; border: 1.5px solid var(--border);
+  border-radius: 20px; overflow: hidden;
+  animation: cardIn .3s ease both;
+}
+@keyframes cardIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+.output-card-hd {
+  padding: 18px 22px 14px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.output-card-hd h2 { font-family: var(--serif); font-size: 16px; font-weight: 700; }
+.output-actions { display: flex; gap: 8px; }
+.btn-action {
+  padding: 7px 14px; border-radius: 20px; font-size: 12px; font-weight: 600;
+  cursor: pointer; transition: .15s; font-family: var(--sans); border: 1.5px solid var(--border);
+  background: #fff; color: var(--ink2);
+}
+.btn-action:hover { border-color: var(--pink); color: var(--pink); }
+.btn-action.primary { background: var(--pink); color: #fff; border-color: var(--pink); }
+.btn-action.primary:hover { background: #e05590; }
+
+.output-content {
+  padding: 24px 28px;
+  font-size: 13.5px; line-height: 1.9;
+  color: var(--ink2);
+  white-space: pre-wrap;
+  font-family: 'Georgia', serif;
+}
+
+/* 스트리밍 커서 */
+.streaming-cursor::after {
+  content: '▋';
+  color: var(--pink);
+  animation: blink .7s steps(1) infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+/* 탭 (독일어/한국어) */
+.lang-tabs { display: flex; gap: 4px; background: var(--tag-bg); padding: 4px; border-radius: 12px; width: fit-content; }
+.lang-tab { padding: 7px 16px; font-size: 12px; font-weight: 600; color: var(--muted); border-radius: 8px; cursor: pointer; transition: .15s; }
+.lang-tab.on { background: #fff; color: var(--pink); box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+
+/* 로딩 skeleton */
+.skeleton-wrap { padding: 24px 28px; }
+.sk { background: linear-gradient(90deg, var(--border) 25%, var(--bg) 50%, var(--border) 75%); background-size: 200%; border-radius: 6px; animation: skl 1.4s ease infinite; }
+@keyframes skl { 0%{background-position:200%} 100%{background-position:-200%} }
+
+/* 섹션 별 출력 탭 */
+.section-tabs { display:flex; gap:6px; padding:12px 22px; border-bottom:1px solid var(--border); flex-wrap:wrap; background:var(--bg); }
+.section-tab { padding:6px 14px; border:1.5px solid var(--border); border-radius:20px; font-size:11px; font-weight:700; color:var(--muted); cursor:pointer; background:#fff; transition:.15s; }
+.section-tab.on { border-color:var(--purple); color:var(--purple); background:var(--purple-bg); }
+.section-panel { display:none; }
+.section-panel.on { display:block; }
+
+/* 토스트 */
+.toast { position:fixed; bottom:24px; right:24px; z-index:999; background:var(--ink); color:#fff; padding:12px 20px; border-radius:12px; font-size:13px; font-weight:600; box-shadow:0 8px 24px rgba(0,0,0,.2); animation:toastIn .2s ease; }
+@keyframes toastIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+</style>
+</head>
+<body>
+
+<!-- ══ TOP NAV ══ -->
+<nav class="topnav">
+  <a class="topnav-brand" href="german_music_v4.html">
+    <div class="flag">
+      <span class="f1"></span><span class="f2"></span><span class="f3"></span>
+    </div>
+    독일 음대 입시 DB
+  </a>
+  <div class="topnav-links">
+    <a class="topnav-link" href="german_music_v4.html">🔍 학교 검색</a>
+    <a class="topnav-link active" href="#">✍️ 이력서 만들기</a>
+  </div>
+</nav>
+
+<!-- ══ PAGE HERO ══ -->
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-hero-badge">✦ AI 입시 서류 작성 도우미</div>
+    <h1>독일 음대 <em>입시 서류</em>, AI와 함께 완성하세요</h1>
+    <p>정보를 입력하면 Claude AI가 독일 음대 입시에 최적화된 Lebenslauf(이력서), Motivationsschreiben(지원동기서), 자기소개서를 자동 생성합니다. 독일어 원문 + 한국어 번역본 제공.</p>
+  </div>
+</section>
+
+<!-- ══ MAIN LAYOUT ══ -->
+<div class="page-layout">
+
+  <!-- ──── 왼쪽: 입력 폼 ──── -->
+  <div class="form-panel">
+    <div class="form-panel-hd">
+      <h2>정보 입력</h2>
+      <p>입력할수록 더 정확한 서류가 생성됩니다</p>
+    </div>
+    <div class="form-scroll" id="formScroll">
+
+      <!-- 생성 문서 선택 -->
+      <div class="fsec">
+        <div class="fsec-title"><span>📄</span> 생성할 문서 선택</div>
+        <div class="doc-tabs">
+          <button class="doc-tab on" data-doc="lebenslauf" onclick="toggleDoc(this)">Lebenslauf (이력서)</button>
+          <button class="doc-tab on" data-doc="motivation" onclick="toggleDoc(this)">Motivationsschreiben</button>
+          <button class="doc-tab" data-doc="selfintro" onclick="toggleDoc(this)">한국어 자기소개서</button>
+        </div>
+      </div>
+
+      <!-- 지원 학교 정보 -->
+      <div class="fsec">
+        <div class="fsec-title"><span>🏫</span> 지원 학교 정보</div>
+        <div class="fg">
+          <label class="fl">지원 학교명</label>
+          <select class="fsel" id="targetSchool">
+            <option value="">-- 선택 --</option>
+            <option>한스 아이슬러 음악대학 베를린 (HfM Berlin)</option>
+            <option>함부르크 음악연극대학 (HfMT Hamburg)</option>
+            <option>뒤셀도르프 로베르트 슈만 음악대학 (RSH Düsseldorf)</option>
+            <option>쾰른 음악무용대학 (HfMT Köln)</option>
+            <option>카를스루에 음악대학 (HfM Karlsruhe)</option>
+            <option>프라이부르크 음악대학 (HfM Freiburg)</option>
+            <option>하노버 음악연극미디어대학 (HMTM Hannover)</option>
+            <option>라이프치히 음악연극대학 (HMT Leipzig)</option>
+            <option>자를란트 음악대학 (HfM Saar)</option>
+            <option>슈투트가르트 음악공연예술대학 (HMDK Stuttgart)</option>
+            <option>트로싱엔 음악대학 (HfM Trossingen)</option>
+            <option>베를린 예술대학 (UdK Berlin)</option>
+            <option>뮌헨 음악연극대학 (HfMT München)</option>
+            <option>기타 (직접 입력)</option>
+          </select>
+        </div>
+        <div class="fg" id="customSchoolWrap" style="display:none">
+          <label class="fl">학교명 직접 입력</label>
+          <input class="fi" id="customSchool" placeholder="예: Hochschule für Musik XXX">
+        </div>
+        <div class="frow">
+          <div class="fg">
+            <label class="fl">지원 학위</label>
+            <select class="fsel" id="degree">
+              <option>Bachelor</option>
+              <option>Master</option>
+              <option>Konzertexamen</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label class="fl">지원 전공</label>
+            <input class="fi" id="major" placeholder="예: Violine">
+          </div>
+        </div>
+        <div class="fg">
+          <label class="fl">희망 교수 (선택)</label>
+          <input class="fi" id="professor" placeholder="예: Prof. Wen-Sinn Yang">
+        </div>
+      </div>
+
+      <!-- 개인 정보 -->
+      <div class="fsec">
+        <div class="fsec-title"><span>👤</span> 개인 정보</div>
+        <div class="frow">
+          <div class="fg">
+            <label class="fl">이름 (한국어)</label>
+            <input class="fi" id="nameKo" placeholder="예: 홍길동">
+          </div>
+          <div class="fg">
+            <label class="fl">이름 (독일어/로마자)</label>
+            <input class="fi" id="nameDe" placeholder="예: Gildong Hong">
+          </div>
+        </div>
+        <div class="frow">
+          <div class="fg">
+            <label class="fl">생년월일</label>
+            <input class="fi" id="birth" placeholder="예: 1998년 3월 15일" type="text">
+          </div>
+          <div class="fg">
+            <label class="fl">출생지 (국적)</label>
+            <input class="fi" id="birthPlace" placeholder="예: Seoul, Südkorea">
+          </div>
+        </div>
+        <div class="fg">
+          <label class="fl">현 주소 (독일 내 또는 한국)</label>
+          <input class="fi" id="address" placeholder="예: Musterstraße 1, 10115 Berlin / 서울특별시 강남구">
+        </div>
+        <div class="frow">
+          <div class="fg">
+            <label class="fl">이메일</label>
+            <input class="fi" id="email" placeholder="예: gildong@email.com" type="email">
+          </div>
+          <div class="fg">
+            <label class="fl">전화번호</label>
+            <input class="fi" id="phone" placeholder="예: +82-10-1234-5678">
+          </div>
+        </div>
+      </div>
+
+      <!-- 음악 경력 -->
+      <div class="fsec">
+        <div class="fsec-title"><span>🎓</span> 음악 교육 · 학력</div>
+        <div class="entry-list" id="eduList">
+          <div class="entry-item">
+            <input class="fi" placeholder="예: 서울대학교 음악대학 기악과 졸업 (2016–2020)">
+            <button class="entry-remove" onclick="removeEntry(this)">−</button>
+          </div>
+        </div>
+        <button class="btn-add" onclick="addEntry('eduList', '예: Hochschule für Musik XXX 재학 중 (2021–현재)')">+ 학력 추가</button>
+      </div>
+
+      <div class="fsec">
+        <div class="fsec-title"><span>🎻</span> 주요 스승 (사사)</div>
+        <div class="entry-list" id="teacherList">
+          <div class="entry-item">
+            <input class="fi" placeholder="예: 김영희 교수 (서울대, 2016–2020)">
+            <button class="entry-remove" onclick="removeEntry(this)">−</button>
+          </div>
+        </div>
+        <button class="btn-add" onclick="addEntry('teacherList', '예: Prof. Max Mustermann (2021–현재)')">+ 스승 추가</button>
+      </div>
+
+      <div class="fsec">
+        <div class="fsec-title"><span>🏆</span> 수상 경력</div>
+        <div class="entry-list" id="awardList">
+          <div class="entry-item">
+            <input class="fi" placeholder="예: 동아음악콩쿠르 1위 (2019)">
+            <button class="entry-remove" onclick="removeEntry(this)">−</button>
+          </div>
+        </div>
+        <button class="btn-add" onclick="addEntry('awardList', '예: ARD-Musikwettbewerb Sonderpreis (2022)')">+ 수상 추가</button>
+      </div>
+
+      <div class="fsec">
+        <div class="fsec-title"><span>🎵</span> 주요 연주 경력</div>
+        <div class="entry-list" id="perfList">
+          <div class="entry-item">
+            <input class="fi" placeholder="예: 서울 필하모닉 오케스트라 협연 (2021)">
+            <button class="entry-remove" onclick="removeEntry(this)">−</button>
+          </div>
+        </div>
+        <button class="btn-add" onclick="addEntry('perfList', '예: Konzert in der Berliner Philharmonie (2023)')">+ 연주 경력 추가</button>
+      </div>
+
+      <div class="fsec">
+        <div class="fsec-title"><span>🌍</span> 언어 능력</div>
+        <div class="entry-list" id="langList">
+          <div class="entry-item">
+            <input class="fi" placeholder="예: 한국어 (모국어), 영어 (C1), 독일어 (B2 — TestDaF 진행 중)">
+            <button class="entry-remove" onclick="removeEntry(this)">−</button>
+          </div>
+        </div>
+        <button class="btn-add" onclick="addEntry('langList', '예: Deutsch B2 (TestDaF TDN 15)')">+ 언어 추가</button>
+      </div>
+
+      <!-- 지원동기 (Motivationsschreiben용) -->
+      <div class="fsec" id="motivationSec">
+        <div class="fsec-title"><span>💬</span> 지원 동기 핵심 메모</div>
+        <div class="tip-box">한 줄로 압축한 메모도 OK. AI가 자연스러운 독일어 문장으로 확장합니다.</div>
+        <div class="fg">
+          <label class="fl">이 학교, 이 교수님을 선택한 이유</label>
+          <textarea class="fta" id="whySchool" placeholder="예: 아이슬러의 실내악 전통이 강점. 특히 Mustermann 교수님의 바로크 접근 방식에 관심."></textarea>
+        </div>
+        <div class="fg">
+          <label class="fl">독일 유학의 목표</label>
+          <textarea class="fta" id="goals" placeholder="예: 독일의 음악 전통과 현대 연주 기법을 융합하여 향후 국제 무대에서 활동하고 싶다."></textarea>
+        </div>
+        <div class="fg">
+          <label class="fl">강조하고 싶은 특기 / 관심 레퍼토리</label>
+          <textarea class="fta" id="repertoire" placeholder="예: 바흐 파르티타 전곡, 베토벤 후기 소나타 사이클. 현대음악에도 관심 많음."></textarea>
+        </div>
+      </div>
+
+      <!-- 추가 메모 -->
+      <div class="fsec">
+        <div class="fsec-title"><span>📝</span> 추가 메모 (선택)</div>
+        <div class="fg">
+          <textarea class="fta" id="extraNote" placeholder="그 외 서류에 포함시키고 싶은 내용이 있다면 자유롭게 적어주세요."></textarea>
+        </div>
+      </div>
+
+    </div><!-- /form-scroll -->
+
+    <div class="form-footer">
+      <div class="tip-box">💡 생성된 서류는 초안입니다. 실제 제출 전 내용을 직접 검토하고, 독어 원어민 또는 전문가의 교정을 거치는 것을 권장합니다.</div>
+      <button class="btn-generate" id="generateBtn" onclick="generate()">
+        <span id="btnIcon">✨</span>
+        <span id="btnText">AI 서류 생성하기</span>
+      </button>
+    </div>
+  </div><!-- /form-panel -->
+
+  <!-- ──── 오른쪽: 출력 ──── -->
+  <div class="output-panel" id="outputPanel">
+    <div class="output-empty" id="emptyState">
+      <div class="output-empty-icon">🎼</div>
+      <h3>서류가 아직 생성되지 않았어요</h3>
+      <p>왼쪽 폼에 정보를 입력하고<br><strong>AI 서류 생성하기</strong> 버튼을 눌러주세요.<br><br>
+      Lebenslauf, Motivationsschreiben, 자기소개서를<br>독일어 + 한국어로 함께 생성합니다.</p>
+    </div>
+    <div class="output-card" id="outputCard" style="display:none">
+      <div class="output-card-hd">
+        <h2 id="outputTitle">생성된 서류</h2>
+        <div class="output-actions">
+          <button class="btn-action" onclick="copyOutput()">복사</button>
+          <button class="btn-action primary" onclick="downloadOutput()">다운로드 (.txt)</button>
+        </div>
+      </div>
+      <div class="section-tabs" id="sectionTabs"></div>
+      <div id="sectionPanels"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// 지원 학교 선택 → custom 표시
+document.getElementById('targetSchool').addEventListener('change', function() {
+  document.getElementById('customSchoolWrap').style.display =
+    this.value === '기타 (직접 입력)' ? 'block' : 'none';
+});
+
+// 문서 탭 토글
+const selectedDocs = new Set(['lebenslauf','motivation']);
+function toggleDoc(btn) {
+  const doc = btn.dataset.doc;
+  if (selectedDocs.has(doc)) {
+    if (selectedDocs.size === 1) return; // 최소 1개
+    selectedDocs.delete(doc); btn.classList.remove('on');
+  } else {
+    selectedDocs.add(doc); btn.classList.add('on');
+  }
+  // 지원동기 섹션 표시 제어
+  document.getElementById('motivationSec').style.display =
+    selectedDocs.has('motivation') || selectedDocs.has('selfintro') ? '' : 'none';
+}
+
+// 항목 추가/제거
+function addEntry(listId, placeholder) {
+  const list = document.getElementById(listId);
+  const div = document.createElement('div');
+  div.className = 'entry-item';
+  div.innerHTML = `<input class="fi" placeholder="${placeholder}"><button class="entry-remove" onclick="removeEntry(this)">−</button>`;
+  list.appendChild(div);
+  div.querySelector('input').focus();
+}
+function removeEntry(btn) {
+  const list = btn.closest('.entry-list');
+  if (list.children.length > 1) btn.closest('.entry-item').remove();
+}
+
+// 엔트리 목록 읽기
+function getEntries(listId) {
+  return [...document.querySelectorAll(`#${listId} input`)]
+    .map(i => i.value.trim()).filter(Boolean);
+}
+
+// ── AI 생성 ──
+let currentOutput = {};
+
+async function generate() {
+  const btn = document.getElementById('generateBtn');
+  const school = document.getElementById('targetSchool').value === '기타 (직접 입력)'
+    ? document.getElementById('customSchool').value
+    : document.getElementById('targetSchool').value;
+
+  if (!school) { showToast('지원 학교를 선택해주세요'); return; }
+  if (!document.getElementById('major').value.trim()) { showToast('지원 전공을 입력해주세요'); return; }
+
+  btn.disabled = true;
+  document.getElementById('btnIcon').textContent = '⏳';
+  document.getElementById('btnText').textContent = '생성 중...';
+
+  document.getElementById('emptyState').style.display = 'none';
+  document.getElementById('outputCard').style.display = 'block';
+
+  const data = {
+    school,
+    degree: document.getElementById('degree').value,
+    major: document.getElementById('major').value,
+    professor: document.getElementById('professor').value,
+    nameKo: document.getElementById('nameKo').value,
+    nameDe: document.getElementById('nameDe').value,
+    birth: document.getElementById('birth').value,
+    birthPlace: document.getElementById('birthPlace').value,
+    address: document.getElementById('address').value,
+    email: document.getElementById('email').value,
+    phone: document.getElementById('phone').value,
+    edu: getEntries('eduList'),
+    teachers: getEntries('teacherList'),
+    awards: getEntries('awardList'),
+    perfs: getEntries('perfList'),
+    langs: getEntries('langList'),
+    whySchool: document.getElementById('whySchool').value,
+    goals: document.getElementById('goals').value,
+    repertoire: document.getElementById('repertoire').value,
+    extra: document.getElementById('extraNote').value,
+    docs: [...selectedDocs],
+  };
+
+  const docLabels = {
+    lebenslauf: 'Lebenslauf (이력서)',
+    motivation: 'Motivationsschreiben',
+    selfintro: '한국어 자기소개서',
+  };
+
+  // 탭 구성
+  const tabs = document.getElementById('sectionTabs');
+  const panels = document.getElementById('sectionPanels');
+  tabs.innerHTML = '';
+  panels.innerHTML = '';
+  currentOutput = {};
+
+  data.docs.forEach((doc, i) => {
+    const tabBtn = document.createElement('button');
+    tabBtn.className = 'section-tab' + (i === 0 ? ' on' : '');
+    tabBtn.textContent = docLabels[doc] || doc;
+    tabBtn.onclick = () => switchSection(doc);
+    tabBtn.dataset.doc = doc;
+    tabs.appendChild(tabBtn);
+
+    const panel = document.createElement('div');
+    panel.className = 'section-panel' + (i === 0 ? ' on' : '');
+    panel.id = 'panel-' + doc;
+    panel.innerHTML = `<div class="skeleton-wrap">
+      <div class="sk" style="height:16px;width:60%;margin-bottom:12px"></div>
+      <div class="sk" style="height:12px;width:100%;margin-bottom:8px"></div>
+      <div class="sk" style="height:12px;width:90%;margin-bottom:8px"></div>
+      <div class="sk" style="height:12px;width:95%;margin-bottom:8px"></div>
+      <div class="sk" style="height:12px;width:80%;margin-bottom:16px"></div>
+      <div class="sk" style="height:12px;width:100%;margin-bottom:8px"></div>
+      <div class="sk" style="height:12px;width:88%;margin-bottom:8px"></div>
+      <div class="sk" style="height:12px;width:93%"></div>
+    </div>`;
+    panels.appendChild(panel);
+    currentOutput[doc] = '';
+  });
+
+  document.getElementById('outputTitle').textContent =
+    data.docs.map(d => docLabels[d]).join(' · ');
+
+  // 각 문서 순차 생성
+  for (const doc of data.docs) {
+    await generateDoc(doc, data);
+  }
+
+  btn.disabled = false;
+  document.getElementById('btnIcon').textContent = '✨';
+  document.getElementById('btnText').textContent = '다시 생성하기';
+}
+
+async function generateDoc(doc, data) {
+  const panel = document.getElementById('panel-' + doc);
+
+  const prompts = {
+    lebenslauf: buildLebenslaufPrompt(data),
+    motivation: buildMotivationPrompt(data),
+    selfintro: buildSelfintroPrompt(data),
+  };
+
+  const prompt = prompts[doc];
+  if (!prompt) return;
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        stream: true,
+        messages: [{ role: 'user', content: prompt }],
+      }),
+    });
+
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+    let text = '';
+
+    panel.innerHTML = `<div class="output-content streaming-cursor" id="stream-${doc}"></div>`;
+    const el = document.getElementById('stream-' + doc);
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      const chunk = decoder.decode(value);
+      const lines = chunk.split('\n');
+      for (const line of lines) {
+        if (!line.startsWith('data: ')) continue;
+        const raw = line.slice(6).trim();
+        if (raw === '[DONE]') continue;
+        try {
+          const parsed = JSON.parse(raw);
+          if (parsed.type === 'content_block_delta' && parsed.delta?.text) {
+            text += parsed.delta.text;
+            el.textContent = text;
+          }
+        } catch {}
+      }
+    }
+
+    el.classList.remove('streaming-cursor');
+    currentOutput[doc] = text;
+
+  } catch (err) {
+    panel.innerHTML = `<div class="output-content" style="color:var(--red)">생성 오류: ${err.message}<br><br>잠시 후 다시 시도해주세요.</div>`;
+  }
+}
+
+// ── 프롬프트 빌더 ──
+
+function buildLebenslaufPrompt(d) {
+  return `Du bist ein Experte für Bewerbungsunterlagen an deutschen Musikhochschulen.
+
+Erstelle einen professionellen, vollständigen Lebenslauf (Curriculum Vitae) auf Deutsch für folgende Person:
+
+Name: ${d.nameDe || d.nameKo}
+Geburtsdatum: ${d.birth}
+Geburtsort: ${d.birthPlace}
+Adresse: ${d.address}
+E-Mail: ${d.email}
+Telefon: ${d.phone}
+
+Bewerbung für: ${d.degree} ${d.major}
+Hochschule: ${d.school}
+${d.professor ? `Wunschprofessor: ${d.professor}` : ''}
+
+Ausbildung:
+${d.edu.length ? d.edu.map(e => '- ' + e).join('\n') : '- (keine Angaben)'}
+
+Musikalische Ausbildung / Lehrer:
+${d.teachers.length ? d.teachers.map(t => '- ' + t).join('\n') : '- (keine Angaben)'}
+
+Preise und Auszeichnungen:
+${d.awards.length ? d.awards.map(a => '- ' + a).join('\n') : '- (keine Angaben)'}
+
+Konzerte und Auftritte (Auswahl):
+${d.perfs.length ? d.perfs.map(p => '- ' + p).join('\n') : '- (keine Angaben)'}
+
+Sprachkenntnisse:
+${d.langs.length ? d.langs.map(l => '- ' + l).join('\n') : '- Koreanisch (Muttersprache)'}
+
+${d.extra ? 'Zusätzliche Informationen:\n' + d.extra : ''}
+
+Erstelle einen sauberen, formellen deutschen Lebenslauf im tabellarischen Stil. Verwende klare Abschnitte mit deutschen Überschriften (Persönliche Daten, Ausbildung, Musikalische Ausbildung, Preise, Konzerttätigkeit, Sprachkenntnisse). Das Format soll professionell und für eine Musikhochschule geeignet sein. Antworte NUR mit dem fertigen Lebenslauf-Text, ohne Erklärungen davor oder danach.`;
+}
+
+function buildMotivationPrompt(d) {
+  return `Du bist ein Experte für Bewerbungsunterlagen an deutschen Musikhochschulen.
+
+Schreibe ein überzeugendes, persönliches Motivationsschreiben auf Deutsch für folgende Bewerbung:
+
+Bewerber: ${d.nameDe || d.nameKo}
+Studiengang: ${d.degree} ${d.major}
+Hochschule: ${d.school}
+${d.professor ? `Wunschprofessor: ${d.professor}` : ''}
+
+Hintergrund des Bewerbers:
+${d.edu.length ? 'Ausbildung:\n' + d.edu.map(e => '- ' + e).join('\n') : ''}
+${d.teachers.length ? '\nLehrer/Professoren:\n' + d.teachers.map(t => '- ' + t).join('\n') : ''}
+${d.awards.length ? '\nPreise:\n' + d.awards.map(a => '- ' + a).join('\n') : ''}
+${d.perfs.length ? '\nAuftritte:\n' + d.perfs.map(p => '- ' + p).join('\n') : ''}
+
+Motivation des Bewerbers:
+${d.whySchool ? 'Warum diese Hochschule / dieser Professor: ' + d.whySchool : ''}
+${d.goals ? 'Studienziele: ' + d.goals : ''}
+${d.repertoire ? 'Repertoire-Schwerpunkte: ' + d.repertoire : ''}
+${d.extra ? 'Weitere Informationen: ' + d.extra : ''}
+
+Schreibe ein 3-4 Absätze langes Motivationsschreiben. Es soll authentisch klingen, musikalische Tiefe zeigen und die Verbindung zur gewählten Hochschule deutlich machen. Füge am Anfang einen formellen Briefkopf (Ort, Datum, Anrede) hinzu. Antworte NUR mit dem fertigen Motivationsschreiben, ohne Erklärungen.`;
+}
+
+function buildSelfintroPrompt(d) {
+  return `당신은 독일 음대 입시 전문가입니다.
+
+다음 지원자를 위한 한국어 자기소개서를 작성해주세요.
+(한국어 자기소개서는 유학원 상담, 가족 공유, 독일어 번역의 기초 자료로 활용됩니다)
+
+지원자: ${d.nameKo || d.nameDe}
+지원: ${d.school} ${d.degree} ${d.major}
+${d.professor ? '희망 교수: ' + d.professor : ''}
+
+학력 및 교육:
+${d.edu.length ? d.edu.map(e => '- ' + e).join('\n') : ''}
+
+사사:
+${d.teachers.length ? d.teachers.map(t => '- ' + t).join('\n') : ''}
+
+수상:
+${d.awards.length ? d.awards.map(a => '- ' + a).join('\n') : ''}
+
+연주 경력:
+${d.perfs.length ? d.perfs.map(p => '- ' + p).join('\n') : ''}
+
+지원 동기:
+${d.whySchool ? '학교/교수 선택 이유: ' + d.whySchool : ''}
+${d.goals ? '유학 목표: ' + d.goals : ''}
+${d.repertoire ? '주요 레퍼토리: ' + d.repertoire : ''}
+${d.extra ? '추가 사항: ' + d.extra : ''}
+
+진정성 있고 구체적인 한국어 자기소개서 3~4단락을 작성해주세요. 음악적 성장 과정, 이 학교를 선택한 이유, 유학 후 목표를 자연스럽게 담아주세요. 오직 자기소개서 본문만 출력하세요.`;
+}
+
+// ── 섹션 탭 전환 ──
+function switchSection(doc) {
+  document.querySelectorAll('.section-tab').forEach(t => t.classList.toggle('on', t.dataset.doc === doc));
+  document.querySelectorAll('.section-panel').forEach(p => p.classList.toggle('on', p.id === 'panel-' + doc));
+}
+
+// ── 복사 / 다운로드 ──
+function copyOutput() {
+  const activePanel = document.querySelector('.section-panel.on');
+  const text = activePanel ? activePanel.textContent : '';
+  navigator.clipboard.writeText(text).then(() => showToast('클립보드에 복사되었습니다'));
+}
+
+function downloadOutput() {
+  const allText = Object.entries(currentOutput)
+    .map(([doc, txt]) => `===== ${doc.toUpperCase()} =====\n\n${txt}`)
+    .join('\n\n\n');
+  const nameDe = document.getElementById('nameDe').value || 'bewerbung';
+  const blob = new Blob([allText], { type: 'text/plain;charset=utf-8' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = `${nameDe.replace(/\s+/g,'-')}_bewerbungsunterlagen.txt`;
+  a.click(); URL.revokeObjectURL(a.href);
+}
+
+// ── 토스트 ──
+function showToast(msg) {
+  const t = document.createElement('div');
+  t.className = 'toast'; t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 2800);
+}
+</script>
+</body>
+</html>
