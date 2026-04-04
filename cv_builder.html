@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>입시 서류 작성 도우미</title>
-<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Merriweather:ital,wght@0,700;0,900;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Merriweather:ital,wght@0,700;0,900;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700;900&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&display=swap" rel="stylesheet">
 <style>
 :root {
   --pink:      #F472A0;
@@ -26,7 +26,6 @@
   --green:     #38A169;
   --blue:      #3182CE;
   --sans:   'Plus Jakarta Sans', 'Noto Sans KR', sans-serif;
-  --serif:  'Merriweather', Georgia, serif;
 }
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
@@ -251,7 +250,7 @@ body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-
   background: #fff;
   overflow: hidden;
   position: relative;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 9px;
   line-height: 1.5;
   color: #1a1a1a;
@@ -259,64 +258,57 @@ body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-
 }
 
 /* ── 노란 그라디언트: 헤더 전체에 퍼지는 워시 ── */
-.cv-yellow-bg {
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 300px;
-  background:
-    linear-gradient(135deg,
-      #FFE600 0%,
-      rgba(255,232,0,.85) 20%,
-      rgba(255,240,0,.5)  40%,
-      rgba(255,248,0,.15) 62%,
-      transparent 80%);
-  pointer-events: none;
-  z-index: 0;
-}
 
 /* ── 우측 상단 장식 사각형 ── */
 .cv-corner-sq {
   position: absolute;
   top: 0; right: 0;
-  width: 13px; height: 34px;
+  width: 13px; height: 100px;
   background: #1a1a1a;
   z-index: 4;
-}
-
-/* ── 헤더·본문 구분 바 ── */
-.cv-header-bar {
-  position: relative; z-index: 2;
-  height: 9px;
-  background: #1a1a1a;
 }
 
 /* ── 경력 항목 앞 노란 대시 ── */
 .cv-work-accent {
   display: block;
-  width: 18px; height: 2px;
-  background: #FFE500;
+  width: 25px; height: 3px;
+  background:  #1a1a1a;
   margin-bottom: 5px;
   flex-shrink: 0;
 }
 
-/* ── 검정 하단 바 ── */
+.cv-header,
+.cv-header-bar,
 .cv-bottom-bar {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 6px;
-  background: #1a1a1a;
-  z-index: 3;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
 }
-
-/* ═══ 헤더: 연락처(좌 하단 정렬) + 이름·직함(우) ═══ */
 .cv-header {
-  position: relative; z-index: 1;
-  padding: 20px 20px 14px 24px;
+  position: relative;
+  z-index: 1;
+  padding: 20px 0 14px; /* 좌우 padding 제거 */
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
   min-height: 180px;
 }
+
+.cv-header-bar {
+  position: relative;
+  z-index: 2;
+  height: 6px;
+  background: #1a1a1a;
+  margin-top: 10px;
+}
+
+.cv-bottom-bar {
+  position: relative;
+  z-index: 3;
+  height: 6px;
+  background: #1a1a1a;
+}
+
 .cv-contact {
   display: flex;
   flex-direction: column;
@@ -332,26 +324,27 @@ body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-
 .cv-name-block {
   text-align: right;
   flex-shrink: 0;
+  margin-top:50px;
 }
 .cv-firstname {
-  font-family: 'Noto Sans KR', sans-serif;
-  font-size: 58px;
-  font-weight: 900;
+  font-family: 'Poppins', sans-serif;
+  font-size: 50px;
+  font-weight: 800;
   color: #1a1a1a;
   line-height: 0.92;
   display: block;
 }
 .cv-lastname {
-  font-family: 'Noto Sans KR', sans-serif;
-  font-size: 58px;
-  font-weight: 900;
+  font-family: 'Poppins', sans-serif;
+  font-size: 50px;
+  font-weight: 800;
   color: #1a1a1a;
   line-height: 0.92;
   display: block;
 }
 .cv-jobtitle {
-  font-family: 'Noto Sans KR', sans-serif;
-  font-size: 14px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 20px;
   font-weight: 700;
   color: #1a1a1a;
   letter-spacing: .04em;
@@ -367,7 +360,7 @@ body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-
   display: grid;
   grid-template-columns: 205px 1fr;
   gap: 22px;
-  padding: 16px 24px 28px 24px;
+  padding: 50px;
 }
 
 /* ── 왼쪽 열 ── */
@@ -377,12 +370,19 @@ body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-
   gap: 18px;
 }
 .cv-bio {
-  font-family: 'Merriweather', Georgia, serif;
-  font-size: 10px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 17px;
   font-weight: 700;
   font-style: italic;
-  line-height: 1.6;
+  line-height: 1;
   color: #1a1a1a;
+  margin-top: 60px;
+}
+.cv-bio-bar {
+  width: 100%;
+  height: 6px;
+  background: #1a1a1a;
+  margin-top: 10px;
 }
 
 /* ── 오른쪽 열 ── */
@@ -395,8 +395,8 @@ body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-
 /* ── 섹션 공통 ── */
 .cv-section { margin-bottom: 0; }
 .cv-section-title {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 9px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
   font-weight: 700;
   letter-spacing: .04em;
   color: #1a1a1a;
@@ -508,7 +508,7 @@ body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-
   <div class="page-hero-inner">
     <div class="page-hero-badge">✦ 입시 서류 작성 도우미</div>
     <h1>독일 음대 <em>입시 서류</em>, AI와 함께 완성하세요</h1>
-    <p>정보를 입력하면 Claude AI가 독일 음대 입시에 최적화된 Lebenslauf(이력서), Motivationsschreiben(지원동기서), 자기소개서를 자동 생성합니다. 독일어 원문 + 한국어 번역본 제공.</p>
+    <p>정보를 입력하면 Claude AI가 독일 음대 입시에 최적화된 Lebenslauf(이력서), Motivationsschreiben(지원동기서), Anschreiben(지원서)을 자동 생성합니다.</p>
   </div>
 </section>
 
@@ -528,13 +528,13 @@ body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-
         <div class="fsec-title"><span>📄</span> 생성할 문서 선택</div>
         <div class="doc-tabs">
           <button class="doc-tab on" data-doc="lebenslauf" onclick="toggleDoc(this)">Lebenslauf (이력서)</button>
-          <button class="doc-tab on" data-doc="motivation" onclick="toggleDoc(this)">Motivationsschreiben</button>
-          <button class="doc-tab" data-doc="selfintro" onclick="toggleDoc(this)">한국어 자기소개서</button>
+          <button class="doc-tab" data-doc="motivation" onclick="toggleDoc(this)">Motivationsschreiben</button>
+          <button class="doc-tab" data-doc="anschreiben" onclick="toggleDoc(this)">Anschreiben an die Hochschule</button>
         </div>
       </div>
 
-      <!-- 지원 학교 정보 -->
-      <div class="fsec">
+      <!-- 지원 학교 정보 (Motivationsschreiben / Anschreiben 전용) -->
+      <div class="fsec" id="schoolSec">
         <div class="fsec-title"> 지원 학교 정보</div>
         <div class="fg">
           <label class="fl">지원 학교명</label>
@@ -560,6 +560,15 @@ body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-
           <label class="fl">학교명 직접 입력</label>
           <input class="fi" id="customSchool" placeholder="예: Hochschule für Musik XXX">
         </div>
+        <div class="fg">
+          <label class="fl">희망 교수 (선택)</label>
+          <input class="fi" id="professor" placeholder="예: Prof. Wen-Sinn Yang">
+        </div>
+      </div>
+
+      <!-- 지원 학위 · 악기 -->
+      <div class="fsec" id="degreeSec">
+        <div class="fsec-title"><span>🎼</span> 지원 학위 · 악기</div>
         <div class="frow">
           <div class="fg">
             <label class="fl">지원 학위</label>
@@ -570,33 +579,29 @@ body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-
             </select>
           </div>
           <div class="fg">
-            <label class="fl">지원 전공</label>
+            <label class="fl">악기 / 전공</label>
             <input class="fi" id="major" placeholder="예: Violine">
           </div>
-        </div>
-        <div class="fg">
-          <label class="fl">희망 교수 (선택)</label>
-          <input class="fi" id="professor" placeholder="예: Prof. Wen-Sinn Yang">
         </div>
       </div>
 
       <!-- 개인 정보 -->
-      <div class="fsec">
+      <div class="fsec" id="personalSec">
         <div class="fsec-title"><span>👤</span> 개인 정보</div>
         <div class="frow">
           <div class="fg">
-            <label class="fl">이름 (영어)</label>
-            <input class="fi" id="nameDe" placeholder="예: Gildong Hong">
+            <label class="fl">이름 (Vorname)</label>
+            <input class="fi" id="firstName" placeholder="예: Ji Eun">
           </div>
           <div class="fg">
-            <label class="fl">이름 (한국어)</label>
-            <input class="fi" id="nameKo" placeholder="예: 홍길동">
+            <label class="fl">성 (Nachname)</label>
+            <input class="fi" id="lastName" placeholder="예: Kim">
           </div>
         </div>
         <div class="frow">
           <div class="fg">
             <label class="fl">생년월일</label>
-            <input class="fi" id="birth" placeholder="예: 1998년 3월 15일" type="text">
+            <input class="fi" id="birth" type="date">
           </div>
           <div class="fg">
             <label class="fl">출생지 (국적)</label>
@@ -619,8 +624,17 @@ body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-
         </div>
       </div>
 
-      <!-- 음악 경력 -->
-      <div class="fsec">
+      <!-- 자기소개 (CV Bio) -->
+      <div class="fsec" id="bioSec">
+        <div class="fsec-title"><span>✍️</span> 자기소개 (Kurzprofil)</div>
+        <div class="tip-box">CV 왼쪽에 들어갈 짧은 자기소개문입니다. 한국어/영어로 쓴 후 번역 버튼을 누르면 독일어로 변환됩니다.</div>
+        <div class="fg">
+          <textarea class="fta" id="bioText" placeholder="예: 다양한 문화에서 성장한 세계시민으로, 유연하고 개방적인 성격..."></textarea>
+          <button class="btn-add" id="translateBioBtn" onclick="translateBio()" style="margin-top:4px;">🌐 Auf Deutsch übersetzen</button>
+        </div>
+      </div>
+
+      <div class="fsec" id="eduSec">
         <div class="fsec-title"><span>🎓</span> 음악 교육 · 학력</div>
         <div class="tip-box">형식: <strong>학교명 | 학위/전공 | 연도</strong><br>예: 서울대학교 음악대학 | 기악과 학사 | 2016–2020</div>
         <div class="entry-list" id="eduList">
@@ -632,7 +646,7 @@ body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-
         <button class="btn-add" onclick="addEntry('eduList', '예: Hochschule für Musik XXX | Bachelor of Music | 2021–현재')">+ 학력 추가</button>
       </div>
 
-      <div class="fsec">
+      <div class="fsec" id="teacherSec">
         <div class="fsec-title"><span>🎻</span> 주요 스승 (사사)</div>
         <div class="entry-list" id="teacherList">
           <div class="entry-item">
@@ -643,7 +657,7 @@ body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-
         <button class="btn-add" onclick="addEntry('teacherList', '예: Prof. Max Mustermann | HfM Berlin | 2021–현재')">+ 스승 추가</button>
       </div>
 
-      <div class="fsec">
+      <div class="fsec" id="awardSec">
         <div class="fsec-title"><span>🏆</span> 수상 경력</div>
         <div class="entry-list" id="awardList">
           <div class="entry-item">
@@ -654,7 +668,7 @@ body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-
         <button class="btn-add" onclick="addEntry('awardList', '예: ARD-Musikwettbewerb | Sonderpreis | 2022')">+ 수상 추가</button>
       </div>
 
-      <div class="fsec">
+      <div class="fsec" id="perfSec">
         <div class="fsec-title"><span>🎵</span> 주요 연주 · 경력</div>
         <div class="tip-box">형식: <strong>기관명 | 기간 | 설명1 | 설명2</strong><br>예: 서울 필하모닉 오케스트라 | 2021 | 협연 솔리스트 | 정기 연주회 참여</div>
         <div class="entry-list" id="perfList">
@@ -666,7 +680,7 @@ body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-
         <button class="btn-add" onclick="addEntry('perfList', '예: Berliner Philharmonie | 2023 | Konzertauftritt | Kammermusik')">+ 경력 추가</button>
       </div>
 
-      <div class="fsec">
+      <div class="fsec" id="langSec">
         <div class="fsec-title"><span>🌍</span> 언어 능력</div>
         <div class="entry-list" id="langList">
           <div class="entry-item">
@@ -696,7 +710,7 @@ body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-
       </div>
 
       <!-- 추가 메모 -->
-      <div class="fsec">
+      <div class="fsec" id="extraSec">
         <div class="fsec-title"><span>📝</span> 추가 메모 (선택)</div>
         <div class="fg">
           <textarea class="fta" id="extraNote" placeholder="그 외 서류에 포함시키고 싶은 내용이 있다면 자유롭게 적어주세요."></textarea>
@@ -737,14 +751,14 @@ body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-
           <!-- ═══ 헤더: 연락처(좌) + 이름·직함(우) ═══ -->
           <div class="cv-header">
             <div class="cv-contact">
-              <div class="cv-contact-item">Mobile: <span id="cvPhone">&mdash;</span></div>
-              <div class="cv-contact-item"><span id="cvEmail">&mdash;</span></div>
-              <div class="cv-contact-item"><span id="cvAddress">&mdash;</span></div>
-              <div class="cv-contact-item">geb. <span id="cvBirth">&mdash;</span></div>
+              <div class="cv-contact-item"><span id="cvBirth"></span></div>
+              <div class="cv-contact-item">Mobile: <span id="cvPhone">mobile</span></div>
+              <div class="cv-contact-item"><span id="cvEmail">email</span></div>
+              <div class="cv-contact-item"><span id="cvAddress">address</span></div>
             </div>
             <div class="cv-name-block">
-              <div class="cv-firstname" id="cvFirstname">Ji Eun</div>
-              <div class="cv-lastname" id="cvLastname">Kim</div>
+              <div class="cv-firstname" id="cvFirstname">Vorname</div>
+              <div class="cv-lastname" id="cvLastname">Nachname</div>
               <div class="cv-jobtitle" id="cvJobtitle">KLARINETTISTIN&amp;<br>INSTRUMENTALLEHRERIN</div>
             </div>
           </div>
@@ -758,6 +772,7 @@ body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-
             <!-- ── 왼쪽: Bio + Akademische Laufbahn ── -->
             <div class="cv-col-left">
               <div class="cv-bio" id="cvBio">Eine Weltbürgerin, in vielen Kulturen zu Hause mit Stationen in Südkorea, Singapur, Kanada und Deutschland. Durch die unterschiedlichen Nationalitäten und Kulturen hat sie gelernt, in jeder Hinsicht flexibel und offen gegenüber allem zu sein.</div>
+              <div class="cv-bio-bar"></div>
 
               <div class="cv-section">
                 <div class="cv-section-title">Akademische Laufbahn</div>
@@ -794,9 +809,9 @@ body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-
                       <div class="cv-work-date">Seit 9/2021</div>
                     </div>
                     <ul class="cv-work-bullets">
-                      <li>Kooperation mit dem Schiller-Gymnasium Hof: Leitung und Betreuung der Bläserklassen in den Jahrgangsstufen 5 und 6</li>
-                      <li>Mitarbeit im Jugendblasorchester und im Symphonischen Blasorchester Hof</li>
-                      <li>Fachjurorin beim 62. Regionalwettbewerb „Jugend musiziert"</li>
+                      <li>Kooperation mit dem Schiller-Gymnasium Hof: Leitung und Betreuung der Bläserklassen in den Jahrgangsstufen 5 und 6 sowie Mitarbeit im Jugendblasorchester und im Symphonischen Blasorchester Hof.</li>
+                      <li>Kooperation mit dem Jean-Paul-Gymnasium Hof: Instrumentalunterricht.</li>
+                      <li>Fachjurorin beim 62. Regionalwettbewerb „Jugend musiziert“.</li>
                     </ul>
                   </div>
                   <div class="cv-work-item">
@@ -919,56 +934,47 @@ function updateCVPreview() {
   const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
 
   // ── 이름 ──
-  const nameDe = v('nameDe').trim();
-  const nameKo = v('nameKo').trim();
-  if (nameDe) {
-    const parts = nameDe.split(/\s+/);
-    set('cvFirstname', parts.length >= 2 ? parts.slice(0, -1).join(' ') : nameDe);
-    set('cvLastname',  parts.length >= 2 ? parts[parts.length - 1] : '');
-  } else if (nameKo) {
-    set('cvFirstname', nameKo.slice(0, 1));
-    set('cvLastname',  nameKo.slice(1));
-  } else {
-    set('cvFirstname', 'Vorname');
-    set('cvLastname',  'Nachname');
-  }
+  // 이름: 별도 Vorname / Nachname 필드
+  const firstName = v('firstName').trim();
+  const lastName = v('lastName').trim();
+  if (firstName) set('cvFirstname', firstName);
+  if (lastName)  set('cvLastname',  lastName);
 
-  // ── 직함 ──
+  // 직함: 전공 입력값이 있을 때만 업데이트 (기본값 유지)
   const major = v('major').trim();
   const degree = v('degree').trim();
   const jobtitleEl = document.getElementById('cvJobtitle');
-  if (jobtitleEl) {
-    jobtitleEl.textContent = major
-      ? (degree ? degree.toUpperCase() + '\n' : '') + major.toUpperCase()
-      : 'INSTRUMENTALIST/IN';
+  if (jobtitleEl && major) {
+    jobtitleEl.textContent = (degree ? degree.toUpperCase() + '\n' : '') + major.toUpperCase();
   }
 
   // ── 연락처 ──
-  set('cvPhone',   v('phone').trim()   || '—');
-  set('cvEmail',   v('email').trim()   || '—');
-  set('cvAddress', v('address').trim() || '—');
-  set('cvBirth',   v('birth').trim()   || '—');
-
-  // ── Bio: 지원동기 > 목표 > 자동 생성 ──
-  const whySchool = v('whySchool').trim();
-  const goals     = v('goals').trim();
-  const birthPlace = v('birthPlace').trim();
-  const professor  = v('professor').trim();
-  const school = v('targetSchool') === '기타 (직접 입력)'
-    ? v('customSchool').trim() : v('targetSchool');
-  let bio = '';
-  if (whySchool) bio = whySchool;
-  else if (goals) bio = goals;
-  else {
-    if (birthPlace) bio += birthPlace + ' 출신. ';
-    if (school)     bio += school + '에 지원. ';
-    if (professor)  bio += professor + ' 교수님 사사 희망.';
+  // 연락처: 입력값이 있을 때만 업데이트 (기본값 유지)
+  if (v('birth').trim() || v('birthPlace').trim()) {
+    let birthStr = 'geb. ';
+    if (v('birth').trim()) {
+      const [y, m, d] = v('birth').split('-');
+      birthStr += d && m && y ? `${d}.${m}.${y}` : v('birth');
+    }
+    if (v('birthPlace').trim()) {
+      birthStr += ' in ' + v('birthPlace').trim();
+    }
+    set('cvBirth', birthStr.trim());
   }
-  set('cvBio', bio || '지원동기 또는 목표를 입력하면 여기에 표시됩니다.');
+  if (v('phone').trim())   set('cvPhone',   v('phone').trim());
+  if (v('email').trim())   set('cvEmail',   v('email').trim());
+  if (v('address').trim()) set('cvAddress', v('address').trim());
+
+  // ── Bio: 자기소개 입력란 우선 ──
+  const bioText = v('bioText').trim();
+  if (bioText) {
+    set('cvBio', bioText);
+  }
 
   // ── 학력 타임라인 ──
   const eduEntries = getEntries('eduList');
   const cvEdu = document.getElementById('cvEdu');
+  // 학력: 입력값이 있을 때만 업데이트 (기본값 유지)
   if (eduEntries.length) {
     cvEdu.innerHTML = eduEntries.map(e => {
       let name, sub, date;
@@ -988,13 +994,12 @@ function updateCVPreview() {
         </div>
       </div>`;
     }).join('');
-  } else {
-    cvEdu.innerHTML = '<div class="cv-empty-hint">학력을 입력해주세요 (형식: 학교 | 학위 | 연도)</div>';
   }
 
   // ── 연주·경력 (Beruflicher Werdegang) ──
   const perfEntries = getEntries('perfList');
   const cvWork = document.getElementById('cvWork');
+  // 경력: 입력값이 있을 때만 업데이트 (기본값 유지)
   if (perfEntries.length) {
     cvWork.innerHTML = perfEntries.map(e => {
       let org, date, bullets;
@@ -1018,8 +1023,6 @@ function updateCVPreview() {
         ${bulletHtml}
       </div>`;
     }).join('');
-  } else {
-    cvWork.innerHTML = '<div class="cv-empty-hint">경력을 입력해주세요 (형식: 기관 | 기간 | 설명)</div>';
   }
 
   // ── 동적 섹션: 스승·수상·언어 ──
@@ -1074,6 +1077,9 @@ document.getElementById('targetSchool').addEventListener('change', () => { setTi
 // 페이지 로드 시 초기 상태 반영
 updateCVPreview();
 
+// 페이지 로드 시 폼 섹션 표시 상태 초기화
+setTimeout(updateFormVisibility, 0);
+
 // PDF 인쇄
 function printCV() {
   window.print();
@@ -1086,19 +1092,40 @@ document.getElementById('targetSchool').addEventListener('change', function() {
     this.value === '기타 (직접 입력)' ? 'block' : 'none';
 });
 
-// 문서 탭 토글
-const selectedDocs = new Set(['lebenslauf','motivation']);
+// 문서 탭 토글 (한 번에 하나만 선택)
+const selectedDocs = new Set(['lebenslauf']);
 function toggleDoc(btn) {
   const doc = btn.dataset.doc;
-  if (selectedDocs.has(doc)) {
-    if (selectedDocs.size === 1) return; // 최소 1개
-    selectedDocs.delete(doc); btn.classList.remove('on');
-  } else {
-    selectedDocs.add(doc); btn.classList.add('on');
+  // 이미 선택된 걸 다시 누르면 무시
+  if (selectedDocs.has(doc)) return;
+  // 기존 선택 해제
+  selectedDocs.clear();
+  document.querySelectorAll('.doc-tab').forEach(t => t.classList.remove('on'));
+  // 새로 선택
+  selectedDocs.add(doc);
+  btn.classList.add('on');
+  updateFormVisibility();
+}
+
+// 선택된 문서에 따라 폼 섹션 표시/숨김
+function updateFormVisibility() {
+  // 문서별 필요 섹션 맵
+  const sectionMap = {
+    lebenslauf:   ['personalSec','bioSec','degreeSec','eduSec','awardSec','perfSec','langSec'],
+    motivation:   ['schoolSec','motivationSec'],
+    anschreiben:  ['personalSec','schoolSec','degreeSec','eduSec','teacherSec','awardSec','perfSec','langSec','motivationSec','extraSec'],
+  };
+  // 선택된 문서들의 필요 섹션 합치합 (union)
+  const needed = new Set();
+  for (const doc of selectedDocs) {
+    (sectionMap[doc] || []).forEach(s => needed.add(s));
   }
-  // 지원동기 섹션 표시 제어
-  document.getElementById('motivationSec').style.display =
-    selectedDocs.has('motivation') || selectedDocs.has('selfintro') ? '' : 'none';
+  // 모든 섹션 순회하며 표시/숨김
+  const allSections = ['personalSec','bioSec','degreeSec','schoolSec','eduSec','teacherSec','awardSec','perfSec','langSec','motivationSec','extraSec'];
+  for (const id of allSections) {
+    const el = document.getElementById(id);
+    if (el) el.style.display = needed.has(id) ? '' : 'none';
+  }
 }
 
 // 항목 추가/제거 (추가·제거 후 미리보기 자동 갱신)
@@ -1147,8 +1174,9 @@ async function generate() {
     degree: document.getElementById('degree').value,
     major: document.getElementById('major').value,
     professor: document.getElementById('professor').value,
-    nameKo: document.getElementById('nameKo').value,
-    nameDe: document.getElementById('nameDe').value,
+    firstName: document.getElementById('firstName').value,
+    lastName: document.getElementById('lastName').value,
+    fullName: (document.getElementById('firstName').value + ' ' + document.getElementById('lastName').value).trim(),
     birth: document.getElementById('birth').value,
     birthPlace: document.getElementById('birthPlace').value,
     address: document.getElementById('address').value,
@@ -1169,7 +1197,7 @@ async function generate() {
   const docLabels = {
     lebenslauf: 'Lebenslauf (이력서)',
     motivation: 'Motivationsschreiben',
-    selfintro: '한국어 자기소개서',
+    anschreiben: 'Anschreiben an die Hochschule',
   };
 
   // 탭 구성
@@ -1223,7 +1251,7 @@ async function generateDoc(doc, data) {
   const prompts = {
     lebenslauf: buildLebenslaufPrompt(data),
     motivation: buildMotivationPrompt(data),
-    selfintro: buildSelfintroPrompt(data),
+    anschreiben: buildAnschreibenPrompt(data),
   };
 
   const prompt = prompts[doc];
@@ -1282,16 +1310,12 @@ function buildLebenslaufPrompt(d) {
 
 Erstelle einen professionellen, vollständigen Lebenslauf (Curriculum Vitae) auf Deutsch für folgende Person:
 
-Name: ${d.nameDe || d.nameKo}
+Name: ${d.fullName}
 Geburtsdatum: ${d.birth}
 Geburtsort: ${d.birthPlace}
 Adresse: ${d.address}
 E-Mail: ${d.email}
 Telefon: ${d.phone}
-
-Bewerbung für: ${d.degree} ${d.major}
-Hochschule: ${d.school}
-${d.professor ? `Wunschprofessor: ${d.professor}` : ''}
 
 Ausbildung:
 ${d.edu.length ? d.edu.map(e => '- ' + e).join('\n') : '- (keine Angaben)'}
@@ -1310,7 +1334,11 @@ ${d.langs.length ? d.langs.map(l => '- ' + l).join('\n') : '- Koreanisch (Mutter
 
 ${d.extra ? 'Zusätzliche Informationen:\n' + d.extra : ''}
 
-Erstelle einen sauberen, formellen deutschen Lebenslauf im tabellarischen Stil. Verwende klare Abschnitte mit deutschen Überschriften (Persönliche Daten, Ausbildung, Musikalische Ausbildung, Preise, Konzerttätigkeit, Sprachkenntnisse). Das Format soll professionell und für eine Musikhochschule geeignet sein. Antworte NUR mit dem fertigen Lebenslauf-Text, ohne Erklärungen davor oder danach.`;
+Erstelle einen sauberen, formellen deutschen Lebenslauf im tabellarischen Stil. Verwende klare Abschnitte mit deutschen Überschriften (Persönliche Daten, Ausbildung, Musikalische Ausbildung, Preise, Konzerttätigkeit, Sprachkenntnisse). Das Format soll professionell und für eine Musikhochschule geeignet sein.
+
+WICHTIG: Alle Angaben, die auf Koreanisch oder Englisch gemacht wurden, müssen ins Deutsche übersetzt bzw. in natürliches Deutsch umformuliert werden. Der gesamte Lebenslauf muss ausschließlich auf Deutsch verfasst sein.
+
+Antworte NUR mit dem fertigen Lebenslauf-Text, ohne Erklärungen davor oder danach.`;
 }
 
 function buildMotivationPrompt(d) {
@@ -1318,7 +1346,7 @@ function buildMotivationPrompt(d) {
 
 Schreibe ein überzeugendes, persönliches Motivationsschreiben auf Deutsch für folgende Bewerbung:
 
-Bewerber: ${d.nameDe || d.nameKo}
+Bewerber: ${d.fullName}
 Studiengang: ${d.degree} ${d.major}
 Hochschule: ${d.school}
 ${d.professor ? `Wunschprofessor: ${d.professor}` : ''}
@@ -1335,38 +1363,63 @@ ${d.goals ? 'Studienziele: ' + d.goals : ''}
 ${d.repertoire ? 'Repertoire-Schwerpunkte: ' + d.repertoire : ''}
 ${d.extra ? 'Weitere Informationen: ' + d.extra : ''}
 
-Schreibe ein 3-4 Absätze langes Motivationsschreiben. Es soll authentisch klingen, musikalische Tiefe zeigen und die Verbindung zur gewählten Hochschule deutlich machen. Füge am Anfang einen formellen Briefkopf (Ort, Datum, Anrede) hinzu. Antworte NUR mit dem fertigen Motivationsschreiben, ohne Erklärungen.`;
+Schreibe ein 3-4 Absätze langes Motivationsschreiben. Es soll authentisch klingen, musikalische Tiefe zeigen und die Verbindung zur gewählten Hochschule deutlich machen. Füge am Anfang einen formellen Briefkopf (Ort, Datum, Anrede) hinzu.
+
+WICHTIG: Alle Angaben, die auf Koreanisch oder Englisch gemacht wurden, müssen ins Deutsche übersetzt bzw. in natürliches Deutsch umformuliert werden. Das gesamte Motivationsschreiben muss ausschließlich auf Deutsch verfasst sein.
+
+Antworte NUR mit dem fertigen Motivationsschreiben, ohne Erklärungen.`;
 }
 
-function buildSelfintroPrompt(d) {
-  return `당신은 독일 음대 입시 전문가입니다.
+function buildAnschreibenPrompt(d) {
+  return `Du bist ein Experte für Bewerbungsunterlagen an deutschen Musikhochschulen.
 
-다음 지원자를 위한 한국어 자기소개서를 작성해주세요.
-(한국어 자기소개서는 유학원 상담, 가족 공유, 독일어 번역의 기초 자료로 활용됩니다)
+Schreibe ein formelles Anschreiben (Bewerbungsschreiben) auf Deutsch an die Hochschule für folgende Bewerbung:
 
-지원자: ${d.nameKo || d.nameDe}
-지원: ${d.school} ${d.degree} ${d.major}
-${d.professor ? '희망 교수: ' + d.professor : ''}
+Bewerber/in: ${d.fullName}
+Geburtsdatum: ${d.birth}
+Adresse: ${d.address}
+E-Mail: ${d.email}
+Telefon: ${d.phone}
 
-학력 및 교육:
-${d.edu.length ? d.edu.map(e => '- ' + e).join('\n') : ''}
+Bewerbung für: ${d.degree} ${d.major}
+Hochschule: ${d.school}
+${d.professor ? 'Wunschprofessor/in: ' + d.professor : ''}
 
-사사:
-${d.teachers.length ? d.teachers.map(t => '- ' + t).join('\n') : ''}
+Ausbildung:
+${d.edu.length ? d.edu.map(e => '- ' + e).join('\n') : '- (keine Angaben)'}
 
-수상:
-${d.awards.length ? d.awards.map(a => '- ' + a).join('\n') : ''}
+Musikalische Lehrer/Professoren:
+${d.teachers.length ? d.teachers.map(t => '- ' + t).join('\n') : '- (keine Angaben)'}
 
-연주 경력:
-${d.perfs.length ? d.perfs.map(p => '- ' + p).join('\n') : ''}
+Preise:
+${d.awards.length ? d.awards.map(a => '- ' + a).join('\n') : '- (keine Angaben)'}
 
-지원 동기:
-${d.whySchool ? '학교/교수 선택 이유: ' + d.whySchool : ''}
-${d.goals ? '유학 목표: ' + d.goals : ''}
-${d.repertoire ? '주요 레퍼토리: ' + d.repertoire : ''}
-${d.extra ? '추가 사항: ' + d.extra : ''}
+Konzerte und Auftritte:
+${d.perfs.length ? d.perfs.map(p => '- ' + p).join('\n') : '- (keine Angaben)'}
 
-진정성 있고 구체적인 한국어 자기소개서 3~4단락을 작성해주세요. 음악적 성장 과정, 이 학교를 선택한 이유, 유학 후 목표를 자연스럽게 담아주세요. 오직 자기소개서 본문만 출력하세요.`;
+Sprachkenntnisse:
+${d.langs.length ? d.langs.map(l => '- ' + l).join('\n') : '- Koreanisch (Muttersprache)'}
+
+${d.whySchool ? 'Warum diese Hochschule / dieser Professor: ' + d.whySchool : ''}
+${d.goals ? 'Studienziele: ' + d.goals : ''}
+${d.repertoire ? 'Repertoire-Schwerpunkte: ' + d.repertoire : ''}
+${d.extra ? 'Weitere Informationen: ' + d.extra : ''}
+
+Schreibe ein formelles Anschreiben an die Hochschule im deutschen Briefformat. Es soll enthalten:
+- Absender (Name, Adresse, E-Mail, Telefon)
+- Empfänger (Hochschulname, Studierendensekretariat/Zulassungsbüro)
+- Ort, Datum
+- Betreff: Bewerbung um einen Studienplatz im Studiengang ${d.degree} ${d.major}
+- Formelle Anrede (Sehr geehrte Damen und Herren)
+- Hauptteil: Kurze Vorstellung, Bezug zur Hochschule, bisherige Ausbildung, Motivation
+- Hinweis auf beigefügte Unterlagen (Lebenslauf, Zeugnisse, Motivationsschreiben etc.)
+- Formeller Abschluss (Mit freundlichen Grüßen)
+
+Das Anschreiben soll professionell, höflich und prägnant sein (ca. 1 Seite).
+
+WICHTIG: Alle Angaben, die auf Koreanisch oder Englisch gemacht wurden, müssen ins Deutsche übersetzt bzw. in natürliches Deutsch umformuliert werden. Das gesamte Anschreiben muss ausschließlich auf Deutsch verfasst sein.
+
+Antworte NUR mit dem fertigen Anschreiben, ohne Erklärungen davor oder danach.`;
 }
 
 // ── 섹션 탭 전환 ──
@@ -1386,7 +1439,7 @@ function downloadOutput() {
   const allText = Object.entries(currentOutput)
     .map(([doc, txt]) => `===== ${doc.toUpperCase()} =====\n\n${txt}`)
     .join('\n\n\n');
-  const nameDe = document.getElementById('nameDe').value || 'bewerbung';
+  const nameDe = document.getElementById('firstName').value + ' ' + document.getElementById('lastName').value || 'bewerbung';
   const blob = new Blob([allText], { type: 'text/plain;charset=utf-8' });
   const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
   a.download = `${nameDe.replace(/\s+/g,'-')}_bewerbungsunterlagen.txt`;
@@ -1399,6 +1452,67 @@ function showToast(msg) {
   t.className = 'toast'; t.textContent = msg;
   document.body.appendChild(t);
   setTimeout(() => t.remove(), 2800);
+}
+
+// ── Kurzprofil 독일어 번역 ──
+async function translateBio() {
+  const ta = document.getElementById('bioText');
+  const text = ta.value.trim();
+  if (!text) { showToast('먼저 자기소개를 입력해주세요'); return; }
+
+  const btn = document.getElementById('translateBioBtn');
+  btn.disabled = true;
+  btn.textContent = '⏳ 번역 중...';
+
+  const prompt = `Übersetze den folgenden Text ins Deutsche. Es handelt sich um ein kurzes Kurzprofil (Selbstbeschreibung) für einen Lebenslauf einer Musikerin / eines Musikers. Der Stil soll professionell, prägnant und in der dritten Person verfasst sein (wie im Original-Beispiel: "Eine Weltbürgerin, in vielen Kulturen zu Hause..."). Antworte NUR mit der deutschen Übersetzung, ohne Erklärungen oder Anführungszeichen.\n\n${text}`;
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 300,
+        stream: true,
+        messages: [{ role: 'user', content: prompt }],
+      }),
+    });
+
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+    let translated = '';
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      const chunk = decoder.decode(value);
+      const lines = chunk.split('\n');
+      for (const line of lines) {
+        if (!line.startsWith('data: ')) continue;
+        const raw = line.slice(6).trim();
+        if (raw === '[DONE]') continue;
+        try {
+          const parsed = JSON.parse(raw);
+          if (parsed.type === 'content_block_delta' && parsed.delta?.text) {
+            translated += parsed.delta.text;
+          }
+        } catch {}
+      }
+    }
+
+    if (translated.trim()) {
+      ta.value = translated.trim();
+      ta.dispatchEvent(new Event('input', { bubbles: true }));
+      showToast('독일어로 번역되었습니다');
+    } else {
+      showToast('번역 실패 — 다시 시도해주세요');
+    }
+  } catch (err) {
+    showToast('번역 오류: ' + err.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '\uD83C\uDF10 Auf Deutsch \u00fcbersetzen';
+  }
 }
 </script>
 </body>
