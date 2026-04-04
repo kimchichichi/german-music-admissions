@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>입시 서류 작성 도우미 — 독일 음대 입시 DB</title>
-<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,700;0,900;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<title>입시 서류 작성 도우미</title>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Merriweather:ital,wght@0,700;0,900;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <style>
 :root {
   --pink:      #F472A0;
@@ -25,8 +25,8 @@
   --red:       #E53E3E;
   --green:     #38A169;
   --blue:      #3182CE;
-  --serif:  'Merriweather', Georgia, serif;
   --sans:   'Plus Jakarta Sans', 'Noto Sans KR', sans-serif;
+  --serif:  'Merriweather', Georgia, serif;
 }
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
@@ -56,15 +56,23 @@ body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-
 
 /* ══ PAGE HERO ══ */
 .page-hero {
-  background: linear-gradient(135deg, #1A1F2E 0%, #2D2150 60%, #1A3A2E 100%);
+  background: linear-gradient(135deg, #1A1F2E 0%, #2D2150 50%, #cf4290 100%);
   padding: clamp(32px,5vw,52px) clamp(20px,5vw,80px) clamp(28px,4vw,44px);
   position: relative; overflow: hidden;
 }
-.page-hero::before { content:''; position:absolute; width:400px; height:400px; background:radial-gradient(circle, rgba(244,114,160,.15) 0%, transparent 70%); top:-100px; right:-60px; pointer-events:none; }
+/* 셰이더 배경 iframe */
+.page-hero-shader {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  border: none;
+  pointer-events: none;
+  z-index: 0;
+}
 .page-hero-inner { max-width: 900px; margin: 0 auto; position:relative; z-index:1; }
 .page-hero-badge { display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.15); border-radius:20px; padding:5px 14px; margin-bottom:14px; font-size:11px; font-weight:700; color:var(--mint); letter-spacing:.06em; text-transform:uppercase; }
-.page-hero h1 { font-family:var(--serif); font-size:clamp(22px,3.5vw,38px); font-weight:900; color:#fff; line-height:1.25; margin-bottom:10px; }
-.page-hero h1 em { font-style:italic; background:linear-gradient(90deg,var(--pink) 0%,var(--purple) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.page-hero h1 { font-family:'Black Han Sans', sans-serif; font-size:clamp(22px,3.5vw,38px); font-weight:400; color:#fff; line-height:1.25; margin-bottom:10px; }
+.page-hero h1 em { font-style:normal; background:linear-gradient(90deg,var(--pink) 0%,var(--purple) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
 .page-hero p { font-size:14px; color:rgba(255,255,255,.6); line-height:1.7; max-width:560px; }
 
 /* ══ MAIN LAYOUT ══ */
@@ -227,6 +235,256 @@ body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-
 /* 토스트 */
 .toast { position:fixed; bottom:24px; right:24px; z-index:999; background:var(--ink); color:#fff; padding:12px 20px; border-radius:12px; font-size:13px; font-weight:600; box-shadow:0 8px 24px rgba(0,0,0,.2); animation:toastIn .2s ease; }
 @keyframes toastIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+
+/* ══ CV 미리보기 — Canva 템플릿 1:1 재현 ══ */
+.cv-preview-wrap {
+  background: #E8EDF2;
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  justify-content: center;
+  overflow: auto;
+}
+.cv-page {
+  width: 595px;
+  min-height: 842px;
+  background: #fff;
+  overflow: hidden;
+  position: relative;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 9px;
+  line-height: 1.5;
+  color: #1a1a1a;
+  box-shadow: 0 4px 24px rgba(0,0,0,.12);
+}
+
+/* ── 노란 그라디언트: 헤더 전체에 퍼지는 워시 ── */
+.cv-yellow-bg {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 300px;
+  background:
+    linear-gradient(135deg,
+      #FFE600 0%,
+      rgba(255,232,0,.85) 20%,
+      rgba(255,240,0,.5)  40%,
+      rgba(255,248,0,.15) 62%,
+      transparent 80%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── 우측 상단 장식 사각형 ── */
+.cv-corner-sq {
+  position: absolute;
+  top: 0; right: 0;
+  width: 13px; height: 34px;
+  background: #1a1a1a;
+  z-index: 4;
+}
+
+/* ── 헤더·본문 구분 바 ── */
+.cv-header-bar {
+  position: relative; z-index: 2;
+  height: 9px;
+  background: #1a1a1a;
+}
+
+/* ── 경력 항목 앞 노란 대시 ── */
+.cv-work-accent {
+  display: block;
+  width: 18px; height: 2px;
+  background: #FFE500;
+  margin-bottom: 5px;
+  flex-shrink: 0;
+}
+
+/* ── 검정 하단 바 ── */
+.cv-bottom-bar {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 6px;
+  background: #1a1a1a;
+  z-index: 3;
+}
+
+/* ═══ 헤더: 연락처(좌 하단 정렬) + 이름·직함(우) ═══ */
+.cv-header {
+  position: relative; z-index: 1;
+  padding: 20px 20px 14px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  min-height: 180px;
+}
+.cv-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding-bottom: 1px;
+}
+.cv-contact-item {
+  font-size: 7.5px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #1a1a1a;
+}
+.cv-name-block {
+  text-align: right;
+  flex-shrink: 0;
+}
+.cv-firstname {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 58px;
+  font-weight: 900;
+  color: #1a1a1a;
+  line-height: 0.92;
+  display: block;
+}
+.cv-lastname {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 58px;
+  font-weight: 900;
+  color: #1a1a1a;
+  line-height: 0.92;
+  display: block;
+}
+.cv-jobtitle {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #1a1a1a;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  text-align: right;
+  margin-top: 8px;
+  line-height: 1.25;
+}
+
+/* ═══ 2열 본문 ═══ */
+.cv-body {
+  position: relative; z-index: 1;
+  display: grid;
+  grid-template-columns: 205px 1fr;
+  gap: 22px;
+  padding: 16px 24px 28px 24px;
+}
+
+/* ── 왼쪽 열 ── */
+.cv-col-left {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.cv-bio {
+  font-family: 'Merriweather', Georgia, serif;
+  font-size: 10px;
+  font-weight: 700;
+  font-style: italic;
+  line-height: 1.6;
+  color: #1a1a1a;
+}
+
+/* ── 오른쪽 열 ── */
+.cv-col-right {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ── 섹션 공통 ── */
+.cv-section { margin-bottom: 0; }
+.cv-section-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  color: #1a1a1a;
+  margin-bottom: 10px;
+  text-transform: none;
+}
+
+/* ── 학력 타임라인 ── */
+.cv-timeline { display: flex; flex-direction: column; gap: 10px; }
+.cv-tl-item {
+  display: grid;
+  grid-template-columns: 54px 1px 1fr;
+  gap: 8px;
+  align-items: start;
+}
+.cv-tl-date {
+  font-size: 8px;
+  font-weight: 700;
+  color: #1a1a1a;
+  line-height: 1.4;
+  padding-top: 1px;
+}
+.cv-tl-line {
+  width: 1px;
+  background: #1a1a1a;
+  align-self: stretch;
+}
+.cv-tl-body { display: flex; flex-direction: column; gap: 2px; }
+.cv-tl-org {
+  font-size: 8px;
+  font-weight: 700;
+  color: #1a1a1a;
+  line-height: 1.35;
+}
+.cv-tl-role {
+  font-size: 7.5px;
+  font-weight: 400;
+  color: #1a1a1a;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+/* ── 경력 (Beruflicher Werdegang) ── */
+.cv-work-item {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-top: 1px solid #c8c8c8;
+  display: grid;
+  grid-template-columns: 88px 1fr;
+  gap: 10px;
+  align-items: start;
+}
+.cv-work-item:first-child { border-top: none; padding-top: 0; }
+.cv-work-left { display: flex; flex-direction: column; }
+.cv-work-org {
+  font-size: 8.5px;
+  font-weight: 700;
+  color: #1a1a1a;
+  line-height: 1.35;
+  margin-bottom: 2px;
+}
+.cv-work-date {
+  font-size: 7px;
+  font-weight: 400;
+  color: #1a1a1a;
+  line-height: 1.4;
+}
+.cv-work-bullets {
+  list-style: disc;
+  padding-left: 11px;
+  margin: 0;
+  font-size: 7px;
+  line-height: 1.65;
+  color: #1a1a1a;
+}
+.cv-work-bullets li { margin-bottom: 1px; }
+
+.cv-empty-hint {
+  font-size: 8px;
+  color: #B0BAC8;
+  font-style: italic;
+}
+
+@media print {
+  body * { visibility: hidden; }
+  .cv-preview-wrap, .cv-preview-wrap * { visibility: visible; }
+  .cv-preview-wrap { position: absolute; top: 0; left: 0; padding: 0; background: none; }
+}
 </style>
 </head>
 <body>
@@ -237,18 +495,18 @@ body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-
     <div class="flag">
       <span class="f1"></span><span class="f2"></span><span class="f3"></span>
     </div>
-    독일 음대 입시 DB
   </a>
   <div class="topnav-links">
-    <a class="topnav-link" href="german_music_v4.html">🔍 학교 검색</a>
-    <a class="topnav-link active" href="#">✍️ 이력서 만들기</a>
+    <a class="topnav-link" href="german_music_v4.html">학교 검색</a>
+    <a class="topnav-link active" href="#">이력서 만들기</a>
   </div>
 </nav>
 
 <!-- ══ PAGE HERO ══ -->
 <section class="page-hero">
+  <iframe class="page-hero-shader" src="hero-bg.html" loading="eager" aria-hidden="true"></iframe>
   <div class="page-hero-inner">
-    <div class="page-hero-badge">✦ AI 입시 서류 작성 도우미</div>
+    <div class="page-hero-badge">✦ 입시 서류 작성 도우미</div>
     <h1>독일 음대 <em>입시 서류</em>, AI와 함께 완성하세요</h1>
     <p>정보를 입력하면 Claude AI가 독일 음대 입시에 최적화된 Lebenslauf(이력서), Motivationsschreiben(지원동기서), 자기소개서를 자동 생성합니다. 독일어 원문 + 한국어 번역본 제공.</p>
   </div>
@@ -277,7 +535,7 @@ body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-
 
       <!-- 지원 학교 정보 -->
       <div class="fsec">
-        <div class="fsec-title"><span>🏫</span> 지원 학교 정보</div>
+        <div class="fsec-title"> 지원 학교 정보</div>
         <div class="fg">
           <label class="fl">지원 학교명</label>
           <select class="fsel" id="targetSchool">
@@ -327,12 +585,12 @@ body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-
         <div class="fsec-title"><span>👤</span> 개인 정보</div>
         <div class="frow">
           <div class="fg">
-            <label class="fl">이름 (한국어)</label>
-            <input class="fi" id="nameKo" placeholder="예: 홍길동">
+            <label class="fl">이름 (영어)</label>
+            <input class="fi" id="nameDe" placeholder="예: Gildong Hong">
           </div>
           <div class="fg">
-            <label class="fl">이름 (독일어/로마자)</label>
-            <input class="fi" id="nameDe" placeholder="예: Gildong Hong">
+            <label class="fl">이름 (한국어)</label>
+            <input class="fi" id="nameKo" placeholder="예: 홍길동">
           </div>
         </div>
         <div class="frow">
@@ -364,46 +622,48 @@ body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-
       <!-- 음악 경력 -->
       <div class="fsec">
         <div class="fsec-title"><span>🎓</span> 음악 교육 · 학력</div>
+        <div class="tip-box">형식: <strong>학교명 | 학위/전공 | 연도</strong><br>예: 서울대학교 음악대학 | 기악과 학사 | 2016–2020</div>
         <div class="entry-list" id="eduList">
           <div class="entry-item">
-            <input class="fi" placeholder="예: 서울대학교 음악대학 기악과 졸업 (2016–2020)">
+            <input class="fi" placeholder="예: 서울대학교 음악대학 | 기악과 학사 | 2016–2020">
             <button class="entry-remove" onclick="removeEntry(this)">−</button>
           </div>
         </div>
-        <button class="btn-add" onclick="addEntry('eduList', '예: Hochschule für Musik XXX 재학 중 (2021–현재)')">+ 학력 추가</button>
+        <button class="btn-add" onclick="addEntry('eduList', '예: Hochschule für Musik XXX | Bachelor of Music | 2021–현재')">+ 학력 추가</button>
       </div>
 
       <div class="fsec">
         <div class="fsec-title"><span>🎻</span> 주요 스승 (사사)</div>
         <div class="entry-list" id="teacherList">
           <div class="entry-item">
-            <input class="fi" placeholder="예: 김영희 교수 (서울대, 2016–2020)">
+            <input class="fi" placeholder="예: 김영희 교수 | 서울대학교 | 2016–2020">
             <button class="entry-remove" onclick="removeEntry(this)">−</button>
           </div>
         </div>
-        <button class="btn-add" onclick="addEntry('teacherList', '예: Prof. Max Mustermann (2021–현재)')">+ 스승 추가</button>
+        <button class="btn-add" onclick="addEntry('teacherList', '예: Prof. Max Mustermann | HfM Berlin | 2021–현재')">+ 스승 추가</button>
       </div>
 
       <div class="fsec">
         <div class="fsec-title"><span>🏆</span> 수상 경력</div>
         <div class="entry-list" id="awardList">
           <div class="entry-item">
-            <input class="fi" placeholder="예: 동아음악콩쿠르 1위 (2019)">
+            <input class="fi" placeholder="예: 동아음악콩쿠르 | 1위 | 2019">
             <button class="entry-remove" onclick="removeEntry(this)">−</button>
           </div>
         </div>
-        <button class="btn-add" onclick="addEntry('awardList', '예: ARD-Musikwettbewerb Sonderpreis (2022)')">+ 수상 추가</button>
+        <button class="btn-add" onclick="addEntry('awardList', '예: ARD-Musikwettbewerb | Sonderpreis | 2022')">+ 수상 추가</button>
       </div>
 
       <div class="fsec">
-        <div class="fsec-title"><span>🎵</span> 주요 연주 경력</div>
+        <div class="fsec-title"><span>🎵</span> 주요 연주 · 경력</div>
+        <div class="tip-box">형식: <strong>기관명 | 기간 | 설명1 | 설명2</strong><br>예: 서울 필하모닉 오케스트라 | 2021 | 협연 솔리스트 | 정기 연주회 참여</div>
         <div class="entry-list" id="perfList">
           <div class="entry-item">
-            <input class="fi" placeholder="예: 서울 필하모닉 오케스트라 협연 (2021)">
+            <input class="fi" placeholder="예: 서울 필하모닉 | 2021 | 협연 솔리스트">
             <button class="entry-remove" onclick="removeEntry(this)">−</button>
           </div>
         </div>
-        <button class="btn-add" onclick="addEntry('perfList', '예: Konzert in der Berliner Philharmonie (2023)')">+ 연주 경력 추가</button>
+        <button class="btn-add" onclick="addEntry('perfList', '예: Berliner Philharmonie | 2023 | Konzertauftritt | Kammermusik')">+ 경력 추가</button>
       </div>
 
       <div class="fsec">
@@ -449,35 +709,377 @@ body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-
       <div class="tip-box">💡 생성된 서류는 초안입니다. 실제 제출 전 내용을 직접 검토하고, 독어 원어민 또는 전문가의 교정을 거치는 것을 권장합니다.</div>
       <button class="btn-generate" id="generateBtn" onclick="generate()">
         <span id="btnIcon">✨</span>
-        <span id="btnText">AI 서류 생성하기</span>
+        <span id="btnText">서류 생성하기</span>
       </button>
     </div>
   </div><!-- /form-panel -->
 
   <!-- ──── 오른쪽: 출력 ──── -->
   <div class="output-panel" id="outputPanel">
-    <div class="output-empty" id="emptyState">
-      <div class="output-empty-icon">🎼</div>
-      <h3>서류가 아직 생성되지 않았어요</h3>
-      <p>왼쪽 폼에 정보를 입력하고<br><strong>AI 서류 생성하기</strong> 버튼을 눌러주세요.<br><br>
-      Lebenslauf, Motivationsschreiben, 자기소개서를<br>독일어 + 한국어로 함께 생성합니다.</p>
+
+    <!-- 미리보기 / AI 생성 탭 -->
+    <div style="display:flex; gap:6px; margin-bottom:16px;">
+      <button class="section-tab on" id="tabPreview" onclick="switchOutputTab('preview')">📄 Lebenslauf 미리보기</button>
+      <button class="section-tab" id="tabAi" onclick="switchOutputTab('ai')">✨ AI 서류 생성</button>
     </div>
-    <div class="output-card" id="outputCard" style="display:none">
-      <div class="output-card-hd">
-        <h2 id="outputTitle">생성된 서류</h2>
-        <div class="output-actions">
-          <button class="btn-action" onclick="copyOutput()">복사</button>
-          <button class="btn-action primary" onclick="downloadOutput()">다운로드 (.txt)</button>
+
+    <!-- ══ CV 미리보기 ══ -->
+    <div id="previewPanel">
+      <div class="cv-preview-wrap">
+        <div class="cv-page" id="cvPage">
+
+          <!-- 노란 그라디언트 배경 -->
+          <div class="cv-yellow-bg"></div>
+
+          <!-- 우측 상단 장식 사각형 -->
+          <div class="cv-corner-sq"></div>
+
+          <!-- ═══ 헤더: 연락처(좌) + 이름·직함(우) ═══ -->
+          <div class="cv-header">
+            <div class="cv-contact">
+              <div class="cv-contact-item">Mobile: <span id="cvPhone">&mdash;</span></div>
+              <div class="cv-contact-item"><span id="cvEmail">&mdash;</span></div>
+              <div class="cv-contact-item"><span id="cvAddress">&mdash;</span></div>
+              <div class="cv-contact-item">geb. <span id="cvBirth">&mdash;</span></div>
+            </div>
+            <div class="cv-name-block">
+              <div class="cv-firstname" id="cvFirstname">Ji Eun</div>
+              <div class="cv-lastname" id="cvLastname">Kim</div>
+              <div class="cv-jobtitle" id="cvJobtitle">KLARINETTISTIN&amp;<br>INSTRUMENTALLEHRERIN</div>
+            </div>
+          </div>
+
+          <!-- 헤더·본문 구분 두꺼운 바 -->
+          <div class="cv-header-bar"></div>
+
+          <!-- ═══ 본문 2열 ═══ -->
+          <div class="cv-body">
+
+            <!-- ── 왼쪽: Bio + Akademische Laufbahn ── -->
+            <div class="cv-col-left">
+              <div class="cv-bio" id="cvBio">Eine Weltbürgerin, in vielen Kulturen zu Hause mit Stationen in Südkorea, Singapur, Kanada und Deutschland. Durch die unterschiedlichen Nationalitäten und Kulturen hat sie gelernt, in jeder Hinsicht flexibel und offen gegenüber allem zu sein.</div>
+
+              <div class="cv-section">
+                <div class="cv-section-title">Akademische Laufbahn</div>
+                <div class="cv-timeline" id="cvEdu">
+                  <div class="cv-tl-item">
+                    <div class="cv-tl-date">2015 – 2020</div>
+                    <div class="cv-tl-line"></div>
+                    <div class="cv-tl-body">
+                      <div class="cv-tl-org">Hochschule für Musik und Theater „Felix Mendelssohn Bartholdy" Leipzig</div>
+                      <div class="cv-tl-role">Bachelor of Music</div>
+                    </div>
+                  </div>
+                  <div class="cv-tl-item">
+                    <div class="cv-tl-date">2020 – 2021</div>
+                    <div class="cv-tl-line"></div>
+                    <div class="cv-tl-body">
+                      <div class="cv-tl-org">Hochschule für Musik Nürnberg</div>
+                      <div class="cv-tl-role">Masterstudium im Hauptfach Neue Musik (Ohne Abschluss)</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── 오른쪽: Beruflicher Werdegang + 동적 섹션 ── -->
+            <div class="cv-col-right">
+              <div class="cv-section">
+                <div class="cv-section-title">Beruflicher Werdegang</div>
+                <div id="cvWork">
+                  <div class="cv-work-item">
+                    <div class="cv-work-left">
+                      <span class="cv-work-accent"></span>
+                      <div class="cv-work-org">Musikschule der Hofer Symphoniker</div>
+                      <div class="cv-work-date">Seit 9/2021</div>
+                    </div>
+                    <ul class="cv-work-bullets">
+                      <li>Kooperation mit dem Schiller-Gymnasium Hof: Leitung und Betreuung der Bläserklassen in den Jahrgangsstufen 5 und 6</li>
+                      <li>Mitarbeit im Jugendblasorchester und im Symphonischen Blasorchester Hof</li>
+                      <li>Fachjurorin beim 62. Regionalwettbewerb „Jugend musiziert"</li>
+                    </ul>
+                  </div>
+                  <div class="cv-work-item">
+                    <div class="cv-work-left">
+                      <span class="cv-work-accent"></span>
+                      <div class="cv-work-org">Musikschule des Landkreises Hof</div>
+                      <div class="cv-work-date">Seit 9/2022</div>
+                    </div>
+                    <ul class="cv-work-bullets">
+                      <li>Kooperation mit der Grund- und Mittelschule Oberkotzau: Leitung der Bläserklassen in den Jahrgangsstufen 5 bis 9</li>
+                      <li>Instrumentalunterricht in den Fächern Klarinette, Saxophon, Blockflöte und Querflöte</li>
+                    </ul>
+                  </div>
+                  <div class="cv-work-item">
+                    <div class="cv-work-left">
+                      <span class="cv-work-accent"></span>
+                      <div class="cv-work-org">Städtische Musikschule Bayreuth</div>
+                      <div class="cv-work-date">9/2024 – 8/2026</div>
+                    </div>
+                    <ul class="cv-work-bullets">
+                      <li>Elternzeitvertretung im Instrumentalunterricht für Klarinette und Saxophon</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 동적 섹션: 스승·수상·언어 (입력 시 표시됨) -->
+              <div class="cv-section" style="display:none">
+                <div class="cv-section-title">Musikalische Ausbildung</div>
+                <div class="cv-timeline" id="cvTeachers"></div>
+              </div>
+              <div class="cv-section" style="display:none">
+                <div class="cv-section-title">Preise &amp; Auszeichnungen</div>
+                <div class="cv-timeline" id="cvAwards"></div>
+              </div>
+              <div class="cv-section" style="display:none">
+                <div class="cv-section-title">Sprachkenntnisse</div>
+                <div class="cv-timeline" id="cvLangs"></div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- 검정 하단 바 -->
+          <div class="cv-bottom-bar"></div>
+
         </div>
       </div>
-      <div class="section-tabs" id="sectionTabs"></div>
-      <div id="sectionPanels"></div>
+      <div style="text-align:center; margin-top:12px;">
+        <button class="btn-action primary" onclick="printCV()" style="font-size:13px; padding:10px 24px; border-radius:12px;">🖨️ PDF로 저장 / 인쇄</button>
+      </div>
     </div>
+
+    <!-- ══ AI 생성 패널 ══ -->
+    <div id="aiPanel" style="display:none">
+      <div class="output-empty" id="emptyState">
+        <div class="output-empty-icon">🎼</div>
+        <h3>서류가 아직 생성되지 않았어요</h3>
+        <p>왼쪽 폼에 정보를 입력하고<br><strong>AI 서류 생성하기</strong> 버튼을 눌러주세요.<br><br>
+        Lebenslauf, Motivationsschreiben, 자기소개서를<br>독일어 + 한국어로 함께 생성합니다.</p>
+      </div>
+      <div class="output-card" id="outputCard" style="display:none">
+        <div class="output-card-hd">
+          <h2 id="outputTitle">생성된 서류</h2>
+          <div class="output-actions">
+            <button class="btn-action" onclick="copyOutput()">복사</button>
+            <button class="btn-action primary" onclick="downloadOutput()">다운로드 (.txt)</button>
+          </div>
+        </div>
+        <div class="section-tabs" id="sectionTabs"></div>
+        <div id="sectionPanels"></div>
+      </div>
+    </div>
+
   </div>
 
 </div>
 
 <script>
+// ── 출력 탭 전환 (미리보기 / AI) ──
+function switchOutputTab(tab) {
+  document.getElementById('previewPanel').style.display = tab === 'preview' ? '' : 'none';
+  document.getElementById('aiPanel').style.display = tab === 'ai' ? '' : 'none';
+  document.getElementById('tabPreview').classList.toggle('on', tab === 'preview');
+  document.getElementById('tabAi').classList.toggle('on', tab === 'ai');
+}
+
+// ── 파이프 구분자로 항목 파싱: "이름 | 서브 | 날짜" ──
+// 날짜는 숫자 포함 + 20자 미만인 파트로 자동 감지
+function parsePipeEntry(text) {
+  const parts = text.split('|').map(s => s.trim()).filter(Boolean);
+  if (parts.length === 0) return { name: '', sub: '', date: '', extra: [] };
+
+  // 날짜 파트 찾기: 숫자가 있고 짧은 것
+  const dateIdx = parts.findIndex((p, i) => i > 0 && /\d/.test(p) && p.length <= 22);
+  const date = dateIdx > -1 ? parts[dateIdx] : '';
+  const nonDate = parts.filter((_, i) => i !== dateIdx);
+
+  return {
+    name:  nonDate[0] || '',
+    sub:   nonDate[1] || '',
+    date,
+    extra: nonDate.slice(2),
+  };
+}
+
+// ── 텍스트에서 날짜 자동 추출 (파이프 없을 때 폴백) ──
+function autoExtractDate(text) {
+  const m = text.match(/\(?(Seit\s+\d+\/\d{4}|\d{4}\s*[-–—]\s*(?:\d{4}|현재|Heute|Present|heute)|\d{4})\)?/i);
+  if (!m) return { date: '', rest: text };
+  const date = m[0].replace(/[()]/g, '').trim();
+  const rest = text.slice(0, m.index).trim().replace(/\s*[,;:]\s*$/, '') +
+               text.slice(m.index + m[0].length).trim();
+  return { date, rest: rest.trim() };
+}
+
+// ── CV 미리보기 실시간 업데이트 ──
+function updateCVPreview() {
+  const v = id => (document.getElementById(id) || {}).value || '';
+  const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+
+  // ── 이름 ──
+  const nameDe = v('nameDe').trim();
+  const nameKo = v('nameKo').trim();
+  if (nameDe) {
+    const parts = nameDe.split(/\s+/);
+    set('cvFirstname', parts.length >= 2 ? parts.slice(0, -1).join(' ') : nameDe);
+    set('cvLastname',  parts.length >= 2 ? parts[parts.length - 1] : '');
+  } else if (nameKo) {
+    set('cvFirstname', nameKo.slice(0, 1));
+    set('cvLastname',  nameKo.slice(1));
+  } else {
+    set('cvFirstname', 'Vorname');
+    set('cvLastname',  'Nachname');
+  }
+
+  // ── 직함 ──
+  const major = v('major').trim();
+  const degree = v('degree').trim();
+  const jobtitleEl = document.getElementById('cvJobtitle');
+  if (jobtitleEl) {
+    jobtitleEl.textContent = major
+      ? (degree ? degree.toUpperCase() + '\n' : '') + major.toUpperCase()
+      : 'INSTRUMENTALIST/IN';
+  }
+
+  // ── 연락처 ──
+  set('cvPhone',   v('phone').trim()   || '—');
+  set('cvEmail',   v('email').trim()   || '—');
+  set('cvAddress', v('address').trim() || '—');
+  set('cvBirth',   v('birth').trim()   || '—');
+
+  // ── Bio: 지원동기 > 목표 > 자동 생성 ──
+  const whySchool = v('whySchool').trim();
+  const goals     = v('goals').trim();
+  const birthPlace = v('birthPlace').trim();
+  const professor  = v('professor').trim();
+  const school = v('targetSchool') === '기타 (직접 입력)'
+    ? v('customSchool').trim() : v('targetSchool');
+  let bio = '';
+  if (whySchool) bio = whySchool;
+  else if (goals) bio = goals;
+  else {
+    if (birthPlace) bio += birthPlace + ' 출신. ';
+    if (school)     bio += school + '에 지원. ';
+    if (professor)  bio += professor + ' 교수님 사사 희망.';
+  }
+  set('cvBio', bio || '지원동기 또는 목표를 입력하면 여기에 표시됩니다.');
+
+  // ── 학력 타임라인 ──
+  const eduEntries = getEntries('eduList');
+  const cvEdu = document.getElementById('cvEdu');
+  if (eduEntries.length) {
+    cvEdu.innerHTML = eduEntries.map(e => {
+      let name, sub, date;
+      if (e.includes('|')) {
+        const p = parsePipeEntry(e);
+        name = p.name; sub = p.sub; date = p.date;
+      } else {
+        const { date: d, rest } = autoExtractDate(e);
+        date = d; name = rest; sub = '';
+      }
+      return `<div class="cv-tl-item">
+        <div class="cv-tl-date">${escapeHtml(date)}</div>
+        <div class="cv-tl-line"></div>
+        <div class="cv-tl-body">
+          <div class="cv-tl-org">${escapeHtml(name)}</div>
+          ${sub ? `<div class="cv-tl-role">${escapeHtml(sub)}</div>` : ''}
+        </div>
+      </div>`;
+    }).join('');
+  } else {
+    cvEdu.innerHTML = '<div class="cv-empty-hint">학력을 입력해주세요 (형식: 학교 | 학위 | 연도)</div>';
+  }
+
+  // ── 연주·경력 (Beruflicher Werdegang) ──
+  const perfEntries = getEntries('perfList');
+  const cvWork = document.getElementById('cvWork');
+  if (perfEntries.length) {
+    cvWork.innerHTML = perfEntries.map(e => {
+      let org, date, bullets;
+      if (e.includes('|')) {
+        const p = parsePipeEntry(e);
+        org = p.name; date = p.date;
+        bullets = [p.sub, ...p.extra].filter(Boolean);
+      } else {
+        const { date: d, rest } = autoExtractDate(e);
+        org = rest; date = d; bullets = [];
+      }
+      const bulletHtml = bullets.length
+        ? `<ul class="cv-work-bullets">${bullets.map(b => `<li>${escapeHtml(b)}</li>`).join('')}</ul>`
+        : '<div></div>';
+      return `<div class="cv-work-item">
+        <div class="cv-work-left">
+          <span class="cv-work-accent"></span>
+          <div class="cv-work-org">${escapeHtml(org)}</div>
+          <div class="cv-work-date">${escapeHtml(date)}</div>
+        </div>
+        ${bulletHtml}
+      </div>`;
+    }).join('');
+  } else {
+    cvWork.innerHTML = '<div class="cv-empty-hint">경력을 입력해주세요 (형식: 기관 | 기간 | 설명)</div>';
+  }
+
+  // ── 동적 섹션: 스승·수상·언어 ──
+  function updateDynSection(containerId, listId) {
+    const entries = getEntries(listId);
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    const sec = container.closest('.cv-section');
+    if (entries.length) {
+      container.innerHTML = entries.map(e => {
+        let name, sub, date;
+        if (e.includes('|')) {
+          const p = parsePipeEntry(e);
+          name = p.name; sub = p.sub; date = p.date;
+        } else {
+          const { date: d, rest } = autoExtractDate(e);
+          date = d; name = rest; sub = '';
+        }
+        return `<div class="cv-tl-item">
+          <div class="cv-tl-date">${escapeHtml(date)}</div>
+          <div class="cv-tl-line"></div>
+          <div class="cv-tl-body">
+            <div class="cv-tl-org">${escapeHtml(name)}</div>
+            ${sub ? `<div class="cv-tl-role">${escapeHtml(sub)}</div>` : ''}
+          </div>
+        </div>`;
+      }).join('');
+      if (sec) sec.style.display = '';
+    } else {
+      container.innerHTML = '';
+      if (sec) sec.style.display = 'none';
+    }
+  }
+
+  updateDynSection('cvTeachers', 'teacherList');
+  updateDynSection('cvAwards',   'awardList');
+  updateDynSection('cvLangs',    'langList');
+}
+
+// HTML 이스케이프
+function escapeHtml(str) {
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
+}
+
+// 폼 입력 시 실시간 업데이트 (input + change 이벤트 모두 감지)
+document.querySelector('.form-scroll').addEventListener('input', updateCVPreview);
+document.querySelector('.form-scroll').addEventListener('change', updateCVPreview);
+document.getElementById('targetSchool').addEventListener('change', () => { setTimeout(updateCVPreview, 50); });
+
+// 페이지 로드 시 초기 상태 반영
+updateCVPreview();
+
+// PDF 인쇄
+function printCV() {
+  window.print();
+}
+
+
 // 지원 학교 선택 → custom 표시
 document.getElementById('targetSchool').addEventListener('change', function() {
   document.getElementById('customSchoolWrap').style.display =
@@ -499,7 +1101,7 @@ function toggleDoc(btn) {
     selectedDocs.has('motivation') || selectedDocs.has('selfintro') ? '' : 'none';
 }
 
-// 항목 추가/제거
+// 항목 추가/제거 (추가·제거 후 미리보기 자동 갱신)
 function addEntry(listId, placeholder) {
   const list = document.getElementById(listId);
   const div = document.createElement('div');
@@ -507,10 +1109,12 @@ function addEntry(listId, placeholder) {
   div.innerHTML = `<input class="fi" placeholder="${placeholder}"><button class="entry-remove" onclick="removeEntry(this)">−</button>`;
   list.appendChild(div);
   div.querySelector('input').focus();
+  updateCVPreview();
 }
 function removeEntry(btn) {
   const list = btn.closest('.entry-list');
   if (list.children.length > 1) btn.closest('.entry-item').remove();
+  updateCVPreview();
 }
 
 // 엔트리 목록 읽기

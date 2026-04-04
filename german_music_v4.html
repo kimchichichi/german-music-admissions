@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>독일 음대 입시 DB — 올인원 판별기</title>
-<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,700;0,900;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<title>독일 음대 입시— 올인원 판별기</title>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Merriweather:ital,wght@0,700;0,900;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
 :root {
   --pink:      #F472A0;
@@ -27,7 +27,6 @@
   --green:     #38A169;
   --blue:      #3182CE;
   --orange:    #DD6B20;
-  --serif:  'Merriweather', Georgia, serif;
   --sans:   'Plus Jakarta Sans', 'Noto Sans KR', sans-serif;
 }
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -79,27 +78,18 @@ body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-
 
 /* ══ HERO SECTION ══ */
 .hero {
-  background: linear-gradient(135deg, #1A1F2E 0%, #2D2150 50%, #1A3A2E 100%);
   padding: clamp(40px,7vw,72px) clamp(20px,5vw,80px);
   position: relative;
   overflow: hidden;
 }
-/* 배경 장식 원 */
-.hero::before {
-  content: '';
+/* 셰이더 배경 iframe (hero-bg.html 리액트 페이지 로드) */
+.hero-shader-iframe {
   position: absolute;
-  width: 500px; height: 500px;
-  background: radial-gradient(circle, rgba(244,114,160,.18) 0%, transparent 70%);
-  top: -100px; right: -80px;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  border: none;
   pointer-events: none;
-}
-.hero::after {
-  content: '';
-  position: absolute;
-  width: 400px; height: 400px;
-  background: radial-gradient(circle, rgba(61,217,164,.14) 0%, transparent 70%);
-  bottom: -120px; left: 10%;
-  pointer-events: none;
+  z-index: 0;
 }
 .hero-inner {
   max-width: 1100px; margin: 0 auto;
@@ -118,18 +108,17 @@ body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-
   letter-spacing: .06em; text-transform: uppercase;
 }
 .hero-title {
-  font-family: var(--serif);
-  font-size: clamp(26px, 4.5vw, 46px);
-  font-weight: 900;
+  font-size: 80px;
+  font-weight: 400;
   color: #fff;
   line-height: 1.2;
-  margin-bottom: 16px;
 }
 .hero-title em {
   font-style: italic;
-  background: linear-gradient(90deg, var(--pink) 0%, var(--purple) 100%);
+    background: #fff;
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text;
+  font-size: 50px;
 }
 .hero-desc {
   font-size: clamp(13px, 1.5vw, 15px);
@@ -190,10 +179,12 @@ body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-
 
 /* 히어로 배너 */
 .hero-bottom-strip {
+  margin-top: 32px;
   background: rgba(255,255,255,.05);
   border-top: 1px solid rgba(255,255,255,.08);
   padding: 12px clamp(20px,5vw,80px);
   display: flex; gap: 28px; align-items: center;
+  justify-content: center;
   flex-wrap: wrap;
   position: relative; z-index: 1;
 }
@@ -457,33 +448,33 @@ body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-
       <span class="f2"></span>
       <span class="f3"></span>
     </div>
-    <span>독일 음대 입시 DB</span>
   </a>
   <div class="topnav-links">
-    <a class="topnav-link" href="cv_builder.html" target="_blank">✍️ 이력서 만들기</a>
-    <button class="topnav-link" onclick="openContact()">📬 문의하기</button>
-    <a class="topnav-link admin" href="admin.html" target="_blank">⚙️ 관리자</a>
+    <a class="topnav-link" href="cv_builder.html" target="_blank">이력서 만들기</a>
+    <button class="topnav-link" onclick="openContact()">문의하기</button>
+    <a class="topnav-link admin" href="admin.html" target="_blank">관리자</a>
   </div>
 </nav>
 
 <!-- ══ HERO SECTION ══ -->
 <section class="hero">
+  <iframe class="hero-shader-iframe" src="hero-bg.html" loading="eager" aria-hidden="true"></iframe>
   <div class="hero-inner">
     <div class="hero-text">
-      <div class="hero-eyebrow">✦ 국내 유일 · RKM 24개 회원교 전부 커버</div>
+      <div class="hero-eyebrow">✦ 독일 국립 음대 24개 전부 커버</div>
       <h1 class="hero-title">
         독일 음대 입시,<br>
-        <em>한눈에 비교하세요</em>
+        <em>한눈에 비교하기</em>
       </h1>
       <p class="hero-desc">
-        베를린부터 뮌헨까지 — 독일 국립 음악대학 24곳의 입시 마감일, 언어조건, 1차 전형방식, 지원 절차를 공식 자료 기반으로 정리했습니다. 악기별·조건별 필터로 나에게 맞는 학교를 찾아보세요.
+        독일 국립 음악대학 24곳의 입시 마감일, 언어조건, 1차 전형방식, 지원 절차를 공식 자료 기반으로 정리했습니다. 악기별·조건별 필터로 나에게 맞는 학교를 찾아보세요.
       </p>
       <div class="hero-ctas">
         <button class="hero-btn-primary" onclick="document.getElementById('filterSection').scrollIntoView({behavior:'smooth'})">
-          🔍 학교 검색 시작하기
+          학교 검색 시작하기
         </button>
         <button class="hero-btn-secondary" onclick="openContact()">
-          💬 입시 상담 문의
+          입시 상담 문의
         </button>
       </div>
     </div>
@@ -513,7 +504,7 @@ body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-
     </div>
     <div class="hbs-item">
       <span class="hbs-dot" style="background:var(--pink)"></span>
-      추측 데이터 없음 · null 표기 원칙
+      추측 데이터 없음
     </div>
     <div class="hbs-item">
       <span class="hbs-dot" style="background:var(--purple)"></span>
@@ -531,7 +522,7 @@ body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-
 
   <!-- 악기 선택 -->
   <div class="fb-group">
-    <label class="fb-label">악기 선택 (복수 가능)</label>
+    <label class="fb-label">악기 선택 </label>
     <div class="dropdown-wrap" id="instrWrap">
       <div class="dropdown-trigger" id="instrTrigger" onclick="toggleDropdown('instrMenu','instrTrigger')">
         <span id="instrLabel">모든 악기</span>
@@ -722,409 +713,553 @@ const SCHOOLS = [
     id:1,
     name:'한스 아이슬러 음악대학 베를린',
     name_de:'Hochschule für Musik Hanns Eisler Berlin',
-    city:'Berlin', status:'verified',
+    city:'Berlin',
+    status:'verified',
     url:'https://www.hfm-berlin.de/bewerbung/studienbewerbung/',
     degrees:['Bachelor','Master','Konzertexamen'],
-    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','플루트','오보에','클라리넷','바순','색소폰','호른','트럼펫','트롬본','튜바','타악기','피아노','성악','실내악','작곡','오케스트라지휘','합창지휘','코레페티션','음악이론','음악극연출'],
-    deadline_w:'4월 8일', deadline_s:'11월 8일',
-    lang_level:'없음', lang_text:'없음 — 증명서 불필요. 독일어 학습 권장 (교내 수업 가능)',
-    lang_timing:'none', lang_timing_text:'해당 없음',
-    round1_type:'video', round1_text:'영상 제출 — muvac에 YouTube/Vimeo/Youku 링크 업로드 (10~15분). 자기소개서 + 교수 선호 순위 필수.',
-    portal:'muvac', portal_type:'muvac',
+    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','플루트','오보에','클라리넷','바순','색소폰','호른','트럼펫','트롬본','튜바','타악기','피아노','리트반주(피아니스트)','실내악','성악','음악극연출','드라마투르기','작곡','화성법·대위법','전자음악','오케스트라지휘','합창지휘','코레페티션'],
+    deadline_w:'4월 8일',
+    deadline_s:'11월 8일',
+    lang_level:'없음',
+    lang_text:'언어 증명서 불필요. 독일어 학습 권장 (교내 유료 수업 수강 가능)',
+    lang_timing:'없음',
+    lang_timing_text:'해당 없음',
+    round1_type:'영상',
+    round1_text:'muvac에 YouTube/Vimeo/Youku/Soundcloud 링크 업로드 (10~15분). 단일 테이크 또는 편집본 모두 가능.',
+    portal:'muvac',
+    portal_type:'muvac',
     method_text:'온라인 전용 (muvac)',
-    fee:'60 EUR (카드만, 환불불가)',
-    note:'Master 성악: 12월 31일 마감. 2차 현장: 피아노 부전공 + 화성법 + 청음.'
+    fee:'60 EUR',
+    note:'muvac 계정 사전 생성 필요. Master 성악 마감 12월 31일 주의.',
   },
   {
     id:2,
     name:'함부르크 음악연극대학',
     name_de:'Hochschule für Musik und Theater Hamburg',
-    city:'Hamburg', status:'verified',
+    city:'Hamburg',
+    status:'verified',
     url:'https://www.hfmt-hamburg.de/bewerben/',
     degrees:['Bachelor','Master'],
     instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','플루트','오보에','클라리넷','바순','색소폰','호른','트럼펫','트롬본','튜바','타악기','피아노','성악','오페라성악','작곡','오케스트라지휘','합창지휘','재즈','교회음악','코레페티션'],
-    deadline_w:'4월 1일', deadline_s:'미확인',
-    lang_level:'B2', lang_text:'B2 필수',
-    lang_timing:'conditional', lang_timing_text:'학사: 첫 학기 시작 전까지 조건부 입학 허용. 미제출 시 음악이론·음악학 수업 수강 불가.',
-    round1_type:'unknown', round1_text:'미확인 — 공식 홈페이지 확인 필요',
-    portal:'hfmt.hispro.de', portal_type:'online',
+    deadline_w:'4월 1일',
+    deadline_s:'1월 10일',
+    lang_level:'B2',
+    lang_text:'B2 필수',
+    lang_timing:'조건부',
+    lang_timing_text:'학사: 첫 학기 시작 전까지 조건부 입학 허용. 미제출 시 음악이론·음악학 수업 수강 불가.',
+    round1_type:'영상',
+    round1_text:'일부 전공 영상 업로드 필수 ("Für einige Studiengänge ist der Upload eines Videos erforderlich"). 전공별 상이.',
+    portal:'hfmt.hispro.de',
+    portal_type:'online',
     method_text:'온라인 (hfmt.hispro.de)',
     fee:'50 EUR',
-    note:'B2 미보유 시 입학 후 이론 수업 수강 제한.'
+    note:'B2 미보유 시 입학 후 이론 수업 수강 제한.',
   },
   {
     id:3,
-    name:'뒤셀도르프 로베르트 슈만 음악대학',
-    name_de:'Robert Schumann Hochschule Düsseldorf',
-    city:'Düsseldorf', status:'verified',
-    url:'https://www.rsh-duesseldorf.de/studium/bewerbung/',
-    degrees:['Bachelor','Master','Konzertexamen'],
-    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','플루트','오보에','클라리넷','바순','호른','트럼펫','트롬본','튜바','타악기','피아노','성악','작곡','오케스트라지휘','합창지휘','교회음악','음악이론','음악교육'],
-    deadline_w:'3월 1일 (학사)', deadline_s:'겨울만',
-    lang_level:'B2', lang_text:'음악 학사·석사: B2 / 음악학 석사: C1 / 음악학 박사: C2',
-    lang_timing:'before_enroll', lang_timing_text:'입학 등록(Immatrikulation) 전까지 제출',
-    round1_type:'video', round1_text:'영상 심사 — muvac 플랫폼 (오르간·교회음악 제외)',
-    portal:'muvac', portal_type:'muvac',
-    method_text:'온라인 (muvac)',
-    fee:'미확인',
-    note:'학사 입학은 겨울학기만 가능.'
-  },
-  {
-    id:4,
-    name:'쾰른 음악무용대학',
-    name_de:'Hochschule für Musik und Tanz Köln',
-    city:'Köln', status:'partial',
-    url:'https://www.hfmt-koeln.de/en/information-for/prospective-students/application/',
-    degrees:['Bachelor','Master','Konzertexamen'],
-    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','류트','비올라 다 감바','플루트','리코더','오보에','클라리넷','바순','색소폰','호른','트럼펫','트롬본','튜바','타악기','피아노','쳄발로','성악','작곡','오케스트라지휘','합창지휘','재즈','교회음악','코레페티션'],
-    deadline_w:'미확인', deadline_s:'미확인',
-    lang_level:'미확인', lang_text:'미확인',
-    lang_timing:'unknown', lang_timing_text:'미확인',
-    round1_type:'video', round1_text:'영상 심사 — muvac 플랫폼',
-    portal:'muvac', portal_type:'muvac',
-    method_text:'온라인 (muvac)',
-    fee:'50 EUR (여러 전공 동시지원 1회만)',
-    note:'쾰른·아헨·부퍼탈 3캠퍼스. 실기: 5월말~6월19일.'
-  },
-  {
-    id:5,
-    name:'카를스루에 음악대학',
-    name_de:'Hochschule für Musik Karlsruhe',
-    city:'Karlsruhe', status:'verified',
-    url:'https://hfm-karlsruhe.de/en/studying/applying',
-    degrees:['Bachelor','Master','Konzertexamen'],
-    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','리코더','플루트','오보에','클라리넷','바순','호른','트럼펫','트롬본','튜바','타악기','피아노','쳄발로','오르간','성악','오페라성악','작곡','오케스트라지휘','합창지휘','교회음악','코레페티션'],
-    deadline_w:'4월 1일', deadline_s:'11월 1일',
-    lang_level:'미확인', lang_text:'미확인 — 홈페이지 확인 필요',
-    lang_timing:'unknown', lang_timing_text:'미확인',
-    round1_type:'both', round1_text:'전공에 따라 영상 예선 있는 그룹 / 없는 그룹 분리. 영상예선 대상자는 비자 확인서 미발급.',
-    portal:'온라인 + 우편', portal_type:'post',
-    method_text:'온라인 + 서류 우편 (마감 4일 내)',
-    fee:'미확인',
-    note:'실기: 6월 6~12일 (겨울). URL: www 없음 (hfm-karlsruhe.de).'
-  },
-  {
-    id:6,
-    name:'프라이부르크 음악대학',
-    name_de:'Hochschule für Musik Freiburg',
-    city:'Freiburg im Breisgau', status:'verified',
-    url:'https://www.mh-freiburg.de/en/study/before-your-studies/application-and-entrance-exams',
-    degrees:['Bachelor','Master','Konzertexamen'],
-    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','플루트','오보에','클라리넷','바순','색소폰','호른','트럼펫','트롬본','튜바','타악기','피아노','오르간','성악','작곡','오케스트라지휘','합창지휘','교회음악','코레페티션'],
-    deadline_w:'4월 1일', deadline_s:'11월 1일',
-    lang_level:'DSH / B1', lang_text:'학사: DSH-1 또는 TestDaF TDN3 (조건부 가능) / 석사·KE: B1 최소 필수',
-    lang_timing:'conditional', lang_timing_text:'학사 조건부: 특별히 뛰어난 지원자는 첫 2학기 독일어 수업 의무 이수 조건으로 허용.',
-    round1_type:'unknown', round1_text:'전공별 상이 — 홈페이지 확인 필요',
-    portal:'온라인 + 우편', portal_type:'post',
-    method_text:'온라인 + 서류 우편 (마감일 소인 기준)',
-    fee:'50 EUR',
-    note:'실기: 6월 8~13일 (겨울 2026/27).'
-  },
-  {
-    id:7,
-    name:'하노버 음악연극미디어대학',
-    name_de:'Hochschule für Musik, Theater und Medien Hannover',
-    city:'Hannover', status:'verified',
-    url:'https://www.hmtm-hannover.de/de/bewerbung/bewerbungsverfahren/',
-    degrees:['Bachelor','Master','Konzertexamen'],
-    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','플루트','오보에','클라리넷','바순','색소폰','호른','트럼펫','트롬본','튜바','타악기','피아노','오르간','성악','작곡','오케스트라지휘','합창지휘','교회음악','재즈','코레페티션'],
-    deadline_w:'3월 15일', deadline_s:'미확인',
-    lang_level:'TestDaF TDN3', lang_text:'TestDaF TDN3 또는 DSH-1 (B2 수준). WS 2024/25부터 지정 인증기관 증명서만 수락.',
-    lang_timing:'before_enroll', lang_timing_text:'입학 등록(Immatrikulation)까지 제출. 예외: Soloklasse 언어조건 없음.',
-    round1_type:'both', round1_text:'영상 예선 + 현장 본선 (전공에 따라 다름). muvac 플랫폼.',
-    portal:'muvac', portal_type:'muvac',
-    method_text:'온라인 (muvac, 음악전공)',
-    fee:'미확인',
-    note:'실기: 6월 2~6일 / Soloklasse 6월 10~11일. Soloklasse 언어조건 없음.'
-  },
-  {
-    id:8,
-    name:'라이프치히 음악연극대학',
-    name_de:'HMT Leipzig – Felix Mendelssohn Bartholdy',
-    city:'Leipzig', status:'verified',
-    url:'https://www.hmt-leipzig.de/studium/vor-dem-studium/bewerbung',
-    degrees:['Bachelor','Master','Konzertexamen'],
-    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','플루트','오보에','클라리넷','바순','색소폰','호른','트럼펫','트롬본','튜바','타악기','피아노','오르간','쳄발로','성악','작곡','오케스트라지휘','합창지휘','교회음악','코레페티션','음악이론'],
-    deadline_w:'3월 31일', deadline_s:'미확인',
-    lang_level:'B2', lang_text:'B2급 인정 — 유럽 품질 인증 어학원 증명서 포함 인정. 구체적 레벨 전공별 상이.',
-    lang_timing:'before_enroll', lang_timing_text:'입학 등록 전까지 제출.',
-    round1_type:'unknown', round1_text:'미확인 — 전공별 상이',
-    portal:'자체 포털', portal_type:'online',
-    method_text:'온라인 (자체 포털)',
-    fee:'미확인',
-    note:'기초과정 겨울학기만 입학 가능.'
-  },
-  {
-    id:9,
-    name:'자르브뤼켄 자를란트 음악대학',
-    name_de:'Hochschule für Musik Saar, Saarbrücken',
-    city:'자르브뤼켄 (Saarbrücken)', status:'verified',
-    url:'https://www.hfmsaar.de/bewerbung',
-    degrees:['Bachelor','Master','Konzertexamen','Promotion'],
-    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','플루트','오보에','클라리넷','바순','색소폰','호른','트럼펫','트롬본','튜바','타악기','피아노','오르간','성악','작곡','오케스트라지휘','합창지휘','교회음악','음악이론','음악교육','코레페티션'],
-    deadline_w:'3월 14일', deadline_s:'11월 28일 (학사만)',
-    lang_level:'TestDaF TDN3', lang_text:'TestDaF TDN3 (전 영역 TDN3 이상) — RKM 2008년 결의 기준',
-    lang_timing:'before_enroll', lang_timing_text:'입학 등록(Immatrikulation)까지 제출 필요.',
-    round1_type:'video', round1_text:'영상 예선 대상: 성악 Master·KE / 플루트·바순·오보에·클라리넷 전 과정. 나머지는 바로 현장시험.',
-    portal:'자체 포털', portal_type:'online',
-    method_text:'온라인 (자체 포털)',
-    fee:'50 EUR (재학생 24 EUR, 환불불가)',
-    note:'실기: 교직 5월 11~13일 / 학사·석사·KE 5월 18~22일. 모의고사 무료 제공.'
-  },
-  {
-    id:10,
-    name:'슈투트가르트 음악공연예술대학',
-    name_de:'Staatliche Hochschule für Musik und Darstellende Kunst Stuttgart',
-    city:'Stuttgart', status:'verified',
-    url:'https://www.hmdk-stuttgart.de/bewerbung',
-    degrees:['Bachelor','Master','Konzertexamen'],
-    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','플루트','오보에','클라리넷','바순','색소폰','호른','트럼펫','트롬본','튜바','타악기','피아노','오르간','성악','작곡','오케스트라지휘','합창지휘','교회음악','코레페티션'],
-    deadline_w:'4월 1일', deadline_s:'11월 4일',
-    lang_level:'B2', lang_text:'B2 (음악교육학·연구 석사: C2)',
-    lang_timing:'conditional', lang_timing_text:'6개월 내 취득 조건부 허용 — 미취득 시 자격 소멸.',
-    round1_type:'unknown', round1_text:'미확인',
-    portal:'eportal + 우편', portal_type:'post',
-    method_text:'온라인 (eportal.hmdk-stuttgart.de) + 서류 우편 (마감 7일 내)',
-    fee:'50 EUR (지원서당, 환불불가)',
-    note:''
-  },
-  {
-    id:11,
-    name:'트로싱엔 음악대학',
-    name_de:'Hochschule für Musik Trossingen',
-    city:'Trossingen', status:'verified',
-    url:'https://www.hfm-trossingen.de/en/application',
-    degrees:['Bachelor of Music','Master of Music','Master of Education','Konzertexamen','Promotion'],
-    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','리코더','플루트','오보에','클라리넷','바순','호른','트럼펫','트롬본','튜바','타악기','피아노','오르간','쳄발로','성악','작곡','오케스트라지휘','합창지휘','교회음악'],
-    deadline_w:'4월 1일', deadline_s:'11월 1일',
-    lang_level:'B2 (조건부)', lang_text:'교직(Gymnasiallehramt)·음악운동·음악학 석사: B2 필수 (시험 전 제출). 실기 과정: 조건부.',
-    lang_timing:'conditional', lang_timing_text:'실기 과정: 2학기 내 B2 취득 필수 — 미취득 시 자격 소멸.',
-    round1_type:'video', round1_text:'영상 예선 대상: BA 음악 / BA 고악(Early Music) / BA 교회음악 B / BA Music Design.',
-    portal:'자체 포털', portal_type:'online',
-    method_text:'온라인 (자체 포털)',
-    fee:'미확인',
-    note:'매주 수요일 온라인 입시설명회 (독·영어 병행).'
-  },
-  {
-    id:12,
-    name:'뷔르츠부르크 음악대학',
-    name_de:'Hochschule für Musik Würzburg',
-    city:'Würzburg', status:'partial',
-    url:'https://hfm-wuerzburg.de/bewerbung',
-    degrees:['Bachelor','Master','Konzertexamen'],
-    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','플루트','오보에','클라리넷','바순','색소폰','호른','트럼펫','트롬본','튜바','타악기','피아노','오르간','성악','작곡','오케스트라지휘','합창지휘','교회음악','코레페티션'],
-    deadline_w:'3월 15일', deadline_s:'없음 (겨울만)',
-    lang_level:'미확인', lang_text:'미확인',
-    lang_timing:'unknown', lang_timing_text:'미확인',
-    round1_type:'unknown', round1_text:'미확인',
-    portal:'muvac', portal_type:'muvac',
-    method_text:'온라인 (muvac)',
-    fee:'미확인',
-    note:'실기: 5월 중순~말. URL: www 없음.'
-  },
-  {
-    id:13,
-    name:'데트몰트 음악대학',
-    name_de:'Hochschule für Musik Detmold',
-    city:'Detmold', status:'partial',
-    url:'https://www.hfm-detmold.de/studium/studienbereiche-und-bewerbung/',
-    degrees:['Bachelor','Master','Konzertexamen'],
-    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','플루트','오보에','클라리넷','바순','색소폰','호른','트럼펫','트롬본','튜바','타악기','피아노','오르간','성악','작곡','오케스트라지휘','합창지휘','교회음악','코레페티션'],
-    deadline_w:'3월 15일', deadline_s:'11월 1일',
-    lang_level:'전공별 상이', lang_text:'전공별 상이 — 각 전공 페이지 확인 필요',
-    lang_timing:'unknown', lang_timing_text:'미확인',
-    round1_type:'both', round1_text:'영상 예선 있는 전공과 없는 전공 분리. muvac 플랫폼.',
-    portal:'muvac', portal_type:'muvac',
-    method_text:'온라인 (muvac)',
-    fee:'50 EUR',
-    note:'2차 현장: 청음 + 음악이론 공통 필수. 실기: 1월 중순 / KE 1월 19~20일.'
-  },
-  {
-    id:14,
-    name:'뉘른베르크 음악대학',
-    name_de:'Hochschule für Musik Nürnberg',
-    city:'Nürnberg', status:'partial',
-    url:'https://www.hfm-nuernberg.de/en/study/application',
-    degrees:['Bachelor','Master'],
-    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','플루트','오보에','클라리넷','바순','호른','트럼펫','트롬본','튜바','타악기','피아노','성악','작곡','오케스트라지휘','합창지휘','코레페티션'],
-    deadline_w:'3월 31일', deadline_s:'없음 (겨울만)',
-    lang_level:'미확인', lang_text:'미확인',
-    lang_timing:'unknown', lang_timing_text:'미확인',
-    round1_type:'unknown', round1_text:'미확인. muvac 플랫폼.',
-    portal:'muvac', portal_type:'muvac',
-    method_text:'온라인 (muvac)',
-    fee:'미확인',
-    note:'2026 신설: 실내악 석사·반주 석사. 실기: 5월 11~29일.'
-  },
-  {
-    id:15,
-    name:'바이마르 프란츠 리스트 음악대학',
-    name_de:'Hochschule für Musik Franz Liszt Weimar',
-    city:'Weimar', status:'partial',
-    url:'https://www.hfm-weimar.de/studium/bewerbung/',
-    degrees:['Bachelor','Master','Konzertexamen'],
-    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','플루트','오보에','클라리넷','바순','호른','트럼펫','트롬본','튜바','타악기','피아노','오르간','성악','작곡','오케스트라지휘','합창지휘','교회음악','코레페티션'],
-    deadline_w:'음악실기 3월 15일 / 음악학 7월 1일', deadline_s:'미확인',
-    lang_level:'미확인', lang_text:'미확인',
-    lang_timing:'unknown', lang_timing_text:'미확인',
-    round1_type:'unknown', round1_text:'미확인',
-    portal:'자체 포털', portal_type:'online',
-    method_text:'온라인 (자체 디지털 포털, WS 2024/25부터)',
-    fee:'미확인',
-    note:'WS 2024/25부터 완전 디지털화.'
-  },
-  {
-    id:16,
     name:'베를린 예술대학 (음악학부)',
     name_de:'Universität der Künste Berlin',
-    city:'Berlin', status:'partial',
+    city:'Berlin',
+    status:'partial',
     url:'https://www.udk-berlin.de/universitaet/fakultaet-musik/bewerbung/',
     degrees:['Bachelor','Master'],
     instruments:['바이올린','비올라','첼로','피아노','성악','작곡','오케스트라지휘','합창지휘','재즈','코레페티션'],
-    deadline_w:'4월 14일', deadline_s:'미확인',
-    lang_level:'B2', lang_text:'석사: B2 필수. 학사: 미확인.',
-    lang_timing:'before_enroll', lang_timing_text:'입학까지 제출 가능.',
-    round1_type:'both', round1_text:'BEMUS 포털에 영상 업로드',
-    portal:'BEMUS', portal_type:'online',
+    deadline_w:'4월 14일',
+    deadline_s:'미확인',
+    lang_level:'B2',
+    lang_text:'석사: B2 필수 (입학까지 제출 가능). 학사: 미확인.',
+    lang_timing:'등록전',
+    lang_timing_text:'입학 등록(Immatrikulation)까지 제출 가능.',
+    round1_type:'영상',
+    round1_text:'BEMUS 포털에 영상 업로드',
+    portal:'BEMUS (my.udk-berlin.de)',
+    portal_type:'online',
     method_text:'온라인 (BEMUS — my.udk-berlin.de)',
-    fee:'30~50 EUR (전공마다)',
-    note:'학기 행정비 360 EUR (독일패스 포함). 학비 없음.'
+    fee:'30~50 EUR (전공마다 다름)',
+    note:'음악·미술·디자인 종합예술대학.',
   },
   {
-    id:17,
-    name:'드레스덴 음악대학',
-    name_de:'Hochschule für Musik Carl Maria von Weber Dresden',
-    city:'Dresden', status:'partial',
-    url:'https://www.hfmdd.de/en/studies/application',
-    degrees:['Bachelor','Master','Konzertexamen'],
-    instruments:['미확인 — 공식 홈페이지 참조'],
-    deadline_w:'6월 12일', deadline_s:'없음 (학사 겨울만)',
-    lang_level:'미확인', lang_text:'미확인',
-    lang_timing:'unknown', lang_timing_text:'미확인',
-    round1_type:'unknown', round1_text:'미확인',
-    portal:'자체 포털', portal_type:'online',
-    method_text:'온라인 (자체 포털)',
-    fee:'미확인',
-    note:'학사는 겨울학기만 시작 가능.'
-  },
-  {
-    id:18,
-    name:'프랑크푸르트 음악공연예술대학',
-    name_de:'Hochschule für Musik und Darstellende Kunst Frankfurt am Main',
-    city:'Frankfurt am Main', status:'partial',
-    url:'https://www.hfmdk-frankfurt.de/thema/bewerben',
-    degrees:['Bachelor','Master','Konzertexamen'],
-    instruments:['미확인 — 공식 홈페이지 참조'],
-    deadline_w:'미확인', deadline_s:'미확인',
-    lang_level:'미확인', lang_text:'전공별 상이',
-    lang_timing:'unknown', lang_timing_text:'미확인',
-    round1_type:'unknown', round1_text:'미확인',
-    portal:'자체 포털', portal_type:'online',
-    method_text:'온라인 (자체 포털)',
-    fee:'50 EUR (환불불가)',
-    note:'2개 전공 동시지원 추가비 없음. 미납시 접수 무효.'
-  },
-  {
-    id:19,
+    id:4,
     name:'브레멘 예술대학 (음악학부)',
     name_de:'Hochschule für Künste Bremen',
-    city:'Bremen', status:'partial',
+    city:'Bremen',
+    status:'partial',
     url:'https://www.hfk-bremen.de/en/application',
     degrees:['Bachelor','Master'],
-    instruments:['미확인 — 공식 홈페이지 참조'],
-    deadline_w:'3월 31일', deadline_s:'없음 (겨울만)',
-    lang_level:'미확인', lang_text:'미확인',
-    lang_timing:'unknown', lang_timing_text:'미확인',
-    round1_type:'direct', round1_text:'1차 없음 — 전원 바로 현장 실기시험 (영상 예선 없음)',
-    portal:'자체 포털', portal_type:'online',
+    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','플루트','오보에','클라리넷','바순','호른','트럼펫','트롬본','튜바','타악기','피아노','성악','고악기','재즈'],
+    deadline_w:'3월 31일',
+    deadline_s:'없음',
+    lang_level:'미확인',
+    lang_text:'미확인',
+    lang_timing:'미확인',
+    lang_timing_text:'미확인',
+    round1_type:'없음(바로현장)',
+    round1_text:'1차 없음 — 전원 바로 현장 실기시험 (영상 예선 없음)',
+    portal:'HfK 자체 포털',
+    portal_type:'online',
     method_text:'온라인 (HfK 자체 포털)',
     fee:'50 EUR',
-    note:'겨울학기만 입학 가능.'
+    note:'겨울학기만 입학 가능.',
   },
   {
-    id:20,
+    id:5,
+    name:'데트몰트 음악대학',
+    name_de:'Hochschule für Musik Detmold',
+    city:'Detmold',
+    status:'partial',
+    url:'https://www.hfm-detmold.de/studium/studienbereiche-und-bewerbung/',
+    degrees:['Bachelor','Master','Konzertexamen'],
+    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','플루트','오보에','클라리넷','바순','색소폰','호른','트럼펫','트롬본','튜바','타악기','피아노','오르간','성악','작곡','오케스트라지휘','합창지휘','교회음악','코레페티션'],
+    deadline_w:'3월 15일',
+    deadline_s:'11월 1일',
+    lang_level:'미확인',
+    lang_text:'전공별 상이 — 각 전공 페이지 확인 필요',
+    lang_timing:'미확인',
+    lang_timing_text:'미확인',
+    round1_type:'영상+서류',
+    round1_text:'영상 예선 있는 전공과 없는 전공 분리. muvac 플랫폼.',
+    portal:'muvac',
+    portal_type:'muvac',
+    method_text:'온라인 (muvac)',
+    fee:'50 EUR',
+    note:'detmoldmusictools.de — 청음·이론 온라인 무료 연습 제공.',
+  },
+  {
+    id:6,
+    name:'드레스덴 음악대학 칼 마리아 폰 베버',
+    name_de:'Hochschule für Musik Carl Maria von Weber Dresden',
+    city:'Dresden',
+    status:'partial',
+    url:'https://www.hfmdd.de/en/studies/application',
+    degrees:['Bachelor','Master','Konzertexamen'],
+    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','플루트','오보에','클라리넷','바순','색소폰','호른','트럼펫','트롬본','튜바','타악기','피아노','오르간','쳄발로','성악','작곡','오케스트라지휘','합창지휘','교회음악','고악기','재즈'],
+    deadline_w:'3월 31일',
+    deadline_s:'11월 1일',
+    lang_level:'미확인',
+    lang_text:'미확인',
+    lang_timing:'조건부',
+    lang_timing_text:'지원 시 가능한 경우 제출 ("if already available"). 필수 시점 미명시.',
+    round1_type:'영상',
+    round1_text:'영상 업로드 있음 (전공별 상이). 유튜브 튜토리얼 제공.',
+    portal:'자체 포털',
+    portal_type:'online',
+    method_text:'온라인 (자체 포털)',
+    fee:'50€',
+    note:'학사는 겨울학기만 시작 가능.',
+  },
+  {
+    id:7,
+    name:'뒤셀도르프 로베르트 슈만 음악대학',
+    name_de:'Robert Schumann Hochschule Düsseldorf',
+    city:'Düsseldorf',
+    status:'verified',
+    url:'https://www.rsh-duesseldorf.de/studium/bewerbung/',
+    degrees:['Bachelor','Master','Konzertexamen'],
+    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','플루트','오보에','클라리넷','바순','호른','트럼펫','트롬본','튜바','타악기','피아노','성악','작곡','오케스트라지휘','합창지휘','교회음악','음악이론','음악교육'],
+    deadline_w:'3월 1일 (학사)',
+    deadline_s:'겨울만',
+    lang_level:'B2',
+    lang_text:'음악 학사·석사: B2 / 음악학 석사: C1 / 음악학 박사: C2',
+    lang_timing:'등록전',
+    lang_timing_text:'입학 등록(Immatrikulation) 전까지 제출',
+    round1_type:'영상',
+    round1_text:'영상 심사 — muvac 플랫폼 (오르간·교회음악 제외)',
+    portal:'muvac',
+    portal_type:'muvac',
+    method_text:'온라인 (muvac)',
+    fee:'50€',
+    note:'학사 입학은 겨울학기만 가능.',
+  },
+  {
+    id:8,
+    name:'에센 폴크방 예술대학',
+    name_de:'Folkwang Universität der Künste Essen',
+    city:'Essen',
+    status:'partial',
+    url:'https://www.folkwang-uni.de/home/hochschule/studium/bewerbung/',
+    degrees:['Bachelor','Master'],
+    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','류트','플루트','리코더','오보에','클라리넷','바순','색소폰','호른','트럼펫','트롬본','튜바','타악기','피아노','오르간','쳄발로','아코디언','성악','작곡','오케스트라지휘','합창지휘','교회음악','재즈','뮤지컬'],
+    deadline_w:'3월 15일',
+    deadline_s:'11월 15일',
+    lang_level:'A2',
+    lang_text:'전공별 Zulassungsordnung 개별 확인 필요 — 국제 지원자 페이지에 통합 언어조건 미명시',
+    lang_timing:'등록전',
+    lang_timing_text:'등록(Einschreibung) 시 제출. 독일 고교 졸업자 제외.',
+    round1_type:'영상',
+    round1_text:'Digitale Vorrunde — 전공에 따라 적용. 성악|음악극(M.Mus.) 포함. 각 전공 페이지 확인.',
+    portal:'pruefung.folkwang-uni.de',
+    portal_type:'online',
+    method_text:'온라인 (pruefung.folkwang-uni.de)',
+    fee:'50 EUR',
+    note:'음악·연극·디자인 종합예술대학.',
+  },
+  {
+    id:9,
+    name:'프랑크푸르트 음악공연예술대학',
+    name_de:'Hochschule für Musik und Darstellende Kunst Frankfurt am Main',
+    city:'Frankfurt am Main',
+    status:'partial',
+    url:'https://www.hfmdk-frankfurt.de/thema/bewerben',
+    degrees:['Bachelor','Master','Konzertexamen'],
+    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','플루트','오보에','클라리넷','바순','색소폰','호른','트럼펫','트롬본','튜바','타악기','피아노','오르간','성악','작곡','오케스트라지휘','합창지휘','교회음악','전자음악','코레페티션'],
+    deadline_w:'3월 1일',
+    deadline_s:'미확인',
+    lang_level:'미확인',
+    lang_text:'전공별 상이 — 홈페이지 Sprachnachweise 목록 참조',
+    lang_timing:'미확인',
+    lang_timing_text:'미확인',
+    round1_type:'영상+현장',
+    round1_text:'미확인',
+    portal:'hfmdk-cloud-application.academyfive.net',
+    portal_type:'online',
+    method_text:'온라인 (hfmdk-cloud-application.academyfive.net)',
+    fee:'50 EUR',
+    note:'재지원 시 지원비 재납부 필요.',
+  },
+  {
+    id:10,
+    name:'프라이부르크 음악대학',
+    name_de:'Hochschule für Musik Freiburg',
+    city:'Freiburg im Breisgau',
+    status:'verified',
+    url:'https://www.mh-freiburg.de/en/study/before-your-studies/application-and-entrance-exams',
+    degrees:['Bachelor','Master','Konzertexamen'],
+    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','플루트','오보에','클라리넷','바순','색소폰','호른','트럼펫','트롬본','튜바','타악기','피아노','오르간','성악','작곡','오케스트라지휘','합창지휘','교회음악','코레페티션'],
+    deadline_w:'4월 1일',
+    deadline_s:'11월 1일',
+    lang_level:'DSH-1 / B1',
+    lang_text:'학사: DSH-1 또는 TestDaF TDN3 (조건부 가능) / 석사·KE: B1 최소 필수',
+    lang_timing:'조건부',
+    lang_timing_text:'학사 조건부: 뛰어난 지원자는 첫 2학기 독일어 수업 의무 이수 조건으로 허용.',
+    round1_type:'영상+현장',
+    round1_text:'전공별 상이 — 홈페이지 확인 필요',
+    portal:'자체 포털',
+    portal_type:'post',
+    method_text:'온라인 + 서류 우편 (마감일 소인 기준)',
+    fee:'50 EUR',
+    note:'실기: 6월 8~13일 (겨울 2026/27).',
+  },
+  {
+    id:11,
+    name:'하노버 음악연극미디어대학',
+    name_de:'Hochschule für Musik, Theater und Medien Hannover',
+    city:'Hannover',
+    status:'verified',
+    url:'https://www.hmtm-hannover.de/de/bewerbung/bewerbungsverfahren/',
+    degrees:['Bachelor','Master','Konzertexamen'],
+    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','플루트','오보에','클라리넷','바순','색소폰','호른','트럼펫','트롬본','튜바','타악기','피아노','오르간','성악','작곡','오케스트라지휘','합창지휘','교회음악','재즈','코레페티션'],
+    deadline_w:'3월 15일',
+    deadline_s:'1월 15일',
+    lang_level:'TestDaF TDN3',
+    lang_text:'TestDaF TDN3 또는 DSH-1 (B2 수준). WS 2024/25부터 지정 인증기관 증명서만 수락.',
+    lang_timing:'등록전',
+    lang_timing_text:'입학 등록(Immatrikulation)까지 제출. 예외: Soloklasse 언어조건 없음.',
+    round1_type:'영상+서류',
+    round1_text:'영상 예선 + 현장 본선 (전공에 따라 다름). muvac 플랫폼.',
+    portal:'muvac',
+    portal_type:'muvac',
+    method_text:'온라인 (muvac, 음악전공)',
+    fee:'50€',
+    note:'실기: 6월 2~6일. Soloklasse: 6월 10~11일 / 언어조건 없음.',
+  },
+  {
+    id:12,
+    name:'카를스루에 음악대학',
+    name_de:'Hochschule für Musik Karlsruhe',
+    city:'Karlsruhe',
+    status:'verified',
+    url:'https://hfm-karlsruhe.de/en/studying/applying',
+    degrees:['Bachelor','Master','Konzertexamen'],
+    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','리코더','플루트','오보에','클라리넷','바순','호른','트럼펫','트롬본','튜바','타악기','피아노','쳄발로','오르간','성악','오페라성악','작곡','오케스트라지휘','합창지휘','교회음악','코레페티션'],
+    deadline_w:'4월 1일',
+    deadline_s:'11월 1일',
+    lang_level:'B2',
+    lang_text:'기악 학사: 등록 시 B1 → 2학기 말까지 B2. 기악 석사: 등록 시 B1 → 1학기 말까지 B2. 성악: 등록 시 B2.',
+    lang_timing:'조건부',
+    lang_timing_text:'등록 시 B1로 입학 가능. 기악: 2학기 말(학사)/1학기 말(석사)까지 B2 필수. 성악: 등록 시 B2 필수. 미제출 시 제적.',
+    round1_type:'영상+서류',
+    round1_text:'전공에 따라 영상 예선 있는 그룹 / 없는 그룹 분리 (여름학기 2026부터). 영상예선 대상자는 비자 확인서 미발급.',
+    portal:'자체 포털',
+    portal_type:'post',
+    method_text:'온라인 + 서류 우편 (마감 4일 내)',
+    fee:'미확인',
+    note:'URL 주의: www 없음 (hfm-karlsruhe.de).',
+  },
+  {
+    id:13,
+    name:'쾰른 음악무용대학',
+    name_de:'Hochschule für Musik und Tanz Köln',
+    city:'Köln',
+    status:'partial',
+    url:'https://www.hfmt-koeln.de/en/information-for/prospective-students/application/',
+    degrees:['Bachelor','Master','Konzertexamen'],
+    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','류트','비올라 다 감바','플루트','리코더','오보에','클라리넷','바순','색소폰','호른','트럼펫','트롬본','튜바','타악기','피아노','쳄발로','성악','작곡','오케스트라지휘','합창지휘','재즈','교회음악','코레페티션'],
+    deadline_w:'3월 2일',
+    deadline_s:'미확인',
+    lang_level:'B2',
+    lang_text:'미확인',
+    lang_timing:'조건부',
+    lang_timing_text:'학사: 2학기 말 / 석사: 1학기 말까지 (미제출 시 제적)',
+    round1_type:'영상',
+    round1_text:'영상 심사 — muvac 플랫폼',
+    portal:'muvac',
+    portal_type:'muvac',
+    method_text:'온라인 (muvac)',
+    fee:'50 EUR',
+    note:'도메인 주의: hfmt-koeln.de (hfmt.de 아님). 쾰른·아헨·부퍼탈 3캠퍼스.',
+  },
+  {
+    id:14,
+    name:'라이프치히 음악연극대학 (멘델스존)',
+    name_de:'HMT Leipzig – Felix Mendelssohn Bartholdy',
+    city:'Leipzig',
+    status:'verified',
+    url:'https://www.hmt-leipzig.de/studium/vor-dem-studium/bewerbung',
+    degrees:['Bachelor','Master','Konzertexamen'],
+    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','플루트','오보에','클라리넷','바순','색소폰','호른','트럼펫','트롬본','튜바','타악기','피아노','오르간','쳄발로','성악','작곡','오케스트라지휘','합창지휘','교회음악','코레페티션','음악이론'],
+    deadline_w:'3월 31일',
+    deadline_s:'미확인',
+    lang_level:'B2',
+    lang_text:'B2급 인정 — 유럽 품질 인증 어학원 증명서 포함 인정. 구체적 레벨 전공별 상이.',
+    lang_timing:'등록전',
+    lang_timing_text:'입학 등록 전까지 제출.',
+    round1_type:'영상',
+    round1_text:'영상 심사 → 약 3주 후 현장 오디션 초대장 발송. 전공별 영상/포트폴리오/악보 제출.',
+    portal:'자체 포털',
+    portal_type:'online',
+    method_text:'온라인 (자체 포털)',
+    fee:'50€',
+    note:null,
+  },
+  {
+    id:15,
     name:'뤼베크 음악대학',
     name_de:'Musikhochschule Lübeck',
-    city:'Lübeck', status:'partial',
+    city:'Lübeck',
+    status:'partial',
     url:'https://www.mh-luebeck.de/bewerben',
     degrees:['Bachelor','Master','Konzertexamen'],
     instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','플루트','오보에','클라리넷','바순','호른','트럼펫','트롬본','타악기','피아노'],
-    deadline_w:'미확인', deadline_s:'12월 1일',
-    lang_level:'미확인', lang_text:'미확인',
-    lang_timing:'unknown', lang_timing_text:'미확인',
-    round1_type:'both', round1_text:'일부 전공 영상 제출 (전공별 상이). 온라인 전용.',
-    portal:'자체 포털', portal_type:'online',
+    deadline_w:'4월 1일',
+    deadline_s:'12월 1일',
+    lang_level:'B2',
+    lang_text:'미확인',
+    lang_timing:'조건부',
+    lang_timing_text:'오디션 당일 저녁 B2 테스트 진행 (KE·Meisterklasse 제외)',
+    round1_type:'영상+서류',
+    round1_text:'일부 전공 영상 제출 (전공별 상이). 온라인 전용.',
+    portal:'자체 포털',
+    portal_type:'muvac',
     method_text:'온라인 전용 (우편 불가)',
     fee:'50 EUR',
-    note:'KE 가능: 15개 악기 확인됨. 실기: 2월 9~22일 (여름).'
+    note:'KE 가능: 15개 악기 확인됨. 서면(우편) 지원 불가.',
+  },
+  {
+    id:16,
+    name:'만하임 음악공연예술대학',
+    name_de:'Staatliche Hochschule für Musik und Darstellende Kunst Mannheim',
+    city:'Mannheim',
+    status:'partial',
+    url:'https://www.muho-mannheim.de/bewerbung/anmeldung/',
+    degrees:['Bachelor','Master','Konzertexamen'],
+    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','류트','플루트','오보에','클라리넷','바순','호른','트럼펫','트롬본','튜바','타악기','피아노','오르간','쳄발로','성악','작곡','오케스트라지휘','합창지휘','교회음악','음악이론'],
+    deadline_w:'4월 30일',
+    deadline_s:'11월 15일',
+    lang_level:'B2',
+    lang_text:'일반 음악 전공: B2 (입학 등록 전까지). Lehramt·음악연구: C1 (지원 마감 전까지). B2 미보유 시 조건부 입학 — 학교에서 무료 독일어 수업 제공 (Uni Mannheim 협력).',
+    lang_timing:'등록전',
+    lang_timing_text:'일반 전공: 입학 등록 전까지. Lehramt·음악연구·성악 오페라·지휘: 지원 마감 전까지 제출.',
+    round1_type:'영상',
+    round1_text:'온라인 예선(Online-Vorauswahl) 있음: 피아노·현악기·목관악기(플루트·바순·클라리넷·오보에·호른·트롬본·트럼펫). 나머지는 바로 현장.',
+    portal:'hisinone.muho-mannheim.de',
+    portal_type:'online',
+    method_text:'온라인 (hisinone.muho-mannheim.de)',
+    fee:'50 EUR',
+    note:null,
+  },
+  {
+    id:17,
+    name:'뮌헨 음악연극대학',
+    name_de:'Hochschule für Musik und Theater München',
+    city:'München',
+    status:'partial',
+    url:'https://hmtm.de/en/application/',
+    degrees:['Bachelor','Master','Konzertexamen'],
+    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','플루트','오보에','클라리넷','바순','색소폰','호른','트럼펫','트롬본','튜바','타악기','피아노','오르간','쳄발로','아코디언','성악','재즈성악','작곡','오케스트라지휘','합창지휘','교회음악','고악기','포크뮤직','음악저널리즘'],
+    deadline_w:'3월 5일',
+    deadline_s:'미확인',
+    lang_level:'B2~C1 (전공별)',
+    lang_text:'예술·기악교육 전공: B2 (TestDaF3, DSH1, Goethe B2, telc B2). 학술·교직 전공: C1 (TestDaF4, DSH2, Goethe C1). 전공 페이지 개별 확인 필요.',
+    lang_timing:'등록전',
+    lang_timing_text:'입학 등록(Immatrikulation)까지 제출. 원본 또는 공증 사본 제출.',
+    round1_type:'영상',
+    round1_text:'영상 예선 있는 전공 / 없는 전공 분리. 전공 페이지 개별 확인 필요.',
+    portal:'zulassung.hmtm.de',
+    portal_type:'online',
+    method_text:'온라인 (zulassung.hmtm.de)',
+    fee:'50 EUR',
+    note:'URL 주의: www 없음 (hmtm.de).',
+  },
+  {
+    id:18,
+    name:'뉘른베르크 음악대학',
+    name_de:'Hochschule für Musik Nürnberg',
+    city:'Nürnberg',
+    status:'partial',
+    url:'https://www.hfm-nuernberg.de/en/study/application',
+    degrees:['Bachelor','Master'],
+    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','플루트','오보에','클라리넷','바순','호른','트럼펫','트롬본','튜바','타악기','피아노','성악','작곡','오케스트라지휘','합창지휘','코레페티션'],
+    deadline_w:'3월 31일',
+    deadline_s:'없음',
+    lang_level:'B2',
+    lang_text:'학사(예술): B2 / 학사(KPA): C1 / 석사(예술): B1 / 석사(KPA): B2~C1',
+    lang_timing:'등록전',
+    lang_timing_text:'입학(Immatrikulation) 시 제출',
+    round1_type:'영상+현장',
+    round1_text:'미확인',
+    portal:'muvac',
+    portal_type:'muvac',
+    method_text:'온라인 (muvac)',
+    fee:'50€',
+    note:'2026 신설: 실내악 석사, 반주(Lied Begleitung) 석사.',
+  },
+  {
+    id:19,
+    name:'로스토크 음악연극대학',
+    name_de:'Hochschule für Musik und Theater Rostock',
+    city:'Rostock',
+    status:'verified',
+    url:'https://www.hmt-rostock.de/studium/bewerbung/',
+    degrees:['Bachelor','Master','Konzertexamen'],
+    instruments:['바이올린','비올라','첼로','콘트라바스','플루트','오보에','클라리넷','바순','트럼펫','트롬본','튜바','호른','색소폰(팝)','타악기','피아노','오르간','기타','일렉트릭 베이스','하프','성악','작곡','음악이론','지휘'],
+    deadline_w:'4월 15일',
+    deadline_s:'11월 15일',
+    lang_level:'B2',
+    lang_text:'기악·성악·재즈·팝 Bachelor·Master: B2. 오케스트라지휘·코레페티션: C1. 음악학 Master: C1. 교직·연극교육: C1. 연극(Schauspiel): C2. B1 보유 시 조건부 입학 (첫 학기 내 B2 취득 필수).',
+    lang_timing:'조건부',
+    lang_timing_text:'B2 이상: 조건 없이 입학. B1: 조건부 입학, 1학기 내 B2 취득 (미취득 시 자격 소멸). B1 미만: 예비과정 최대 2학기 (800 EUR/학기). 입학 시 독일어 테스트(C-Test) 필수.',
+    round1_type:'영상',
+    round1_text:'영상 업로드 있음 (포털에서 업로드). 전공별 상이.',
+    portal:'service.hmt-rostock.de',
+    portal_type:'online',
+    method_text:'온라인 (service.hmt-rostock.de)',
+    fee:'50 EUR',
+    note:null,
+  },
+  {
+    id:20,
+    name:'자르브뤼켄 자를란트 음악대학',
+    name_de:'Hochschule für Musik Saar, Saarbrücken',
+    city:'자르브뤼켄 (Saarbrücken)',
+    status:'verified',
+    url:'https://www.hfmsaar.de/bewerbung',
+    degrees:['Bachelor','Master','Konzertexamen','Promotion'],
+    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','플루트','오보에','클라리넷','바순','색소폰','호른','트럼펫','트롬본','튜바','타악기','피아노','오르간','성악','작곡','오케스트라지휘','합창지휘','교회음악','음악이론','음악교육','코레페티션'],
+    deadline_w:'3월 14일',
+    deadline_s:'11월 28일 (학사만)',
+    lang_level:'TestDaF TDN3',
+    lang_text:'TestDaF TDN3 (전 영역, RKM 2008년 결의 기준)',
+    lang_timing:'등록전',
+    lang_timing_text:'입학 등록(Immatrikulation)까지 제출 필요.',
+    round1_type:'영상',
+    round1_text:'영상 예선 대상: 성악 Master·KE / 플루트·바순·오보에·클라리넷 전 과정. 나머지는 바로 현장.',
+    portal:'자체 포털',
+    portal_type:'online',
+    method_text:'온라인 (자체 포털)',
+    fee:'50 EUR',
+    note:'모의고사(Muster-Eignungsprüfung) 홈페이지 무료 제공.',
   },
   {
     id:21,
-    name:'에센 폴크방 예술대학',
-    name_de:'Folkwang Universität der Künste Essen',
-    city:'Essen', status:'unverified',
-    url:'https://www.folkwang-uni.de/home/hochschule/studium/bewerbung/',
-    degrees:['Bachelor','Master'],
-    instruments:['미확인 — 공식 홈페이지 참조'],
-    deadline_w:'미확인', deadline_s:'미확인',
-    lang_level:'미확인', lang_text:'미확인',
-    lang_timing:'unknown', lang_timing_text:'미확인',
-    round1_type:'unknown', round1_text:'미확인',
-    portal:'자체 포털', portal_type:'online',
-    method_text:'온라인 (자체 포털)',
+    name:'슈투트가르트 음악공연예술대학',
+    name_de:'Staatliche Hochschule für Musik und Darstellende Kunst Stuttgart',
+    city:'Stuttgart',
+    status:'verified',
+    url:'https://www.hmdk-stuttgart.de/bewerbung',
+    degrees:['Bachelor','Master','Konzertexamen'],
+    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','플루트','오보에','클라리넷','바순','색소폰','호른','트럼펫','트롬본','튜바','타악기','피아노','오르간','성악','작곡','오케스트라지휘','합창지휘','교회음악','코레페티션'],
+    deadline_w:'4월 1일',
+    deadline_s:'11월 4일',
+    lang_level:'B2',
+    lang_text:'B2 (음악교육학·연구 석사: C2)',
+    lang_timing:'조건부',
+    lang_timing_text:'6개월 내 취득 조건부 허용 — 미취득 시 자격 소멸.',
+    round1_type:'영상+현장',
+    round1_text:'미확인',
+    portal:'eportal.hmdk-stuttgart.de',
+    portal_type:'post',
+    method_text:'온라인 (eportal.hmdk-stuttgart.de) + 서류 우편 (마감 7일 내)',
     fee:'50 EUR',
-    note:'음악·연극·디자인 종합예술대학.'
+    note:null,
   },
   {
     id:22,
-    name:'만하임 음악공연예술대학',
-    name_de:'Staatliche Hochschule für Musik und Darstellende Kunst Mannheim',
-    city:'Mannheim', status:'unverified',
-    url:'https://www.muho-mannheim.de/bewerbung/anmeldung/',
-    degrees:['Bachelor','Master','Konzertexamen'],
-    instruments:['미확인 — 공식 홈페이지 참조'],
-    deadline_w:'미확인', deadline_s:'미확인',
-    lang_level:'미확인', lang_text:'미확인',
-    lang_timing:'unknown', lang_timing_text:'미확인',
-    round1_type:'unknown', round1_text:'미확인',
-    portal:'자체 포털', portal_type:'online',
+    name:'트로싱엔 음악대학',
+    name_de:'Hochschule für Musik Trossingen',
+    city:'Trossingen',
+    status:'verified',
+    url:'https://www.hfm-trossingen.de/en/application',
+    degrees:['Bachelor of Music','Master of Music','Master of Education','Master of Arts','Konzertexamen','Promotion'],
+    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','리코더','플루트','오보에','클라리넷','바순','호른','트럼펫','트롬본','튜바','타악기','피아노','오르간','쳄발로','성악','작곡','오케스트라지휘','합창지휘','교회음악'],
+    deadline_w:'4월 1일',
+    deadline_s:'11월 1일',
+    lang_level:'B2 (조건부)',
+    lang_text:'교직(Gymnasiallehramt)·음악운동·음악학 석사: B2 필수 (시험 전 제출). 실기 과정: 조건부.',
+    lang_timing:'조건부',
+    lang_timing_text:'실기 과정: 2학기 내 B2 취득 필수 — 미취득 시 자격 소멸.',
+    round1_type:'영상',
+    round1_text:'영상 예선 있음 (10~15분, 12개월 이내 촬영). 지휘·음악교육학 등 일부 전공 제외.',
+    portal:'자체 포털',
+    portal_type:'online',
     method_text:'온라인 (자체 포털)',
-    fee:'미확인',
-    note:''
+    fee:'50€',
+    note:'매주 수요일 온라인 입시설명회 (독·영어 병행). 소규모, 기숙사 저렴.',
   },
   {
     id:23,
-    name:'뮌헨 음악연극대학',
-    name_de:'Hochschule für Musik und Theater München',
-    city:'München', status:'unverified',
-    url:'https://hmtm.de/en/application/',
+    name:'바이마르 프란츠 리스트 음악대학',
+    name_de:'Hochschule für Musik Franz Liszt Weimar',
+    city:'Weimar',
+    status:'partial',
+    url:'https://www.hfm-weimar.de/en/applying/how-to-apply',
     degrees:['Bachelor','Master','Konzertexamen'],
-    instruments:['미확인 — 공식 홈페이지 참조'],
-    deadline_w:'미확인', deadline_s:'미확인',
-    lang_level:'B1~C1 (전공별)', lang_text:'전공별 B1~C1 상이 — 각 전공 Zulassungsordnung 확인 필요',
-    lang_timing:'unknown', lang_timing_text:'미확인',
-    round1_type:'unknown', round1_text:'미확인',
-    portal:'zulassung.hmtm.de', portal_type:'online',
-    method_text:'온라인 (zulassung.hmtm.de)',
+    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','플루트','오보에','클라리넷','바순','호른','트럼펫','트롬본','튜바','타악기','피아노','오르간','성악','작곡','오케스트라지휘','합창지휘','교회음악','코레페티션'],
+    deadline_w:'3월 16일 (WS 2026/27 기준)',
+    deadline_s:'11월 2일',
+    lang_level:'B2',
+    lang_text:'예술·기악교육 전공: B2 (TestDaF3, DSH1, Goethe B2, telc B2). 학술·교직 전공: C1 (TestDaF4, DSH2, Goethe C1). 원본 또는 공증 사본 제출.',
+    lang_timing:'등록전',
+    lang_timing_text:'입학 등록(Immatrikulation)까지 제출.',
+    round1_type:'없음(바로현장)',
+    round1_text:'영상 예선 없음. 서류 업로드 후 바로 현장 실기. 완전 디지털 온라인 지원.',
+    portal:'his-1.hfm-weimar.de',
+    portal_type:'online',
+    method_text:'온라인 (his-1.hfm-weimar.de)',
     fee:'50 EUR',
-    note:'URL 주의: www 없음 (hmtm.de).'
+    note:'WS 2024/25부터 완전 디지털화.',
   },
   {
     id:24,
-    name:'로스토크 음악연극대학',
-    name_de:'Hochschule für Musik und Theater Rostock',
-    city:'Rostock', status:'unverified',
-    url:'https://www.hmt-rostock.de/studium/bewerbung/',
+    name:'뷔르츠부르크 음악대학',
+    name_de:'Hochschule für Musik Würzburg',
+    city:'Würzburg',
+    status:'partial',
+    url:'https://hfm-wuerzburg.de/bewerbung',
     degrees:['Bachelor','Master','Konzertexamen'],
-    instruments:['미확인 — 공식 홈페이지 참조'],
-    deadline_w:'미확인', deadline_s:'미확인',
-    lang_level:'미확인', lang_text:'미확인',
-    lang_timing:'unknown', lang_timing_text:'미확인',
-    round1_type:'unknown', round1_text:'미확인',
-    portal:'자체 포털', portal_type:'online',
-    method_text:'온라인 (자체 포털)',
-    fee:'50 EUR',
-    note:''
+    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','플루트','오보에','클라리넷','바순','색소폰','호른','트럼펫','트롬본','튜바','타악기','피아노','오르간','성악','작곡','오케스트라지휘','합창지휘','교회음악','코레페티션'],
+    deadline_w:'3월 15일',
+    deadline_s:'없음',
+    lang_level:'B2',
+    lang_text:'학사(예술): B2 / 학사(KPA): C1 / Immatrikulation 시 필수',
+    lang_timing:'등록전',
+    lang_timing_text:'합격 후 등록(Immatrikulation) 전까지 제출 필수',
+    round1_type:'영상',
+    round1_text:'미확인',
+    portal:'muvac',
+    portal_type:'muvac',
+    method_text:'온라인 (muvac)',
+    fee:'미확인',
+    note:'URL 주의: www 없음 (hfm-wuerzburg.de).',
   },
 ];
 
@@ -1141,11 +1276,19 @@ const DEGREE_CONFIG = {
 };
 
 const R1MAP = {
+  // 영어 키 (legacy)
   video:  { cls:'r1-video',  icon:'📹', text:'영상 제출' },
   post:   { cls:'r1-post',   icon:'📮', text:'우편 서류' },
   both:   { cls:'r1-both',   icon:'📹📮', text:'영상+서류' },
   direct: { cls:'r1-direct', icon:'🎯', text:'바로 현장' },
   unknown:{ cls:'r1-unk',    icon:'❓', text:'미확인' },
+
+  // 한국어 키 (JSON 데이터와 동기화)
+  '영상':           { cls:'r1-video',     icon:'📹', text:'영상 제출' },
+  '영상+서류':      { cls:'r1-both',      icon:'📹📮', text:'영상+서류' },
+  '영상+현장':      { cls:'r1-both-live', icon:'📹🎬', text:'영상+현장' },
+  '없음(바로현장)':  { cls:'r1-direct',    icon:'🎯', text:'바로 현장' },
+  '미확인':         { cls:'r1-unk',       icon:'❓', text:'미확인' },
 };
 
 // ════ 상태 ════
@@ -1427,5 +1570,7 @@ document.addEventListener('keydown', e => { if (e.key==='Escape') { closeModal()
 // 초기 렌더
 applyAll();
 </script>
+
+<!-- 히어로 배경 셰이더는 hero-bg.html (React) 에서 iframe으로 로드됩니다 -->
 </body>
 </html>

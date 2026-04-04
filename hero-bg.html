@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hero Background Shader</title>
+<style>
+  /* 페이지 전체를 셰이더로 채움 (iframe 안에서 사용) */
+  * { margin: 0; padding: 0; }
+  html, body, #root { width: 100%; height: 100%; overflow: hidden; }
+</style>
+
+<!-- React + ReactDOM CDN -->
+<script src="https://esm.sh/react@18.3.1" type="module"></script>
+<script src="https://esm.sh/react-dom@18.3.1" type="module"></script>
+
+<!-- importmap: React 의존성 + 셰이더 패키지 매핑 -->
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@18.3.1",
+    "react-dom": "https://esm.sh/react-dom@18.3.1",
+    "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
+    "react/jsx-runtime": "https://esm.sh/react@18.3.1/jsx-runtime",
+    "@paper-design/shaders-react": "https://esm.sh/@paper-design/shaders-react@0.0.72?external=react,react-dom"
+  }
+}
+</script>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="module">
+import { createElement, useState, useEffect } from 'react';
+import { createRoot } from 'react-dom/client';
+import { MeshGradient } from '@paper-design/shaders-react';
+
+// 히어로 배경 셰이더 컴포넌트
+function HeroBg() {
+  const [dimensions, setDimensions] = useState({ width: 1920, height: 1080 });
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    const update = () => setDimensions({
+      width: window.innerWidth,
+      height: window.innerHeight,
+    });
+    update();
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, []);
+
+  if (!mounted) return null;
+
+  // MeshGradient 렌더링 — 히어로 색상 팔레트
+  return createElement(MeshGradient, {
+    width: dimensions.width,
+    height: dimensions.height,
+    //colors: ['#2D2150', '#cf4290', '#F472A0', '#3DD9A4', '#7B6CF6', '#1A1F2E'],
+    colors:["#72b9bb", "#b5d9d9", "#ffd1bd", "#ffebe0", "#8cc5b8", "#dbf4a4"],
+    distortion: 1.2,
+    swirl: 0.6,
+    speed: 0.42,
+    grainMixer: 0,
+    grainOverlay: 0,
+    style: { width: '100%', height: '100%' },
+  });
+}
+
+// React 마운트
+createRoot(document.getElementById('root')).render(createElement(HeroBg));
+</script>
+</body>
+</html>
