@@ -450,7 +450,9 @@ body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-
     </div>
   </a>
   <div class="topnav-links">
-    <a class="topnav-link" href="cv_builder.html" target="_blank">이력서 만들기</a>
+    <a class="topnav-link" href="about.html">소개</a>
+    <a class="topnav-link" href="dashboard.html">대시보드</a>
+    <a class="topnav-link" href="cv_builder.html">이력서 만들기</a>
     <button class="topnav-link" onclick="openContact()">문의하기</button>
     <a class="topnav-link admin" href="admin.html" target="_blank">관리자</a>
   </div>
@@ -470,8 +472,8 @@ body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-
         독일 국립 음악대학 24곳의 입시 마감일, 언어조건, 1차 전형방식, 지원 절차를 공식 자료 기반으로 정리했습니다. 악기별·조건별 필터로 나에게 맞는 학교를 찾아보세요.
       </p>
       <div class="hero-ctas">
-        <button class="hero-btn-primary" onclick="document.getElementById('filterSection').scrollIntoView({behavior:'smooth'})">
-          학교 검색 시작하기
+        <button class="hero-btn-primary" onclick="window.location.href='cv_builder.html'">
+          이력서 만들기
         </button>
         <button class="hero-btn-secondary" onclick="openContact()">
           입시 상담 문의
@@ -832,7 +834,7 @@ const SCHOOLS = [
     status:'partial',
     url:'https://www.hfmdd.de/en/studies/application',
     degrees:['Bachelor','Master','Konzertexamen'],
-    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','플루트','오보에','클라리넷','바순','색소폰','호른','트럼펫','트롬본','튜바','타악기','피아노','오르간','쳄발로','성악','작곡','오케스트라지휘','합창지휘','교회음악','고악기','재즈'],
+    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','플루트','오보에','클라리넷','바순','색소폰','호른','트럼펫','트롬본','튜바','타악기','피아노','오르간','젬발로','성악','작곡','오케스트라지휘','합창지휘','교회음악','고악기','재즈'],
     deadline_w:'3월 31일',
     deadline_s:'11월 1일',
     lang_level:'전공별 상이',
@@ -855,7 +857,7 @@ const SCHOOLS = [
     status:'verified',
     url:'https://www.rsh-duesseldorf.de/studium/bewerbung/',
     degrees:['Bachelor','Master','Konzertexamen'],
-    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','플루트','오보에','클라리넷','바순','호른','트럼펫','트롬본','튜바','타악기','피아노','성악','작곡','오케스트라지휘','합창지휘','교회음악','음악이론','음악교육'],
+    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','플루트','오보에','클라리넷','바순','색소폰','호른','트럼펫','트롬본','튜바','타악기','피아노','오르간','성악','작곡','오케스트라지휘','합창지휘','교회음악','코레페티션'],
     deadline_w:'3월 1일 (학사)',
     deadline_s:'겨울만',
     lang_level:'B2',
@@ -878,7 +880,7 @@ const SCHOOLS = [
     status:'partial',
     url:'https://www.folkwang-uni.de/home/hochschule/studium/bewerbung/',
     degrees:['Bachelor','Master'],
-    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','류트','플루트','리코더','오보에','클라리넷','바순','색소폰','호른','트럼펫','트롬본','튜바','타악기','피아노','오르간','쳄발로','아코디언','성악','작곡','오케스트라지휘','합창지휘','교회음악','재즈','뮤지컬'],
+    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','류트','플루트','리코더','오보에','클라리넷','바순','색소폰','호른','트럼펫','트롬본','튜바','타악기','피아노','오르간','젬발로','성악','작곡','오케스트라지휘','합창지휘','교회음악','재즈','뮤지컬'],
     deadline_w:'3월 15일',
     deadline_s:'11월 15일',
     lang_level:'A2',
@@ -970,7 +972,7 @@ const SCHOOLS = [
     status:'verified',
     url:'https://hfm-karlsruhe.de/en/studying/applying',
     degrees:['Bachelor','Master','Konzertexamen'],
-    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','리코더','플루트','오보에','클라리넷','바순','호른','트럼펫','트롬본','튜바','타악기','피아노','쳄발로','오르간','성악','오페라성악','작곡','오케스트라지휘','합창지휘','교회음악','코레페티션'],
+    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','리코더','플루트','오보에','클라리넷','바순','호른','트럼펫','트롬본','튜바','타악기','피아노','젬발로','성악','오페라성악','작곡','오케스트라지휘','합창지휘','교회음악','코레페티션'],
     deadline_w:'4월 1일',
     deadline_s:'11월 1일',
     lang_level:'B2',
@@ -993,7 +995,7 @@ const SCHOOLS = [
     status:'partial',
     url:'https://www.hfmt-koeln.de/en/information-for/prospective-students/application/',
     degrees:['Bachelor','Master','Konzertexamen'],
-    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','류트','비올라 다 감바','플루트','리코더','오보에','클라리넷','바순','색소폰','호른','트럼펫','트롬본','튜바','타악기','피아노','쳄발로','성악','작곡','오케스트라지휘','합창지휘','재즈','교회음악','코레페티션'],
+    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','류트','비올라 다 감바','플루트','리코더','오보에','클라리넷','바순','색소폰','호른','트럼펫','트롬본','튜바','타악기','피아노','젬발로','성악','작곡','오케스트라지휘','합창지휘','재즈','교회음악','코레페티션'],
     deadline_w:'3월 2일',
     deadline_s:'여름학기만',
     lang_level:'전공별 상이',
@@ -1016,7 +1018,7 @@ const SCHOOLS = [
     status:'verified',
     url:'https://www.hmt-leipzig.de/studium/vor-dem-studium/bewerbung',
     degrees:['Bachelor','Master','Konzertexamen'],
-    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','플루트','오보에','클라리넷','바순','색소폰','호른','트럼펫','트롬본','튜바','타악기','피아노','오르간','쳄발로','성악','작곡','오케스트라지휘','합창지휘','교회음악','코레페티션','음악이론'],
+    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','플루트','오보에','클라리넷','바순','색소폰','호른','트럼펫','트롬본','튜바','타악기','피아노','오르간','젬발로','성악','작곡','오케스트라지휘','합창지휘','교회음악','코레페티션','음악이론'],
     deadline_w:'3월 31일',
     deadline_s:'미확인',
     lang_level:'B2',
@@ -1062,7 +1064,7 @@ const SCHOOLS = [
     status:'partial',
     url:'https://www.muho-mannheim.de/bewerbung/anmeldung/',
     degrees:['Bachelor','Master','Konzertexamen'],
-    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','류트','플루트','오보에','클라리넷','바순','호른','트럼펫','트롬본','튜바','타악기','피아노','오르간','쳄발로','성악','작곡','오케스트라지휘','합창지휘','교회음악','음악이론'],
+    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','류트','플루트','오보에','클라리넷','바순','호른','트럼펫','트롬본','튜바','타악기','피아노','오르간','젬발로','성악','작곡','오케스트라지휘','합창지휘','교회음악','음악이론'],
     deadline_w:'4월 30일',
     deadline_s:'11월 15일',
     lang_level:'B2',
@@ -1085,7 +1087,7 @@ const SCHOOLS = [
     status:'partial',
     url:'https://hmtm.de/en/application/',
     degrees:['Bachelor','Master','Konzertexamen'],
-    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','플루트','오보에','클라리넷','바순','색소폰','호른','트럼펫','트롬본','튜바','타악기','피아노','오르간','쳄발로','아코디언','성악','재즈성악','작곡','오케스트라지휘','합창지휘','교회음악','고악기','포크뮤직','음악저널리즘'],
+    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','플루트','오보에','클라리넷','바순','색소폰','호른','트럼펫','트롬본','튜바','타악기','피아노','오르간','젬발로','성악','재즈성악','작곡','오케스트라지휘','합창지휘','교회음악','고악기','포크뮤직','음악저널리즘'],
     deadline_w:'3월 5일',
     deadline_s:'3월 5일',
     lang_level:'전공별 상이',
@@ -1200,7 +1202,7 @@ const SCHOOLS = [
     status:'verified',
     url:'https://www.hfm-trossingen.de/en/application',
     degrees:['Bachelor of Music','Master of Music','Master of Education','Master of Arts','Konzertexamen','Promotion'],
-    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','리코더','플루트','오보에','클라리넷','바순','호른','트럼펫','트롬본','튜바','타악기','피아노','오르간','쳄발로','성악','작곡','오케스트라지휘','합창지휘','교회음악'],
+    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','리코더','플루트','오보에','클라리넷','바순','호른','트럼펫','트롬본','튜바','타악기','피아노','오르간','젬발로','성악','작곡','오케스트라지휘','합창지휘','교회음악'],
     deadline_w:'4월 1일',
     deadline_s:'11월 1일',
     lang_level:'B2 (조건부)',

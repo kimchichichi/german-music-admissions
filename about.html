@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>소개 — 독일 음대 입시 판별기</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Sans+KR:wght@300;400;500&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:     #0E0C09;
+  --paper:   #F5F1EA;
+  --gold:    #8B6914;
+  --gold-lt: #C9A84C;
+  --muted:   #8A8070;
+  --border:  rgba(139,105,20,0.15);
+  --surface: #EFEBE2;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ── 상단 금선 ── */
+body::before {
+  content: '';
+  display: block;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, var(--gold) 30%, var(--gold-lt) 50%, var(--gold) 70%, transparent 100%);
+}
+
+/* ── 네비 ── */
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 48px;
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--gold);
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+
+.nav-links a {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--muted);
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color .2s;
+}
+
+.nav-links a:hover,
+.nav-links a.active { color: var(--gold); }
+
+/* ── 히어로 ── */
+.hero {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 100px 48px 80px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: end;
+}
+
+.hero-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 4px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hero-label::before {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: var(--gold);
+}
+
+.hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(48px, 6vw, 80px);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -1px;
+  color: var(--ink);
+}
+
+.hero-title em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.hero-right {
+  padding-bottom: 12px;
+}
+
+.hero-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--muted);
+  border-left: 1px solid var(--gold-lt);
+  padding-left: 28px;
+  margin-bottom: 40px;
+}
+
+.hero-desc {
+  font-size: 14px;
+  line-height: 1.9;
+  color: #4A4438;
+  font-weight: 300;
+}
+
+/* ── 구분선 ── */
+.divider {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 48px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.divider-ornament {
+  color: var(--gold-lt);
+  font-size: 14px;
+  letter-spacing: 6px;
+}
+
+/* ── 스탯 바 ── */
+.stats {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 60px 48px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.stat {
+  background: var(--paper);
+  padding: 36px 32px;
+  position: relative;
+}
+
+.stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 52px;
+  font-weight: 300;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.stat-unit {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px;
+}
+
+.stat-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--muted);
+  text-transform: uppercase;
+  line-height: 1.6;
+}
+
+/* ── 본문 섹션 ── */
+.section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 80px 48px;
+}
+
+.section-grid {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 80px;
+}
+
+.section-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: var(--gold);
+  text-transform: uppercase;
+  padding-top: 6px;
+  position: sticky;
+  top: 32px;
+  align-self: start;
+  line-height: 1.8;
+}
+
+.section-content h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 300;
+  line-height: 1.15;
+  margin-bottom: 32px;
+  color: var(--ink);
+}
+
+.section-content h2 em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.section-content p {
+  font-size: 15px;
+  line-height: 2;
+  color: #3A342A;
+  font-weight: 300;
+  margin-bottom: 20px;
+  max-width: 580px;
+}
+
+.section-content p:last-child { margin-bottom: 0; }
+
+/* ── 강조 블록 ── */
+.emphasis-block {
+  border-left: 2px solid var(--gold);
+  padding: 24px 32px;
+  margin: 40px 0;
+  background: rgba(139,105,20,0.04);
+}
+
+.emphasis-block p {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1.6;
+  color: var(--ink);
+  margin: 0 !important;
+}
+
+/* ── 차별점 카드 ── */
+.diff-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin-top: 48px;
+}
+
+.diff-card {
+  background: var(--paper);
+  padding: 36px 28px;
+  position: relative;
+  overflow: hidden;
+  transition: background .3s;
+}
+
+.diff-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: transparent;
+  transition: background .3s;
+}
+
+.diff-card:hover { background: var(--surface); }
+.diff-card:hover::before { background: var(--gold); }
+
+.diff-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 64px;
+  font-weight: 300;
+  color: var(--border);
+  line-height: 1;
+  margin-bottom: 20px;
+  transition: color .3s;
+}
+
+.diff-card:hover .diff-num { color: rgba(139,105,20,0.15); }
+
+.diff-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 400;
+  margin-bottom: 12px;
+  color: var(--ink);
+}
+
+.diff-body {
+  font-size: 13px;
+  line-height: 1.85;
+  color: var(--muted);
+  font-weight: 300;
+}
+
+/* ── 비교 테이블 ── */
+.compare-wrap {
+  margin-top: 48px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.compare-table th {
+  padding: 16px 24px;
+  text-align: left;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  font-weight: 400;
+}
+
+.compare-table th.hl {
+  color: var(--gold);
+  background: rgba(139,105,20,0.06);
+}
+
+.compare-table td {
+  padding: 16px 24px;
+  border-bottom: 1px solid rgba(139,105,20,0.08);
+  color: #4A4438;
+  font-weight: 300;
+  vertical-align: middle;
+}
+
+.compare-table tr:last-child td { border-bottom: none; }
+.compare-table td:first-child { font-weight: 400; color: var(--ink); font-size: 13px; }
+.compare-table td.hl { background: rgba(139,105,20,0.03); color: var(--gold); font-weight: 500; }
+
+.check { color: #5A9B6A; font-size: 15px; }
+.cross { color: #B08080; font-size: 15px; }
+.partial { color: var(--gold-lt); font-size: 13px; }
+
+/* ── 철학 섹션 ── */
+.philosophy {
+  background: var(--ink);
+  padding: 100px 48px;
+  margin: 0;
+}
+
+.philosophy-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.philosophy-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 4px;
+  color: var(--gold-lt);
+  text-transform: uppercase;
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.philosophy-label::before {
+  content: '';
+  width: 24px;
+  height: 1px;
+  background: var(--gold-lt);
+}
+
+.philosophy h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(36px, 4vw, 56px);
+  font-weight: 300;
+  color: var(--paper);
+  line-height: 1.15;
+  margin-bottom: 0;
+}
+
+.philosophy h2 em {
+  color: var(--gold-lt);
+  font-style: italic;
+}
+
+.philosophy-right p {
+  font-size: 15px;
+  line-height: 2;
+  color: rgba(245,241,234,0.6);
+  font-weight: 300;
+  margin-bottom: 24px;
+}
+
+.philosophy-right p strong {
+  color: var(--paper);
+  font-weight: 400;
+}
+
+/* ── 배지 리스트 ── */
+.badge-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 40px;
+}
+
+.badge-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  border: 1px solid rgba(201,168,76,0.2);
+  border-radius: 2px;
+  background: rgba(201,168,76,0.04);
+  animation: fadeUp .5s ease both;
+}
+
+.badge-item:nth-child(1) { animation-delay: .1s; }
+.badge-item:nth-child(2) { animation-delay: .2s; }
+.badge-item:nth-child(3) { animation-delay: .3s; }
+.badge-item:nth-child(4) { animation-delay: .4s; }
+.badge-item:nth-child(5) { animation-delay: .5s; }
+
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(12px); }
+  to   { opacity:1; transform:none; }
+}
+
+.badge-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+  width: 24px;
+  text-align: center;
+}
+
+.badge-text {
+  font-size: 13px;
+  color: var(--paper);
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+.badge-text strong {
+  color: var(--gold-lt);
+  font-weight: 500;
+  display: block;
+  font-size: 12px;
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 1px;
+  margin-bottom: 2px;
+}
+
+/* ── CTA 섹션 ── */
+.cta-section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 100px 48px;
+  text-align: center;
+}
+
+.cta-section h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 300;
+  line-height: 1.15;
+  margin-bottom: 24px;
+  color: var(--ink);
+}
+
+.cta-section h2 em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.cta-section p {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.8;
+  margin-bottom: 48px;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  background: var(--gold);
+  color: var(--paper);
+  border: none;
+  padding: 16px 40px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: all .2s;
+}
+
+.btn-primary:hover {
+  background: var(--gold-lt);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(139,105,20,0.25);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  padding: 15px 40px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: all .2s;
+}
+
+.btn-ghost:hover {
+  background: rgba(139,105,20,0.06);
+  transform: translateY(-2px);
+}
+
+/* ── 푸터 ── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 40px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-logo {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+
+.footer-note {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: var(--muted);
+}
+
+/* ── 스크롤 진입 애니메이션 ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── 반응형 ── */
+@media (max-width: 768px) {
+  nav { padding: 16px 24px; }
+  .nav-links { display: none; }
+  .hero { grid-template-columns: 1fr; gap: 40px; padding: 60px 24px; }
+  .stats { grid-template-columns: repeat(2, 1fr); padding: 0 24px; }
+  .section { padding: 60px 24px; }
+  .section-grid { grid-template-columns: 1fr; gap: 24px; }
+  .section-label { position: static; }
+  .diff-grid { grid-template-columns: 1fr; }
+  .philosophy { padding: 60px 24px; }
+  .philosophy-inner { grid-template-columns: 1fr; gap: 40px; }
+  .cta-section { padding: 60px 24px; }
+  footer { flex-direction: column; gap: 12px; padding: 32px 24px; text-align: center; }
+  .compare-wrap { overflow-x: auto; }
+}
+</style>
+</head>
+<body>
+
+<!-- 네비 -->
+<nav>
+  <a href="독일음대판별기.html" class="nav-logo">🇩🇪 독일 음대 판별기</a>
+  <ul class="nav-links">
+    <li><a href="dashboard.html">대시보드</a></li>
+    <li><a href="#" class="active">소개</a></li>
+    <li><a href="#">CV 생성</a></li>
+    <li><a href="#">관리자</a></li>
+  </ul>
+</nav>
+
+<!-- 히어로 -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-label">About</div>
+    <h1 class="hero-title">
+      독일 음대를<br>
+      <em>직접 졸업한</em><br>
+      사람이<br>
+      만들었습니다.
+    </h1>
+  </div>
+  <div class="hero-right">
+    <p class="hero-quote">
+      "ChatGPT는<br>
+      Zulassungsordnung을<br>
+      읽지 않습니다.<br>
+      저는 읽었습니다."
+    </p>
+    <p class="hero-desc">
+      독일 음대 입시 정보의 비대칭성을 해결하기 위해 만들었습니다.
+      유학원이 수백만 원을 받고 제공하던 정보를,
+      현지 졸업생이 직접 확인하고 AI로 구조화했습니다.
+    </p>
+  </div>
+</section>
+
+<!-- 스탯 -->
+<div class="stats reveal">
+  <div class="stat">
+    <div class="stat-num">24<span class="stat-unit">개</span></div>
+    <div class="stat-label">RKM 회원교<br>전수 확인</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">C<span class="stat-unit">1</span></div>
+    <div class="stat-label">독일어 수준<br>원문 직독직해</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">0<span class="stat-unit">개</span></div>
+    <div class="stat-label">추측 데이터<br>미확인은 null</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">매<span class="stat-unit">주</span></div>
+    <div class="stat-label">자동 업데이트<br>변경 즉시 반영</div>
+  </div>
+</div>
+
+<!-- 만든 이유 -->
+<section class="section">
+  <div class="section-grid reveal">
+    <div class="section-label">
+      만든 이유<br>
+      ——<br>
+      Why We<br>
+      Built This
+    </div>
+    <div class="section-content">
+      <h2>정보의 격차가<br><em>결과의 격차</em>를 만들었습니다.</h2>
+      <p>
+        독일 음대에 지원하는 한국 학생들이 겪는 가장 큰 문제는
+        실력이 아닙니다. 정보입니다.
+      </p>
+      <p>
+        어느 학교가 사전 영상을 요구하는지, 어학 증명서를
+        지원 시점에 내야 하는지 입학 시점에 내도 되는지,
+        올해 라이프치히가 요강을 바꿨는지 — 이런 정보가
+        없어서 실력 있는 학생들이 서류 단계에서 탈락합니다.
+      </p>
+
+      <div class="emphasis-block">
+        <p>
+          유학원은 이 정보를 100만 원이 넘는 컨설팅 비용으로
+          판매합니다. 하지만 그 정보의 원천은 각 학교 홈페이지의
+          PDF 파일 하나입니다.
+        </p>
+      </div>
+
+      <p>
+        독일 음대를 직접 다닌 사람으로서,
+        이 격차를 없앨 수 있다는 걸 알고 있었습니다.
+        이 서비스는 그 격차를 메우기 위해 만들었습니다.
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><span class="divider-ornament">✦ ✦ ✦</span></div>
+
+<!-- 차별점 -->
+<section class="section">
+  <div class="section-grid reveal">
+    <div class="section-label">
+      차별점<br>
+      ——<br>
+      What Makes<br>This Different
+    </div>
+    <div class="section-content">
+      <h2>AI가 아니라<br><em>전문성</em>이 상품입니다.</h2>
+      <p>
+        이 서비스의 핵심은 AI 기술이 아닙니다.
+        독일 음대를 직접 졸업하고, 실제 합격자를 배출한
+        전문가의 지식을 AI로 빠르게 전달하는 것입니다.
+      </p>
+      <p>
+        누구나 ChatGPT에 "독일 음대 CV 써줘"라고 할 수 있습니다.
+        하지만 그 결과물이 한스 아이슬러 지원 양식에 맞는지,
+        교수 선호 순위가 빠진 건 아닌지 — 판단할 수 있는
+        사람은 많지 않습니다.
+      </p>
+
+      <div class="diff-grid">
+        <div class="diff-card">
+          <div class="diff-num">01</div>
+          <div class="diff-title">원문 직접 확인</div>
+          <div class="diff-body">
+            모든 데이터는 각 학교의 공식
+            Zulassungsordnung PDF를
+            독일어로 직접 읽고 입력합니다.
+            AI 추측 데이터는 없습니다.
+          </div>
+        </div>
+        <div class="diff-card">
+          <div class="diff-num">02</div>
+          <div class="diff-title">현지 졸업생 검수</div>
+          <div class="diff-body">
+            독일 음대를 실제로 다닌 사람만
+            아는 맥락이 있습니다. 교수 성향,
+            실기 현장 분위기, 서류 작성
+            관행이 그 안에 담겨 있습니다.
+          </div>
+        </div>
+        <div class="diff-card">
+          <div class="diff-num">03</div>
+          <div class="diff-title">실시간 업데이트</div>
+          <div class="diff-body">
+            매주 자동으로 24개교 페이지를
+            모니터링합니다. 라이프치히처럼
+            갑자기 요강이 바뀌는 학교를
+            즉시 감지하고 반영합니다.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 비교 테이블 -->
+<section class="section" style="padding-top: 0;">
+  <div class="section-grid reveal">
+    <div class="section-label">
+      비교<br>
+      ——<br>
+      vs Others
+    </div>
+    <div class="section-content">
+      <h2>다른 선택지와<br><em>솔직하게</em> 비교합니다.</h2>
+      <div class="compare-wrap">
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th>항목</th>
+              <th>일반 유학원</th>
+              <th>ChatGPT</th>
+              <th class="hl">이 서비스</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>독일 현지 졸업생</td>
+              <td><span class="cross">✕ 대부분 아님</span></td>
+              <td><span class="cross">✕</span></td>
+              <td class="hl"><span class="check">✓</span></td>
+            </tr>
+            <tr>
+              <td>원문 PDF 직접 확인</td>
+              <td><span class="partial">△ 경우에 따라</span></td>
+              <td><span class="cross">✕</span></td>
+              <td class="hl"><span class="check">✓ 전수 확인</span></td>
+            </tr>
+            <tr>
+              <td>실시간 요강 업데이트</td>
+              <td><span class="cross">✕</span></td>
+              <td><span class="cross">✕</span></td>
+              <td class="hl"><span class="check">✓ 매주 자동</span></td>
+            </tr>
+            <tr>
+              <td>지원 시점 vs 입학 시점<br>어학 조건 구분</td>
+              <td><span class="partial">△ 비용 추가</span></td>
+              <td><span class="cross">✕ 구분 불가</span></td>
+              <td class="hl"><span class="check">✓ 자동 판별</span></td>
+            </tr>
+            <tr>
+              <td>합격자 컨설팅 경험</td>
+              <td><span class="check">✓</span></td>
+              <td><span class="cross">✕</span></td>
+              <td class="hl"><span class="check">✓</span></td>
+            </tr>
+            <tr>
+              <td>비용</td>
+              <td>100만원 이상</td>
+              <td>무료</td>
+              <td class="hl" style="color:var(--gold);font-weight:500;">2~3만원</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 철학 섹션 -->
+<section class="philosophy">
+  <div class="philosophy-inner">
+    <div>
+      <div class="philosophy-label">운영 원칙</div>
+      <h2>
+        확인된 것만.<br>
+        <em>그것으로 충분합니다.</em>
+      </h2>
+    </div>
+    <div class="philosophy-right">
+      <p>
+        이 서비스에는 <strong>단 하나의 원칙</strong>이 있습니다.
+        확인되지 않은 정보는 싣지 않는다는 것입니다.
+      </p>
+      <p>
+        미확인 항목은 null로 표시합니다.
+        추측으로 채운 데이터는 없습니다.
+        틀린 정보로 학생이 피해를 입는 것보다
+        정보가 없는 것이 낫습니다.
+      </p>
+      <p>
+        독일어 원문을 직접 읽을 수 있기에
+        가능한 원칙입니다.
+      </p>
+
+      <div class="badge-list">
+        <div class="badge-item">
+          <div class="badge-icon">🎓</div>
+          <div class="badge-text">
+            <strong>독일 음대 졸업</strong>
+            현지에서 직접 경험한 입시 과정
+          </div>
+        </div>
+        <div class="badge-item">
+          <div class="badge-icon">🇩🇪</div>
+          <div class="badge-text">
+            <strong>독일어 C1</strong>
+            Zulassungsordnung 원문 직독직해
+          </div>
+        </div>
+        <div class="badge-item">
+          <div class="badge-icon">📋</div>
+          <div class="badge-text">
+            <strong>24개교 전수 확인</strong>
+            RKM 전체 회원교 공식 데이터
+          </div>
+        </div>
+        <div class="badge-item">
+          <div class="badge-icon">✅</div>
+          <div class="badge-text">
+            <strong>실제 합격자 컨설팅 경험</strong>
+            S등급부터 B등급까지 다양한 학교
+          </div>
+        </div>
+        <div class="badge-item">
+          <div class="badge-icon">🔄</div>
+          <div class="badge-text">
+            <strong>매주 자동 업데이트</strong>
+            변경 즉시 감지 · 즉시 반영
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section reveal">
+  <h2>
+    지금 바로<br>
+    <em>지원 가능한 학교</em>를<br>
+    확인해보세요.
+  </h2>
+  <p>
+    전공, 학위, 독일어 수준, 영상 제출 여부를 입력하면
+    지원 가능한 학교를 즉시 판별해 드립니다.
+  </p>
+  <div class="cta-buttons">
+    <a href="독일음대판별기.html" class="btn-primary">판별기 시작하기 →</a>
+    <a href="#" class="btn-ghost">CV 생성하기</a>
+  </div>
+</section>
+
+<!-- 푸터 -->
+<footer>
+  <div class="footer-logo">🇩🇪 독일 음대 입시 판별기</div>
+  <div class="footer-note">
+    모든 데이터는 공식 홈페이지 원문 기반 · 미확인 항목 null 표기
+  </div>
+</footer>
+
+<script>
+// 스크롤 진입 애니메이션
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
