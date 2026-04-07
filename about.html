@@ -4,7 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>소개 — 독일 음대 입시 판별기</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Sans+KR:wght@300;400;500&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Sans+KR:wght@300;400;500&family=IBM+Plex+Mono:wght@300;400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <style>
 :root {
   --ink:     #0E0C09;
@@ -14,6 +15,12 @@
   --muted:   #8A8070;
   --border:  rgba(139,105,20,0.15);
   --surface: #EFEBE2;
+  /* shared nav tokens */
+  --teal:       #2B4A4A;
+  --teal-mid:   #3D6363;
+  --teal-dark:  #121E1E;
+  --off-white:  #FAFAFA;
+  --radius-pill: 18px;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -37,42 +44,86 @@ body::before {
   background: linear-gradient(90deg, transparent 0%, var(--gold) 30%, var(--gold-lt) 50%, var(--gold) 70%, transparent 100%);
 }
 
-/* ── 네비 ── */
+/* ── 네비 — landing.html pill style (shared across all pages) ── */
 nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: 60px;
+  padding: 0 50px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 48px;
-  border-bottom: 1px solid var(--border);
+  background: rgba(250,250,250,0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(43,74,74,0.18);
 }
-
 .nav-logo {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 3px;
-  color: var(--gold);
-  text-transform: uppercase;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--teal);
+  display: flex;
+  align-items: center;
+  gap: 10px;
   text-decoration: none;
+  letter-spacing: -0.3px;
+  font-family: 'Inter', sans-serif;
 }
-
+.nav-flag {
+  display: flex;
+  flex-direction: column;
+  width: 20px;
+  height: 14px;
+  border-radius: 3px;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 1px solid rgba(43,74,74,0.15);
+}
+.nav-flag span { flex: 1; display: block; }
+.nav-flag .f1 { background: #1C1C1C; }
+.nav-flag .f2 { background: #CC0000; }
+.nav-flag .f3 { background: #FFCC00; }
 .nav-links {
   display: flex;
-  gap: 32px;
+  align-items: center;
+  gap: 6px;
   list-style: none;
 }
-
-.nav-links a {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 2px;
-  color: var(--muted);
+.nav-link {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--teal-mid);
   text-decoration: none;
-  text-transform: uppercase;
-  transition: color .2s;
+  padding: 7px 16px;
+  border-radius: var(--radius-pill);
+  border: 1px solid transparent;
+  letter-spacing: -0.2px;
+  transition: border-color 0.25s, color 0.25s, background 0.25s;
+  font-family: 'Inter', sans-serif;
 }
-
-.nav-links a:hover,
-.nav-links a.active { color: var(--gold); }
+.nav-link:hover,
+.nav-link.active {
+  color: var(--teal);
+  border-color: rgba(43,74,74,0.18);
+  background: rgba(43,74,74,0.05);
+}
+.nav-cta {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--off-white);
+  background: var(--teal);
+  padding: 7px 20px;
+  border-radius: var(--radius-pill);
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: -0.2px;
+  transition: background 0.3s;
+  margin-left: 10px;
+}
+.nav-cta:hover { background: var(--teal-dark); }
 
 /* ── 히어로 ── */
 .hero {
@@ -634,13 +685,20 @@ footer {
 
 <!-- 네비 -->
 <nav>
-  <a href="독일음대판별기.html" class="nav-logo">🇩🇪 독일 음대 판별기</a>
-  <ul class="nav-links">
-    <li><a href="dashboard.html">대시보드</a></li>
-    <li><a href="#" class="active">소개</a></li>
-    <li><a href="#">CV 생성</a></li>
-    <li><a href="#">관리자</a></li>
-  </ul>
+  <a class="nav-logo" href="landing.html">
+    <div class="nav-flag">
+      <span class="f1"></span><span class="f2"></span><span class="f3"></span>
+    </div>
+    독일 음대 입시 판별기
+  </a>
+  <div class="nav-links">
+    <a class="nav-link" href="landing.html">서비스 소개</a>
+    <a class="nav-link" href="search.html">학교 검색</a>
+    <a class="nav-link" href="cv.html">입시 서류</a>
+    <a class="nav-link" href="landing.html#pricing">요금제</a>
+    <a class="nav-link" href="dashboard.html">대시보드</a>
+    <a class="nav-cta" href="search.html">학교 검색하기 →</a>
+  </div>
 </nav>
 
 <!-- 히어로 -->
