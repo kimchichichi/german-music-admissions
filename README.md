@@ -26,13 +26,17 @@
 
 ### 1. 웹 앱 실행
 ```bash
-# german_music_v4.html을 브라우저에서 열기
-open german_music_v4.html
+# search.html을 브라우저에서 열기
+open search.html
 
 # Mac 터미널
 cd /path/to/german-music-admissions
-open german_music_v4.html
+open search.html
 ```
+
+기준 프론트엔드 파일은 `search.html`입니다.
+`sync_html_data.py`는 `universities.json → search.html`만 동기화합니다.
+`german_music_v4.html`은 레거시 진입점으로 보고, 새 작업 기준본으로 사용하지 않습니다.
 
 ### 2. 데이터 동기화
 ```bash
@@ -60,7 +64,8 @@ python3 sync_html_data.py
 │   └── CLAUDE_DEPLOY.md        ← GitHub Actions 배포 시 읽기
 │
 ├── universities.json            ← 단일 진실 소스 (24개 학교 정보)
-├── german_music_v4.html        ← 프론트엔드 (단일 HTML 파일)
+├── search.html                 ← 기준 프론트엔드 (단일 HTML 파일)
+├── german_music_v4.html        ← 레거시 진입점 (search.html로 정리 중)
 ├── sync_html_data.py           ← 자동 동기화 스크립트
 ├── crawl_pipeline.py           ← 크롤러 (확장용)
 ├── requirements.txt            ← Python 의존성
@@ -135,7 +140,7 @@ python3 sync_html_data.py
 23. 뮌헨 음악연극대학
 
 ### 자를란트
-24. 자르브뤼켄 자를란트 음악대학
+24. 자브뤼켄 자를란트 음악대학
 
 ---
 
@@ -161,7 +166,7 @@ python3 sync_html_data.py
 
 ### 1. 학교 찾기
 ```
-1. german_music_v4.html 열기
+1. search.html 열기
 2. 필터 선택:
    - 악기 (다중 선택)
    - 언어조건
@@ -249,9 +254,9 @@ python3 sync_html_data.py
 
 ### 로컬 실행 (추천)
 ```bash
-# 파인더에서 german_music_v4.html 더블클릭
+# 파인더에서 search.html 더블클릭
 # 또는 터미널에서
-open german_music_v4.html
+open search.html
 ```
 
 ### 온라인 배포
@@ -264,7 +269,8 @@ open german_music_v4.html
 
 ### 보호 파일 (자동 동기화)
 - `universities.json` ← 마스터 데이터 소스
-- `german_music_v4.html` ← sync_html_data.py로 자동 갱신
+- `search.html` ← 기준 프론트엔드, sync_html_data.py로 자동 갱신
+- `german_music_v4.html` ← 레거시 파일, 새 작업 기준본으로 사용하지 않음
 
 ### 사용자 변경 금지
 명시적 승인 없이는 수정 불가:

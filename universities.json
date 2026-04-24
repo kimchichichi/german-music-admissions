@@ -1,7 +1,7 @@
 {
   "project": "독일 음대 입시 올인원 판별기",
   "version": "2.0",
-  "last_updated": "2026-04-20",
+  "last_updated": "2026-03-23",
   "data_policy": "확인된 정보만 수록. 미확인 항목은 null 표기. 추측 데이터 없음.",
   "source": "RKM 공식 회원목록 + 각 학교 공식 홈페이지 직접 확인",
   "total_schools": 24,
@@ -88,9 +88,9 @@
       ],
       "pdf_links": [],
       "note": "muvac 계정 사전 생성 필요. Master 성악 마감 12월 31일 주의.",
-      "crawl_status": "success",
-      "last_crawled": "2026-04-20T03:31:23.101939",
-      "page_changed": false,
+      "crawl_status": null,
+      "last_crawled": null,
+      "page_changed": null,
       "ai_extracted_data": null
     },
     {
@@ -157,9 +157,9 @@
       "docs_master": null,
       "pdf_links": [],
       "note": "B2 미보유 시 입학 후 이론 수업 수강 제한.",
-      "crawl_status": "success",
-      "last_crawled": "2026-04-20T03:31:27.318723",
-      "page_changed": false,
+      "crawl_status": null,
+      "last_crawled": null,
+      "page_changed": null,
       "ai_extracted_data": null
     },
     {
@@ -211,9 +211,9 @@
       "docs_master": null,
       "pdf_links": [],
       "note": "음악·미술·디자인 종합예술대학.",
-      "crawl_status": "success",
-      "last_crawled": "2026-04-20T03:31:31.375627",
-      "page_changed": false,
+      "crawl_status": null,
+      "last_crawled": null,
+      "page_changed": null,
       "ai_extracted_data": null
     },
     {
@@ -254,9 +254,9 @@
       "docs_master": null,
       "pdf_links": [],
       "note": "겨울학기만 입학 가능.",
-      "crawl_status": "success",
-      "last_crawled": "2026-04-20T03:31:37.995303",
-      "page_changed": false,
+      "crawl_status": null,
+      "last_crawled": null,
+      "page_changed": null,
       "ai_extracted_data": null
     },
     {
@@ -327,8 +327,8 @@
       "docs_master": null,
       "pdf_links": [],
       "note": "detmoldmusictools.de — 청음·이론 온라인 무료 연습 제공.",
-      "crawl_status": "failed",
-      "last_crawled": "2026-04-20T03:31:40.772594",
+      "crawl_status": null,
+      "last_crawled": null,
       "page_changed": null,
       "ai_extracted_data": null
     },
@@ -369,15 +369,11 @@
       "repertoire": null,
       "docs_common": null,
       "docs_master": null,
-      "pdf_links": [
-        "https://www.hfmdd.de/fileadmin/user_upload/Bewerbung/Bachelor_Merkblatt_Musiktheorie_Gehoerbildung.pdf",
-        "https://www.hfmdd.de/fileadmin/user_upload/Bewerbung/Bachelor_Kuenstlerisch_Klausur_Musiktheorie_Muster.pdf",
-        "https://www.hfmdd.de/fileadmin/user_upload/Bewerbung/Bachelor_Kuenstlerisch_Klausur_Gehoerbildung_Muster.pdf"
-      ],
+      "pdf_links": [],
       "note": "학사는 겨울학기만 시작 가능.",
-      "crawl_status": "success",
-      "last_crawled": "2026-04-20T03:31:47.129115",
-      "page_changed": false,
+      "crawl_status": null,
+      "last_crawled": null,
+      "page_changed": null,
       "ai_extracted_data": null
     },
     {
@@ -443,8 +439,8 @@
       "docs_master": null,
       "pdf_links": [],
       "note": "학사 입학은 겨울학기만 가능.",
-      "crawl_status": "failed",
-      "last_crawled": "2026-04-20T03:31:49.788684",
+      "crawl_status": null,
+      "last_crawled": null,
       "page_changed": null,
       "ai_extracted_data": null
     },
@@ -461,12 +457,12 @@
         "Master"
       ],
       "instruments": null,
-      "deadline_winter_start": null,
-      "deadline_winter": null,
-      "deadline_summer_start": null,
-      "deadline_summer": null,
-      "deadline_note": null,
-      "audition_dates": null,
+      "deadline_winter_start": "1월 15일",
+      "deadline_winter": "3월 15일",
+      "deadline_summer_start": "10월 1일",
+      "deadline_summer": "11월 15일",
+      "deadline_note": "일부 전공은 겨울학기 5월 31일 별도 마감",
+      "audition_dates": "겨울학기: 5월 초 / 여름학기: 1월 말 (전공별 상세일 개별 안내)",
       "semester": null,
       "lang_level": null,
       "lang_text": null,
@@ -484,13 +480,11 @@
       "repertoire": null,
       "docs_common": null,
       "docs_master": null,
-      "pdf_links": [
-        "https://www.folkwang-uni.de/fileadmin/medien/Die%20Hochschule/PDFs/Studium/Bewerbung/Fristen/2026-01__%C3%9Cbersicht_Bewerbungsfristen.pdf"
-      ],
+      "pdf_links": [],
       "note": "음악·연극·디자인 종합예술대학.",
-      "crawl_status": "success",
-      "last_crawled": "2026-04-20T03:31:53.500497",
-      "page_changed": false,
+      "crawl_status": null,
+      "last_crawled": null,
+      "page_changed": null,
       "ai_extracted_data": null
     },
     {
@@ -508,11 +502,11 @@
       ],
       "instruments": null,
       "deadline_winter_start": null,
-      "deadline_winter": null,
+      "deadline_winter": "4월 1일 (다수 전공 기준)",
       "deadline_summer_start": null,
-      "deadline_summer": null,
-      "deadline_note": null,
-      "audition_dates": null,
+      "deadline_summer": "12월 1일 (다수 전공 기준)",
+      "deadline_note": "전공별 일정 상이. 공식 웹사이트와 전공별 규정 추가 확인 필요",
+      "audition_dates": "일반 음악전공: 1월 28일~2월 13일 / HIP: 6월 8·10·11일",
       "semester": null,
       "lang_level": null,
       "lang_text": "전공별 상이 — 홈페이지 Sprachnachweise 목록 참조",
@@ -532,9 +526,9 @@
       "docs_master": null,
       "pdf_links": [],
       "note": "재지원 시 지원비 재납부 필요.",
-      "crawl_status": "success",
-      "last_crawled": "2026-04-20T03:32:01.150436",
-      "page_changed": false,
+      "crawl_status": null,
+      "last_crawled": null,
+      "page_changed": null,
       "ai_extracted_data": null
     },
     {
@@ -601,9 +595,9 @@
       "docs_master": null,
       "pdf_links": [],
       "note": "실기: 6월 8~13일 (겨울 2026/27).",
-      "crawl_status": "success",
-      "last_crawled": "2026-04-20T03:32:04.584101",
-      "page_changed": false,
+      "crawl_status": null,
+      "last_crawled": null,
+      "page_changed": null,
       "ai_extracted_data": null
     },
     {
@@ -669,13 +663,11 @@
       "repertoire": null,
       "docs_common": null,
       "docs_master": null,
-      "pdf_links": [
-        "https://www.hmtm-hannover.de/de/bewerbung/bewerbungsverfahren/fileadmin/mount/pdf/Studium/Bewerbung/Flyer_Aufnahmepruefung_Internat._2021-2-1.pdf"
-      ],
+      "pdf_links": [],
       "note": "실기: 6월 2~6일. Soloklasse: 6월 10~11일 / 언어조건 없음.",
-      "crawl_status": "success",
-      "last_crawled": "2026-04-20T03:32:07.913087",
-      "page_changed": false,
+      "crawl_status": null,
+      "last_crawled": null,
+      "page_changed": null,
       "ai_extracted_data": null
     },
     {
@@ -742,13 +734,11 @@
       "repertoire": null,
       "docs_common": null,
       "docs_master": null,
-      "pdf_links": [
-        "https://hfm-karlsruhe.de/sites/default/files/field/media_file/2025-10/Geb%C3%BChrensatzung_Bewerbungsverfahren_250917.pdf"
-      ],
+      "pdf_links": [],
       "note": "URL 주의: www 없음 (hfm-karlsruhe.de).",
-      "crawl_status": "success",
-      "last_crawled": "2026-04-20T03:32:11.217738",
-      "page_changed": false,
+      "crawl_status": null,
+      "last_crawled": null,
+      "page_changed": null,
       "ai_extracted_data": null
     },
     {
@@ -817,16 +807,11 @@
       "repertoire": null,
       "docs_common": null,
       "docs_master": null,
-      "pdf_links": [
-        "https://www.hfmt-koeln.de/media/redaktion/pdf-Dateien/Studium/Eignungspr%C3%BCfungsordnung/rahmen_epo_bm_alle_ba_tanz_2022_11_30_mit_Anhang_26_01_2026_2.pdf",
-        "https://www.hfmt-koeln.de/media/redaktion/pdf-Dateien/Studium/Eignungspr%C3%BCfungsordnung/rahmen_epo_mm_ma_2025_07_10_mit_Anhang_09_12_2025.pdf",
-        "https://www.hfmt-koeln.de/media/redaktion/pdf-Dateien/Studium/Eignungspr%C3%BCfungsordnung/rahmen_epo_jungstudium_2022_01_27.pdf",
-        "https://www.hfmt-koeln.de/media/redaktion/pdf-Dateien/Studium/Eignungspr%C3%BCfungsordnung/rahmen_epo_ba_lehramt_und_me_lehramt_stand_20.01.2025_2.pdf"
-      ],
+      "pdf_links": [],
       "note": "도메인 주의: hfmt-koeln.de (hfmt.de 아님). 쾰른·아헨·부퍼탈 3캠퍼스.",
-      "crawl_status": "success",
-      "last_crawled": "2026-04-20T03:32:15.231470",
-      "page_changed": false,
+      "crawl_status": null,
+      "last_crawled": null,
+      "page_changed": null,
       "ai_extracted_data": null
     },
     {
@@ -895,9 +880,9 @@
       "docs_master": null,
       "pdf_links": [],
       "note": null,
-      "crawl_status": "success",
-      "last_crawled": "2026-04-20T03:32:18.939701",
-      "page_changed": false,
+      "crawl_status": null,
+      "last_crawled": null,
+      "page_changed": null,
       "ai_extracted_data": null
     },
     {
@@ -955,9 +940,9 @@
       "docs_master": null,
       "pdf_links": [],
       "note": "KE 가능: 15개 악기 확인됨. 서면(우편) 지원 불가.",
-      "crawl_status": "success",
-      "last_crawled": "2026-04-20T03:32:25.085197",
-      "page_changed": false,
+      "crawl_status": null,
+      "last_crawled": null,
+      "page_changed": null,
       "ai_extracted_data": null
     },
     {
@@ -974,12 +959,12 @@
         "Konzertexamen"
       ],
       "instruments": null,
-      "deadline_winter_start": null,
-      "deadline_winter": null,
-      "deadline_summer_start": null,
-      "deadline_summer": null,
-      "deadline_note": null,
-      "audition_dates": null,
+      "deadline_winter_start": "4월 1일",
+      "deadline_winter": "4월 30일",
+      "deadline_summer_start": "10월 15일",
+      "deadline_summer": "11월 15일",
+      "deadline_note": "Jazz/Pop은 별도 일정",
+      "audition_dates": "음악(재즈/팝 제외): 7월 9~18일 / Lehramt: 6월 13일·20일",
       "semester": null,
       "lang_level": null,
       "lang_text": null,
@@ -997,13 +982,11 @@
       "repertoire": null,
       "docs_common": null,
       "docs_master": null,
-      "pdf_links": [
-        "https://www.muho-mannheim.de/fileadmin/user_upload/Upload/Dokumente/Zulassung_Bewerbung/lebenslauf.pdf"
-      ],
+      "pdf_links": [],
       "note": null,
-      "crawl_status": "success",
-      "last_crawled": "2026-04-20T03:32:28.434436",
-      "page_changed": false,
+      "crawl_status": null,
+      "last_crawled": null,
+      "page_changed": null,
       "ai_extracted_data": null
     },
     {
@@ -1020,12 +1003,12 @@
         "Konzertexamen"
       ],
       "instruments": null,
-      "deadline_winter_start": null,
-      "deadline_winter": null,
+      "deadline_winter_start": "1월 15일",
+      "deadline_winter": "3월 5일",
       "deadline_summer_start": null,
       "deadline_summer": null,
-      "deadline_note": null,
-      "audition_dates": null,
+      "deadline_note": "대부분 전공 기준. 무용·Theaterakademie 협력과정 등 일부 예외는 별도 일정",
+      "audition_dates": "현장 실기·적성시험: 6월 13~23일",
       "semester": null,
       "lang_level": "B1~C1 (전공별)",
       "lang_text": "전공별 B1~C1 상이 — 각 전공 Zulassungsordnung 확인 필요",
@@ -1043,15 +1026,11 @@
       "repertoire": null,
       "docs_common": null,
       "docs_master": null,
-      "pdf_links": [
-        "https://hmtm.de/wp-content/uploads/PDF/Leitfaden-Online-Bewerbung-Nutzung-ePayment_01-2026.pdf",
-        "https://hmtm.de/wp-content/uploads/PDF/Online-Bewerbung_FAQ.pdf",
-        "https://hmtm.de/wp-content/uploads/PDF/Leitfaden_Online-Bewerbung_BZM_mit-Zahlung_2026.pdf"
-      ],
+      "pdf_links": [],
       "note": "URL 주의: www 없음 (hmtm.de).",
-      "crawl_status": "success",
-      "last_crawled": "2026-04-20T03:32:35.672313",
-      "page_changed": false,
+      "crawl_status": null,
+      "last_crawled": null,
+      "page_changed": null,
       "ai_extracted_data": null
     },
     {
@@ -1114,9 +1093,9 @@
       "docs_master": null,
       "pdf_links": [],
       "note": "2026 신설: 실내악 석사, 반주(Lied Begleitung) 석사.",
-      "crawl_status": "success",
-      "last_crawled": "2026-04-20T03:32:39.110000",
-      "page_changed": false,
+      "crawl_status": null,
+      "last_crawled": null,
+      "page_changed": null,
       "ai_extracted_data": null
     },
     {
@@ -1133,12 +1112,12 @@
         "Konzertexamen"
       ],
       "instruments": null,
-      "deadline_winter_start": null,
-      "deadline_winter": null,
-      "deadline_summer_start": null,
-      "deadline_summer": null,
-      "deadline_note": null,
-      "audition_dates": null,
+      "deadline_winter_start": "3월 1일",
+      "deadline_winter": "4월 15일",
+      "deadline_summer_start": "10월 1일",
+      "deadline_summer": "11월 15일",
+      "deadline_note": "Master Opernstudio 겨울학기와 Schauspiel 여름학기 2026은 별도 예외 일정",
+      "audition_dates": "겨울학기 2026/27: 5월 28~29일, 6월 1~2일, 6월 15~18일 / 여름학기 2027: 1월 11~13일",
       "semester": null,
       "lang_level": null,
       "lang_text": null,
@@ -1156,24 +1135,18 @@
       "repertoire": null,
       "docs_common": null,
       "docs_master": null,
-      "pdf_links": [
-        "https://www.hmt-rostock.de/storages/hmt-rostock/1_Studium/Bewerbung/Musterklausuren/Musterklausur_GB_LA_Gym_RS_GeS.pdf",
-        "https://www.hmt-rostock.de/storages/hmt-rostock/1_Studium/Bewerbung/Musterklausuren/Musterpruefung_MP_LA_SoPae_GS_Beifach.pdf",
-        "https://www.hmt-rostock.de/storages/hmt-rostock/1_Studium/Bewerbung/Musterklausuren/Musterklausur_GB_BA.pdf",
-        "https://www.hmt-rostock.de/storages/hmt-rostock/1_Studium/Bewerbung/Musterklausuren/Musterklausur_TS_BA.pdf",
-        "https://www.hmt-rostock.de/storages/hmt-rostock/1_Studium/Bewerbung/Deutschkenntnisse.pdf"
-      ],
+      "pdf_links": [],
       "note": null,
-      "crawl_status": "success",
-      "last_crawled": "2026-04-20T03:32:43.083396",
-      "page_changed": false,
+      "crawl_status": null,
+      "last_crawled": null,
+      "page_changed": null,
       "ai_extracted_data": null
     },
     {
       "id": 20,
-      "name": "자르브뤼켄 자를란트 음악대학",
+      "name": "자브뤼켄 자를란트 음악대학",
       "name_de": "Hochschule für Musik Saar, Saarbrücken",
-      "city": "자르브뤼켄 (Saarbrücken)",
+      "city": "자브뤼켄 (Saarbrücken)",
       "data_status": "확인됨",
       "homepage": "https://www.hfmsaar.de",
       "bewerbung_url": "https://www.hfmsaar.de/bewerbung",
@@ -1237,16 +1210,11 @@
       "repertoire": null,
       "docs_common": null,
       "docs_master": null,
-      "pdf_links": [
-        "https://www.hfmsaar.de/bewerbung/files/hfm/Downloads_Dokumente/Studium/Studienberatung/muster_aufnahmepruefung_gehoerbildung_musiktheorie_schriftlich.pdf",
-        "https://www.hfmsaar.de/bewerbung/files/hfm/Downloads_Dokumente/Studium/Eignungspr%C3%BCfung_Voraussetzungen/EP_Lehraemter.pdf",
-        "https://www.hfmsaar.de/bewerbung/files/hfm/Downloads_Dokumente/Studium/Studienberatung/muster_aufnahmepruefung_gehoerbildung_musiktheorie.pdf",
-        "https://www.hfmsaar.de/bewerbung/files/hfm/Downloads_Dokumente/Studium/Studienberatung/DTKV-ThK-2026.pdf"
-      ],
+      "pdf_links": [],
       "note": "모의고사(Muster-Eignungsprüfung) 홈페이지 무료 제공.",
-      "crawl_status": "success",
-      "last_crawled": "2026-04-20T03:32:47.846779",
-      "page_changed": false,
+      "crawl_status": null,
+      "last_crawled": null,
+      "page_changed": null,
       "ai_extracted_data": null
     },
     {
@@ -1311,13 +1279,11 @@
       "repertoire": null,
       "docs_common": null,
       "docs_master": null,
-      "pdf_links": [
-        "https://www.hmdk-stuttgart.de/sites/default/files/2025-05/FAQ%20-%20Fragen%20Rund%20um%20die%20Bewerbung%20Website%2028.05.2025%20deu.pdf"
-      ],
+      "pdf_links": [],
       "note": null,
-      "crawl_status": "success",
-      "last_crawled": "2026-04-20T03:32:52.102449",
-      "page_changed": false,
+      "crawl_status": null,
+      "last_crawled": null,
+      "page_changed": null,
       "ai_extracted_data": null
     },
     {
@@ -1387,9 +1353,9 @@
       "docs_master": null,
       "pdf_links": [],
       "note": "매주 수요일 온라인 입시설명회 (독·영어 병행). 소규모, 기숙사 저렴.",
-      "crawl_status": "success",
-      "last_crawled": "2026-04-20T03:32:55.302317",
-      "page_changed": false,
+      "crawl_status": null,
+      "last_crawled": null,
+      "page_changed": null,
       "ai_extracted_data": null
     },
     {
@@ -1455,8 +1421,8 @@
       "docs_master": null,
       "pdf_links": [],
       "note": "WS 2024/25부터 완전 디지털화.",
-      "crawl_status": "failed",
-      "last_crawled": "2026-04-20T03:32:58.392310",
+      "crawl_status": null,
+      "last_crawled": null,
       "page_changed": null,
       "ai_extracted_data": null
     },
@@ -1524,11 +1490,10 @@
       "docs_master": null,
       "pdf_links": [],
       "note": "URL 주의: www 없음 (hfm-wuerzburg.de).",
-      "crawl_status": "success",
-      "last_crawled": "2026-04-20T03:33:01.445823",
-      "page_changed": false,
+      "crawl_status": null,
+      "last_crawled": null,
+      "page_changed": null,
       "ai_extracted_data": null
     }
-  ],
-  "last_crawled": "2026-04-20T03:33:03.446361"
+  ]
 }

@@ -3,13 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="refresh" content="0; url=search.html">
-<link rel="canonical" href="search.html">
 <title>독일 음대 입시 — 올인원 판별기</title>
-<script>
-// 레거시 진입점을 기준 파일인 search.html로 보낸다.
-window.location.replace('search.html');
-</script>
 
 <!-- Same Inter typeface as landing.html for visual consistency -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -21,36 +15,57 @@ window.location.replace('search.html');
    so both pages feel like one coherent product.
 ═══════════════════════════════════════════════ */
 :root {
-  --pink:      #F472A0;
-  --pink-lt:   #F8A8C4;
-  --pink-bg:   #FFF0F5;
-  --mint:      #3DD9A4;
-  --mint-lt:   #E6FAF4;
-  --purple:    #7B6CF6;
-  --purple-bg: #F0EFFE;
-  --teal:      #4ECDC4;
-  --teal-bg:   #E8FAF9;
-  --bg:        #F7F8FC;
-  --paper:     #FFFFFF;
-  --ink:       #1A1F2E;
-  --ink2:      #2D3748;
-  --muted:     #718096;
-  --border:    #E8EDF2;
-  --tag-bg:    #F0F4F8;
-  --red:       #E53E3E;
-  --green:     #38A169;
-  --blue:      #3182CE;
-  --orange:    #DD6B20;
-  --sans:   'Plus Jakarta Sans', 'Noto Sans KR', sans-serif;
+  --teal-dark:  #121E1E;
+  --teal:       #2B4A4A;
+  --teal-mid:   #3D6363;
+  --lavender:   #DBCCE8;
+  --gray-light: #E5E5E5;
+  --off-white:  #FAFAFA;
+  --white:      #FFFFFF;
+  --text-dark:  #EFEFEF;
+  --text-muted-dark: rgba(194,194,194,1);
+  --text-muted: rgba(43,74,74,0.55);
+  --border:     rgba(43,74,74,0.15);
+  --radius-pill: 18px;
+  --sans: 'Inter', sans-serif;
+
+  /* Legacy aliases so JS-generated class names still resolve */
+  --pink:      var(--teal);
+  --pink-lt:   rgba(43,74,74,0.35);
+  --pink-bg:   rgba(43,74,74,0.06);
+  --mint:      var(--lavender);
+  --mint-lt:   rgba(219,204,232,0.18);
+  --purple:    var(--teal-mid);
+  --purple-bg: rgba(61,99,99,0.1);
+  --teal-old:  #4ECDC4;
+  --teal-bg:   rgba(219,204,232,0.12);
+  --bg:        var(--off-white);
+  --paper:     var(--white);
+  --ink:       var(--teal-dark);
+  --ink2:      var(--teal);
+  --muted:     var(--text-muted);
+  --tag-bg:    rgba(43,74,74,0.06);
+  --red:       #B84040;
+  --green:     #2E6B4A;
+  --blue:      var(--teal);
+  --orange:    #A06020;
 }
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; }
-body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-font-smoothing:antialiased; }
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  background: var(--off-white);
+  color: var(--teal);
+  -webkit-font-smoothing: antialiased;
+  /* Dark body peeks out behind section cards */
+  background-color: var(--teal-dark);
+}
 
 /* ═══════════════════════════════════════════════
-   NAV — matches landing.html pill nav exactly
+   NAV — landing.html pill nav (shared across all pages)
 ═══════════════════════════════════════════════ */
-.topnav {
+nav {
   position: sticky;
   top: 0;
   z-index: 100;
@@ -59,13 +74,12 @@ body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: rgba(250,250,250,0.9);
+  background: rgba(250,250,250,0.85);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid rgba(43,74,74,0.18);
 }
-
-.topnav-brand {
+.nav-logo {
   font-size: 15px;
   font-weight: 600;
   color: var(--teal);
@@ -75,56 +89,54 @@ body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-
   text-decoration: none;
   letter-spacing: -0.3px;
 }
-.topnav-brand .flag {
+.nav-flag {
   display: flex;
   flex-direction: column;
-  width: 20px; height: 14px;
+  width: 20px;
+  height: 14px;
   border-radius: 3px;
   overflow: hidden;
   flex-shrink: 0;
   border: 1px solid rgba(43,74,74,0.15);
 }
-.topnav-brand .flag span { flex: 1; display: block; }
-.topnav-brand .flag .f1 { background: #1C1C1C; }
-.topnav-brand .flag .f2 { background: #CC0000; }
-.topnav-brand .flag .f3 { background: #FFCC00; }
-
-.topnav-links { display: flex; align-items: center; gap: 6px; }
-
-/* Ghost pill nav links */
-.topnav-link {
+.nav-flag span { flex: 1; display: block; }
+.nav-flag .f1 { background: #1C1C1C; }
+.nav-flag .f2 { background: #CC0000; }
+.nav-flag .f3 { background: #FFCC00; }
+.nav-links { display: flex; align-items: center; gap: 6px; }
+.nav-link {
   font-size: 13px;
   font-weight: 500;
-  color: var(--text-muted);
+  color: var(--teal-mid);
   text-decoration: none;
   padding: 7px 16px;
   border-radius: var(--radius-pill);
   border: 1px solid transparent;
   letter-spacing: -0.2px;
   transition: border-color 0.25s, color 0.25s, background 0.25s;
-  cursor: pointer;
-  background: none;
-  font-family: var(--sans);
 }
-.topnav-link:hover {
+.nav-link:hover,
+.nav-link.active {
   color: var(--teal);
-  border-color: var(--border);
+  border-color: rgba(43,74,74,0.18);
   background: rgba(43,74,74,0.05);
 }
-/* Solid CTA pill for "back to landing" link */
-.topnav-link.back-link {
-  color: var(--teal);
-  border-color: var(--border);
-  font-weight: 500;
-}
-/* Admin badge as muted pill */
-.topnav-link.admin {
-  background: rgba(43,74,74,0.08);
-  color: var(--teal);
-  border-color: var(--border);
+.nav-cta {
+  font-size: 13px;
   font-weight: 600;
+  color: var(--off-white);
+  background: var(--teal);
+  padding: 7px 20px;
+  border-radius: var(--radius-pill);
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  font-family: var(--sans);
+  letter-spacing: -0.2px;
+  transition: background 0.3s;
+  margin-left: 10px;
 }
-.topnav-link.admin:hover { background: rgba(43,74,74,0.15); }
+.nav-cta:hover { background: var(--teal-dark); }
 
 /* ═══════════════════════════════════════════════
    HERO — section-card style matching landing.html
@@ -475,6 +487,65 @@ body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-
 }
 .fb-reset:hover { border-color: var(--red); color: var(--red); background: rgba(184,64,64,0.04); }
 
+.filter-mobile-toggle {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  padding: 11px 16px;
+  border: 1.5px solid rgba(43,74,74,0.18);
+  border-radius: var(--radius-pill);
+  background: linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(43,74,74,0.05) 100%);
+  color: var(--teal);
+  cursor: pointer;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  box-shadow: 0 8px 24px rgba(43,74,74,0.08);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+.filter-mobile-toggle-main {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.filter-mobile-toggle-main::before {
+  content: '⌕';
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(43,74,74,0.08);
+  font-size: 12px;
+  color: var(--teal);
+  flex-shrink: 0;
+}
+.filter-mobile-toggle-meta {
+  color: var(--teal);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(43,74,74,0.08);
+  white-space: nowrap;
+}
+.filter-mobile-toggle-arrow {
+  color: var(--text-muted);
+  font-size: 11px;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+.filter-mobile-toggle:hover {
+  border-color: rgba(43,74,74,0.3);
+  box-shadow: 0 12px 28px rgba(43,74,74,0.12);
+}
+.filter-controls {
+  display: contents;
+}
+
 /* Active filter chips */
 .active-chips { width: 100%; display: flex; flex-wrap: wrap; gap: 6px; }
 .chip {
@@ -596,11 +667,48 @@ body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-
   text-transform: uppercase;
 }
 
-/* Status dot */
-.status-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 3px; flex-shrink: 0; }
-.sd-v { background: var(--teal); box-shadow: 0 0 0 3px rgba(43,74,74,0.12); }
-.sd-p { background: var(--lavender); box-shadow: 0 0 0 3px rgba(219,204,232,0.3); border: 1px solid rgba(43,74,74,0.2); }
-.sd-u { background: var(--border); }
+/* Status badge */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: -0.1px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.status-badge::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.sd-v {
+  background: rgba(43,74,74,0.08);
+  color: var(--teal);
+}
+.sd-v::before {
+  background: var(--teal);
+}
+.sd-p {
+  background: rgba(219,204,232,0.45);
+  color: var(--teal-dark);
+  border: 1px solid rgba(43,74,74,0.12);
+}
+.sd-p::before {
+  background: #9c88c7;
+}
+.sd-u {
+  background: rgba(43,74,74,0.06);
+  color: var(--text-muted);
+}
+.sd-u::before {
+  background: rgba(43,74,74,0.3);
+}
 
 .card-name {
   font-size: 16px;
@@ -727,6 +835,12 @@ body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-
   display: flex;
   align-items: center;
   gap: 3px;
+}
+.cf-fee {
+  display: none;
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 600;
 }
 
 /* Empty state */
@@ -1039,12 +1153,275 @@ body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-
   .hero-stats { grid-template-columns: repeat(4,1fr); }
   #filterSection { padding: 16px 24px; top: 60px; position: relative; }
   .results-section-card { padding: 20px 24px 50px; }
-  .topnav { padding: 0 24px; }
+  nav { padding: 0 24px; }
 }
 @media (max-width: 700px) {
+  nav {
+    height: auto;
+    padding: 12px 16px;
+    align-items: flex-start;
+    gap: 12px;
+    flex-direction: column;
+  }
+  .nav-logo {
+    font-size: 14px;
+  }
+  .nav-links {
+    width: 100%;
+    gap: 6px;
+    flex-wrap: wrap;
+    overflow-x: visible;
+    padding-bottom: 0;
+  }
+  .nav-link,
+  .nav-cta {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+  .nav-link {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+  .nav-cta {
+    margin-left: 0;
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+  .hero {
+    padding: 34px 16px 40px;
+    border-radius: 28px 28px 0 0;
+  }
+  .hero-inner {
+    gap: 24px;
+  }
+  .hero-eyebrow {
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+  .hero-eyebrow-num {
+    font-size: 11px;
+  }
+  .hero-eyebrow-cat {
+    font-size: 10px;
+  }
+  .hero-title {
+    font-size: clamp(34px, 12vw, 48px);
+    line-height: 0.92;
+    letter-spacing: -2.8px;
+    margin-bottom: 16px;
+  }
+  .hero-desc {
+    font-size: 13px;
+    line-height: 1.65;
+    margin-bottom: 20px;
+    max-width: none;
+  }
+  .hero-ctas {
+    gap: 8px;
+  }
+  .hero-btn-primary,
+  .hero-btn-secondary {
+    height: 42px;
+    font-size: 13px;
+    padding: 9px 18px;
+  }
+  .hero-stats {
+    gap: 10px;
+  }
+  .stat-card {
+    padding: 16px 12px;
+    border-radius: 18px;
+  }
+  .stat-num {
+    font-size: 22px;
+    margin-bottom: 4px;
+    letter-spacing: -1.4px;
+  }
+  .stat-label {
+    font-size: 10px;
+    line-height: 1.35;
+  }
+  #filterSection {
+    padding: 14px 16px;
+    gap: 10px;
+  }
+  .filter-mobile-toggle {
+    display: flex;
+  }
+  #filterSection.filter-collapsed .filter-controls {
+    display: none;
+  }
+  #filterSection.filter-expanded .filter-mobile-toggle-arrow {
+    transform: rotate(180deg);
+    color: var(--teal);
+  }
+  #filterSection.filter-expanded .filter-mobile-toggle {
+    border-color: rgba(43,74,74,0.28);
+    box-shadow: 0 12px 30px rgba(43,74,74,0.12);
+  }
+  .fb-group {
+    width: 100%;
+    gap: 4px;
+  }
+  .dropdown-wrap,
+  .fb-group select,
+  .fb-group input {
+    width: 100%;
+  }
   #grid { grid-template-columns: 1fr; }
-  .dropdown-trigger { min-width: 140px; }
-  .modal { border-radius: 20px; }
+  .dropdown-trigger { min-width: 0; width: 100%; }
+  .fb-label {
+    font-size: 10px;
+  }
+  .fb-reset {
+    align-self: flex-start;
+  }
+  .active-chips {
+    gap: 5px;
+  }
+  #filterSection.filter-collapsed .active-chips:empty {
+    display: none;
+  }
+  .results-section-card {
+    padding: 18px 16px 36px;
+  }
+  .result-hd {
+    margin-bottom: 16px;
+  }
+  .result-title {
+    font-size: 17px;
+  }
+  .result-meta {
+    font-size: 12px;
+  }
+  .result-meta strong {
+    font-size: 18px;
+  }
+  .card-body {
+    padding: 18px 18px 14px;
+  }
+  .card-name {
+    font-size: 15px;
+  }
+  .status-badge {
+    padding: 3px 8px;
+    font-size: 9px;
+  }
+  .card-name-de {
+    font-size: 10px;
+    line-height: 1.35;
+    margin-bottom: 10px;
+    opacity: 0.88;
+  }
+  .instr-tags {
+    margin-bottom: 12px;
+  }
+  .card-info {
+    gap: 8px;
+    padding-top: 11px;
+    grid-template-columns: 1fr 1fr;
+  }
+  .card-info .ci-fee {
+    display: none;
+  }
+  .card-footer {
+    padding: 11px 18px;
+    align-items: flex-start;
+  }
+  .cf-l,
+  .cf-r {
+    font-size: 11px;
+  }
+  .cf-l {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .cf-fee {
+    display: block;
+  }
+  .overlay {
+    padding: 10px;
+    align-items: flex-end;
+  }
+  .modal {
+    border-radius: 20px 20px 0 0;
+    max-height: 85vh;
+  }
+  .m-hd {
+    padding: 18px 18px 14px;
+    border-radius: 20px 20px 0 0;
+  }
+  .m-city {
+    font-size: 10px;
+    margin-bottom: 4px;
+  }
+  .m-name {
+    font-size: 18px;
+    letter-spacing: -0.6px;
+    margin-bottom: 2px;
+  }
+  .m-name-de {
+    font-size: 10px;
+    line-height: 1.35;
+  }
+  .m-close {
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+  }
+  .m-body {
+    padding: 16px 18px 20px;
+  }
+  .m-tabs {
+    margin-bottom: 14px;
+    gap: 3px;
+    padding: 3px;
+  }
+  .m-tab {
+    padding: 8px 6px;
+    font-size: 11px;
+  }
+  .m-instr {
+    gap: 5px;
+    margin-bottom: 14px;
+  }
+  .m-itag {
+    padding: 4px 10px;
+    font-size: 11px;
+  }
+  .m-tbl {
+    margin-bottom: 12px;
+    font-size: 12px;
+  }
+  .m-tbl th,
+  .m-tbl td {
+    padding: 9px 10px;
+  }
+  .m-tbl th {
+    width: 34%;
+    font-size: 10px;
+  }
+  .m-tbl td {
+    line-height: 1.45;
+  }
+  .note-box,
+  .warn-box {
+    padding: 11px 12px;
+    font-size: 11px;
+    line-height: 1.5;
+  }
+  .link-row {
+    gap: 8px;
+    margin-top: 6px;
+  }
+  .btn-go,
+  .btn-cp {
+    width: 100%;
+    justify-content: center;
+    padding: 10px 14px;
+    font-size: 12px;
+  }
   .hero-stats { grid-template-columns: repeat(2,1fr); }
   .hero-title { letter-spacing: -3px; }
 }
@@ -1055,21 +1432,20 @@ body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-
 <!-- ════════════════════════════════════════
      NAV — same pill style as landing.html
 ════════════════════════════════════════ -->
-<nav class="topnav">
-  <a class="topnav-brand" href="landing.html">
-    <div class="flag" aria-label="독일 국기">
-      <span class="f1"></span>
-      <span class="f2"></span>
-      <span class="f3"></span>
+<nav>
+  <a class="nav-logo" href="landing.html">
+    <div class="nav-flag">
+      <span class="f1"></span><span class="f2"></span><span class="f3"></span>
     </div>
     독일 음대 입시 판별기
   </a>
-  <div class="topnav-links">
-    <!-- Back to landing page -->
-    <a class="topnav-link back-link" href="landing.html">← 서비스 소개</a>
-    <a class="topnav-link" href="cv_builder.html" target="_blank">이력서 만들기</a>
-    <button class="topnav-link" onclick="openContact()">문의하기</button>
-    <a class="topnav-link admin" href="admin.html" target="_blank">관리자</a>
+  <div class="nav-links">
+    <a class="nav-link" href="landing.html">서비스 소개</a>
+    <a class="nav-link active" href="#">학교 검색</a>
+    <a class="nav-link" href="cv.html">입시 서류</a>
+    <a class="nav-link" href="landing.html#pricing">요금제</a>
+    <a class="nav-link" href="dashboard.html">대시보드</a>
+    <a class="nav-cta" href="#">학교 검색하기 →</a>
   </div>
 </nav>
 
@@ -1098,7 +1474,7 @@ body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-
       </p>
       <div class="hero-ctas">
         <button class="hero-btn-primary" onclick="document.getElementById('filterSection').scrollIntoView({behavior:'smooth'})">
-          학교 검색 시작하기 →
+          학교 검색하기 →
         </button>
         <button class="hero-btn-secondary" onclick="openContact()">
           입시 상담 문의
@@ -1134,6 +1510,14 @@ body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-
      FILTER BAR — sticky, teal-accented
 ════════════════════════════════════════ -->
 <div id="filterSection" class="filter-bar" style="background:var(--white);border:2px solid var(--teal);border-top:none;border-bottom:none;padding:20px 50px;display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;position:sticky;top:60px;z-index:90;box-shadow:0 4px 24px rgba(43,74,74,0.07);">
+
+  <button class="filter-mobile-toggle" id="filterToggleBtn" type="button" onclick="toggleFilterCollapse()" aria-controls="filterControls" aria-expanded="false">
+    <span class="filter-mobile-toggle-main">검색 필터 열기</span>
+    <span class="filter-mobile-toggle-meta" id="filterToggleMeta">전체 24개 학교</span>
+    <span class="filter-mobile-toggle-arrow">▼</span>
+  </button>
+
+  <div class="filter-controls" id="filterControls">
 
   <!-- 악기 선택 -->
   <div class="fb-group">
@@ -1252,6 +1636,8 @@ body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-
 
   <button class="fb-reset" onclick="resetAll()">초기화 ✕</button>
 
+  </div>
+
   <div class="active-chips" id="chips"></div>
 </div>
 
@@ -1262,7 +1648,7 @@ body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-
 <div class="results-section-card">
   <div style="max-width:1100px;margin:0 auto;">
     <div class="result-hd">
-      <div class="result-title">검색 결과</div>
+      <div class="result-title">학교 검색 결과</div>
       <div class="result-meta"><strong id="cnt">0</strong>개 학교 표시</div>
     </div>
     <div id="grid"></div>
@@ -1273,25 +1659,25 @@ body { font-family:var(--sans); background:var(--bg); color:var(--ink); -webkit-
 <!-- ════════════════════════════════════════
      SCHOOL DETAIL MODAL
 ════════════════════════════════════════ -->
-<div class="overlay" id="overlay" onclick="handleOvClick(event)">
-  <div class="modal">
+<div class="overlay" id="overlay" onclick="handleOvClick(event)" role="presentation">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mName" aria-describedby="mNameDe">
     <div class="m-hd">
       <div>
         <div class="m-city" id="mCity"></div>
         <div class="m-name" id="mName"></div>
         <div class="m-name-de" id="mNameDe"></div>
       </div>
-      <button class="m-close" onclick="closeModal()">✕</button>
+      <button class="m-close" type="button" onclick="closeModal()" aria-label="상세 정보 닫기">✕</button>
     </div>
     <div class="m-body">
-      <div class="m-tabs">
-        <div class="m-tab on" onclick="switchTab('instr',this)">전공 악기</div>
-        <div class="m-tab" onclick="switchTab('info',this)">입시 정보</div>
-        <div class="m-tab" onclick="switchTab('lang',this)">언어 · 서류</div>
+      <div class="m-tabs" role="tablist" aria-label="학교 상세 정보 탭">
+        <button class="m-tab on" type="button" role="tab" aria-selected="true" aria-controls="mp-instr" id="tab-instr" onclick="switchTab('instr',this)">전공 악기</button>
+        <button class="m-tab" type="button" role="tab" aria-selected="false" aria-controls="mp-info" id="tab-info" onclick="switchTab('info',this)">입시 정보</button>
+        <button class="m-tab" type="button" role="tab" aria-selected="false" aria-controls="mp-lang" id="tab-lang" onclick="switchTab('lang',this)">언어 · 서류</button>
       </div>
-      <div class="m-panel on" id="mp-instr"></div>
-      <div class="m-panel" id="mp-info"></div>
-      <div class="m-panel" id="mp-lang"></div>
+      <div class="m-panel on" id="mp-instr" role="tabpanel" aria-labelledby="tab-instr"></div>
+      <div class="m-panel" id="mp-info" role="tabpanel" aria-labelledby="tab-info" hidden></div>
+      <div class="m-panel" id="mp-lang" role="tabpanel" aria-labelledby="tab-lang" hidden></div>
     </div>
   </div>
 </div>
@@ -1367,17 +1753,17 @@ const SCHOOLS = [
     degrees:['Bachelor','Master'],
     instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','플루트','오보에','클라리넷','바순','색소폰','호른','트럼펫','트롬본','튜바','타악기','피아노','성악','오페라성악','작곡','오케스트라지휘','합창지휘','재즈','교회음악','코레페티션'],
     deadline_w:'4월 1일',
-    deadline_s:'1월 10일',
+    deadline_s:'미확인',
     lang_level:'B2',
     lang_text:'B2 필수',
     lang_timing:'조건부',
     lang_timing_text:'학사: 첫 학기 시작 전까지 조건부 입학 허용. 미제출 시 음악이론·음악학 수업 수강 불가.',
-    round1_type:'영상',
-    round1_text:'일부 전공 영상 업로드 필수 ("Für einige Studiengänge ist der Upload eines Videos erforderlich"). 전공별 상이.',
+    round1_type:'미확인',
+    round1_text:'미확인',
     portal:'hfmt.hispro.de',
     portal_type:'online',
     method_text:'온라인 (hfmt.hispro.de)',
-    fee:'미확인',
+    fee:'50 EUR',
     note:'B2 미보유 시 입학 후 이론 수업 수강 제한.',
   },
   {
@@ -1390,7 +1776,7 @@ const SCHOOLS = [
     degrees:['Bachelor','Master'],
     instruments:['바이올린','비올라','첼로','피아노','성악','작곡','오케스트라지휘','합창지휘','재즈','코레페티션'],
     deadline_w:'4월 14일',
-    deadline_s:'없음',
+    deadline_s:'미확인',
     lang_level:'B2',
     lang_text:'석사: B2 필수 (입학까지 제출 가능). 학사: 미확인.',
     lang_timing:'등록전',
@@ -1400,8 +1786,8 @@ const SCHOOLS = [
     portal:'BEMUS (my.udk-berlin.de)',
     portal_type:'online',
     method_text:'온라인 (BEMUS — my.udk-berlin.de)',
-    fee:'30 EUR',
-    note:'대부분의 음악 전공은 겨울학기만 입학 가능. 성악·뮤지컬 일부 전공은 여름 불가.',
+    fee:'30~50 EUR (전공마다 다름)',
+    note:'음악·미술·디자인 종합예술대학.',
   },
   {
     id:4,
@@ -1411,13 +1797,13 @@ const SCHOOLS = [
     status:'partial',
     url:'https://www.hfk-bremen.de/en/application',
     degrees:['Bachelor','Master'],
-    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','플루트','오보에','클라리넷','바순','호른','트럼펫','트롬본','튜바','타악기','피아노','성악','고악기','재즈'],
+    instruments:['미확인 — 공식 홈페이지 참조'],
     deadline_w:'3월 31일',
     deadline_s:'없음',
-    lang_level:'TestDaF 3 / B2',
-    lang_text:'TestDaF 3 또는 B2 (음악 전공)',
-    lang_timing:'등록전',
-    lang_timing_text:'학기 시작 시점까지 제출. 미제출 시 2학기 말까지 취득 필수',
+    lang_level:'미확인',
+    lang_text:'미확인',
+    lang_timing:'미확인',
+    lang_timing_text:'미확인',
     round1_type:'없음(바로현장)',
     round1_text:'1차 없음 — 전원 바로 현장 실기시험 (영상 예선 없음)',
     portal:'HfK 자체 포털',
@@ -1437,10 +1823,10 @@ const SCHOOLS = [
     instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','플루트','오보에','클라리넷','바순','색소폰','호른','트럼펫','트롬본','튜바','타악기','피아노','오르간','성악','작곡','오케스트라지휘','합창지휘','교회음악','코레페티션'],
     deadline_w:'3월 15일',
     deadline_s:'11월 1일',
-    lang_level:'전공별 상이',
-    lang_text:'대부분 없음 (음악 전공). 교직·음악학: B2 / 작곡·지휘: 없음',
-    lang_timing:'등록전',
-    lang_timing_text:'입학 등록(Immatrikulation) 전까지 제출',
+    lang_level:'미확인',
+    lang_text:'전공별 상이 — 각 전공 페이지 확인 필요',
+    lang_timing:'미확인',
+    lang_timing_text:'미확인',
     round1_type:'영상+서류',
     round1_text:'영상 예선 있는 전공과 없는 전공 분리. muvac 플랫폼.',
     portal:'muvac',
@@ -1457,20 +1843,20 @@ const SCHOOLS = [
     status:'partial',
     url:'https://www.hfmdd.de/en/studies/application',
     degrees:['Bachelor','Master','Konzertexamen'],
-    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','플루트','오보에','클라리넷','바순','색소폰','호른','트럼펫','트롬본','튜바','타악기','피아노','오르간','쳄발로','성악','작곡','오케스트라지휘','합창지휘','교회음악','고악기','재즈'],
-    deadline_w:'3월 31일',
-    deadline_s:'11월 1일',
-    lang_level:'전공별 상이',
-    lang_text:'음악 실기: 없음 / 음악학·교직: B2 / 지휘: 없음',
-    lang_timing:'조건부',
-    lang_timing_text:'지원 시 가능한 경우 제출 ("if already available"). 필수 시점 미명시.',
-    round1_type:'영상',
-    round1_text:'영상 업로드 있음 (전공별 상이). 유튜브 튜토리얼 제공.',
+    instruments:['미확인 — 공식 홈페이지 참조'],
+    deadline_w:'6월 12일',
+    deadline_s:'없음',
+    lang_level:'미확인',
+    lang_text:'미확인',
+    lang_timing:'미확인',
+    lang_timing_text:'미확인',
+    round1_type:'미확인',
+    round1_text:'미확인',
     portal:'자체 포털',
     portal_type:'online',
     method_text:'온라인 (자체 포털)',
     fee:'50 EUR',
-    note:'실기 전공과 음악학은 언어 요구사항 상이',
+    note:'학사는 겨울학기만 시작 가능.',
   },
   {
     id:7,
@@ -1492,7 +1878,7 @@ const SCHOOLS = [
     portal:'muvac',
     portal_type:'muvac',
     method_text:'온라인 (muvac)',
-    fee:'50 EUR',
+    fee:'50 EUR (첫 지원) / 10 EUR (추가)',
     note:'학사 입학은 겨울학기만 가능.',
   },
   {
@@ -1500,22 +1886,22 @@ const SCHOOLS = [
     name:'에센 폴크방 예술대학',
     name_de:'Folkwang Universität der Künste Essen',
     city:'Essen',
-    status:'partial',
+    status:'unverified',
     url:'https://www.folkwang-uni.de/home/hochschule/studium/bewerbung/',
     degrees:['Bachelor','Master'],
-    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','류트','플루트','리코더','오보에','클라리넷','바순','색소폰','호른','트럼펫','트롬본','튜바','타악기','피아노','오르간','쳄발로','아코디언','성악','작곡','오케스트라지휘','합창지휘','교회음악','재즈','뮤지컬'],
+    instruments:['미확인 — 공식 홈페이지 참조'],
     deadline_w:'3월 15일',
     deadline_s:'11월 15일',
-    lang_level:'A2',
-    lang_text:'전공별 Zulassungsordnung 개별 확인 필요 — 국제 지원자 페이지에 통합 언어조건 미명시',
-    lang_timing:'등록전',
-    lang_timing_text:'등록(Einschreibung) 시 제출. 독일 고교 졸업자 제외.',
-    round1_type:'영상',
-    round1_text:'Digitale Vorrunde — 전공에 따라 적용. 성악|음악극(M.Mus.) 포함. 각 전공 페이지 확인.',
-    portal:'pruefung.folkwang-uni.de',
+    lang_level:'미확인',
+    lang_text:'미확인',
+    lang_timing:'미확인',
+    lang_timing_text:'미확인',
+    round1_type:'미확인',
+    round1_text:'미확인',
+    portal:'자체 포털',
     portal_type:'online',
-    method_text:'온라인 (pruefung.folkwang-uni.de)',
-    fee:'50 EUR (실기) / 무료 (디자인)',
+    method_text:'온라인 (자체 포털)',
+    fee:'50 EUR',
     note:'음악·연극·디자인 종합예술대학.',
   },
   {
@@ -1526,20 +1912,20 @@ const SCHOOLS = [
     status:'partial',
     url:'https://www.hfmdk-frankfurt.de/thema/bewerben',
     degrees:['Bachelor','Master','Konzertexamen'],
-    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','플루트','오보에','클라리넷','바순','색소폰','호른','트럼펫','트롬본','튜바','타악기','피아노','오르간','성악','작곡','오케스트라지휘','합창지휘','교회음악','전자음악','코레페티션'],
-    deadline_w:'3월 1일',
-    deadline_s:'4월 1일',
-    lang_level:'전공별 상이',
-    lang_text:'음악 실기: 없음 / 음악학·교직: B2',
-    lang_timing:'없음',
-    lang_timing_text:'해당 없음 (실기 전공)',
-    round1_type:'영상+현장',
-    round1_text:'muvac에 영상 링크 업로드 또는 현장 실기. 전공별 상이.',
-    portal:'hfmdk-cloud-application.academyfive.net',
+    instruments:['미확인 — 공식 홈페이지 참조'],
+    deadline_w:'4월 1일 (다수 전공 기준)',
+    deadline_s:'12월 1일 (다수 전공 기준)',
+    lang_level:'미확인',
+    lang_text:'전공별 상이 — 홈페이지 Sprachnachweise 목록 참조',
+    lang_timing:'미확인',
+    lang_timing_text:'미확인',
+    round1_type:'미확인',
+    round1_text:'미확인',
+    portal:'자체 포털',
     portal_type:'online',
-    method_text:'온라인 (hfmdk-cloud-application.academyfive.net)',
-    fee:'미확인',
-    note:'실기 전공과 음악학은 요구사항 다름',
+    method_text:'온라인 (자체 포털)',
+    fee:'50 EUR',
+    note:'재지원 시 지원비 재납부 필요.',
   },
   {
     id:10,
@@ -1556,7 +1942,7 @@ const SCHOOLS = [
     lang_text:'학사: DSH-1 또는 TestDaF TDN3 (조건부 가능) / 석사·KE: B1 최소 필수',
     lang_timing:'조건부',
     lang_timing_text:'학사 조건부: 뛰어난 지원자는 첫 2학기 독일어 수업 의무 이수 조건으로 허용.',
-    round1_type:'영상+현장',
+    round1_type:'미확인',
     round1_text:'전공별 상이 — 홈페이지 확인 필요',
     portal:'자체 포털',
     portal_type:'post',
@@ -1574,7 +1960,7 @@ const SCHOOLS = [
     degrees:['Bachelor','Master','Konzertexamen'],
     instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','플루트','오보에','클라리넷','바순','색소폰','호른','트럼펫','트롬본','튜바','타악기','피아노','오르간','성악','작곡','오케스트라지휘','합창지휘','교회음악','재즈','코레페티션'],
     deadline_w:'3월 15일',
-    deadline_s:'1월 15일',
+    deadline_s:'미확인',
     lang_level:'TestDaF TDN3',
     lang_text:'TestDaF TDN3 또는 DSH-1 (B2 수준). WS 2024/25부터 지정 인증기관 증명서만 수락.',
     lang_timing:'등록전',
@@ -1584,7 +1970,7 @@ const SCHOOLS = [
     portal:'muvac',
     portal_type:'muvac',
     method_text:'온라인 (muvac, 음악전공)',
-    fee:'50 EUR',
+    fee:'50 EUR (첫 지원) / 30 EUR (추가)',
     note:'실기: 6월 2~6일. Soloklasse: 6월 10~11일 / 언어조건 없음.',
   },
   {
@@ -1598,10 +1984,10 @@ const SCHOOLS = [
     instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','리코더','플루트','오보에','클라리넷','바순','호른','트럼펫','트롬본','튜바','타악기','피아노','쳄발로','오르간','성악','오페라성악','작곡','오케스트라지휘','합창지휘','교회음악','코레페티션'],
     deadline_w:'4월 1일',
     deadline_s:'11월 1일',
-    lang_level:'B2',
-    lang_text:'기악 학사: 등록 시 B1 → 2학기 말까지 B2. 기악 석사: 등록 시 B1 → 1학기 말까지 B2. 성악: 등록 시 B2.',
-    lang_timing:'조건부',
-    lang_timing_text:'등록 시 B1로 입학 가능. 기악: 2학기 말(학사)/1학기 말(석사)까지 B2 필수. 성악: 등록 시 B2 필수. 미제출 시 제적.',
+    lang_level:'미확인',
+    lang_text:'미확인',
+    lang_timing:'미확인',
+    lang_timing_text:'미확인',
     round1_type:'영상+서류',
     round1_text:'전공에 따라 영상 예선 있는 그룹 / 없는 그룹 분리 (여름학기 2026부터). 영상예선 대상자는 비자 확인서 미발급.',
     portal:'자체 포털',
@@ -1619,19 +2005,19 @@ const SCHOOLS = [
     url:'https://www.hfmt-koeln.de/en/information-for/prospective-students/application/',
     degrees:['Bachelor','Master','Konzertexamen'],
     instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','류트','비올라 다 감바','플루트','리코더','오보에','클라리넷','바순','색소폰','호른','트럼펫','트롬본','튜바','타악기','피아노','쳄발로','성악','작곡','오케스트라지휘','합창지휘','재즈','교회음악','코레페티션'],
-    deadline_w:'3월 2일',
-    deadline_s:'여름학기만',
-    lang_level:'전공별 상이',
-    lang_text:'음악 실기: 없음 / 음악학·교직: B2',
-    lang_timing:'조건부',
-    lang_timing_text:'학사: 2학기 말 / 석사: 1학기 말까지 (미제출 시 제적)',
+    deadline_w:'미확인',
+    deadline_s:'미확인',
+    lang_level:'미확인',
+    lang_text:'미확인',
+    lang_timing:'미확인',
+    lang_timing_text:'미확인',
     round1_type:'영상',
     round1_text:'영상 심사 — muvac 플랫폼',
     portal:'muvac',
     portal_type:'muvac',
     method_text:'온라인 (muvac)',
     fee:'50 EUR',
-    note:'일부 전공(성악 등)은 겨울만 가능. 교직 과정은 언어 요구 있음.',
+    note:'도메인 주의: hfmt-koeln.de (hfmt.de 아님). 쾰른·아헨·부퍼탈 3캠퍼스.',
   },
   {
     id:14,
@@ -1648,12 +2034,12 @@ const SCHOOLS = [
     lang_text:'B2급 인정 — 유럽 품질 인증 어학원 증명서 포함 인정. 구체적 레벨 전공별 상이.',
     lang_timing:'등록전',
     lang_timing_text:'입학 등록 전까지 제출.',
-    round1_type:'영상',
-    round1_text:'영상 심사 → 약 3주 후 현장 오디션 초대장 발송. 전공별 영상/포트폴리오/악보 제출.',
+    round1_type:'미확인',
+    round1_text:'미확인',
     portal:'자체 포털',
     portal_type:'online',
     method_text:'온라인 (자체 포털)',
-    fee:'50 EUR',
+    fee:'미확인 (일부 프로그램 무료)',
     note:null,
   },
   {
@@ -1665,41 +2051,41 @@ const SCHOOLS = [
     url:'https://www.mh-luebeck.de/bewerben',
     degrees:['Bachelor','Master','Konzertexamen'],
     instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','플루트','오보에','클라리넷','바순','호른','트럼펫','트롬본','타악기','피아노'],
-    deadline_w:'4월 1일',
+    deadline_w:'미확인',
     deadline_s:'12월 1일',
-    lang_level:'전공별 상이',
-    lang_text:'음악 실기: 없음 / 음악학·교직: B2 / Early Music: 없음',
-    lang_timing:'조건부',
-    lang_timing_text:'오디션 당일 저녁 B2 테스트 진행 (KE·Meisterklasse 제외)',
+    lang_level:'미확인',
+    lang_text:'미확인',
+    lang_timing:'미확인',
+    lang_timing_text:'미확인',
     round1_type:'영상+서류',
     round1_text:'일부 전공 영상 제출 (전공별 상이). 온라인 전용.',
     portal:'자체 포털',
-    portal_type:'muvac',
+    portal_type:'online',
     method_text:'온라인 전용 (우편 불가)',
-    fee:'50 EUR (첫) / +10 EUR (이중)',
-    note:'고악기·Early Music 전공은 언어 조건 없음',
+    fee:'50 EUR',
+    note:'KE 가능: 15개 악기 확인됨. 서면(우편) 지원 불가.',
   },
   {
     id:16,
     name:'만하임 음악공연예술대학',
     name_de:'Staatliche Hochschule für Musik und Darstellende Kunst Mannheim',
     city:'Mannheim',
-    status:'partial',
+    status:'unverified',
     url:'https://www.muho-mannheim.de/bewerbung/anmeldung/',
     degrees:['Bachelor','Master','Konzertexamen'],
-    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','류트','플루트','오보에','클라리넷','바순','호른','트럼펫','트롬본','튜바','타악기','피아노','오르간','쳄발로','성악','작곡','오케스트라지휘','합창지휘','교회음악','음악이론'],
+    instruments:['미확인 — 공식 홈페이지 참조'],
     deadline_w:'4월 30일',
     deadline_s:'11월 15일',
-    lang_level:'B2',
-    lang_text:'일반 음악 전공: B2 (입학 등록 전까지). Lehramt·음악연구: C1 (지원 마감 전까지). B2 미보유 시 조건부 입학 — 학교에서 무료 독일어 수업 제공 (Uni Mannheim 협력).',
-    lang_timing:'등록전',
-    lang_timing_text:'일반 전공: 입학 등록 전까지. Lehramt·음악연구·성악 오페라·지휘: 지원 마감 전까지 제출.',
-    round1_type:'영상',
-    round1_text:'온라인 예선(Online-Vorauswahl) 있음: 피아노·현악기·목관악기(플루트·바순·클라리넷·오보에·호른·트롬본·트럼펫). 나머지는 바로 현장.',
-    portal:'hisinone.muho-mannheim.de',
+    lang_level:'미확인',
+    lang_text:'미확인',
+    lang_timing:'미확인',
+    lang_timing_text:'미확인',
+    round1_type:'미확인',
+    round1_text:'미확인',
+    portal:'자체 포털',
     portal_type:'online',
-    method_text:'온라인 (hisinone.muho-mannheim.de)',
-    fee:'미확인',
+    method_text:'온라인 (자체 포털)',
+    fee:'50 EUR',
     note:null,
   },
   {
@@ -1707,23 +2093,23 @@ const SCHOOLS = [
     name:'뮌헨 음악연극대학',
     name_de:'Hochschule für Musik und Theater München',
     city:'München',
-    status:'partial',
+    status:'unverified',
     url:'https://hmtm.de/en/application/',
     degrees:['Bachelor','Master','Konzertexamen'],
-    instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','플루트','오보에','클라리넷','바순','색소폰','호른','트럼펫','트롬본','튜바','타악기','피아노','오르간','쳄발로','아코디언','성악','재즈성악','작곡','오케스트라지휘','합창지휘','교회음악','고악기','포크뮤직','음악저널리즘'],
+    instruments:['미확인 — 공식 홈페이지 참조'],
     deadline_w:'3월 5일',
-    deadline_s:'3월 5일',
-    lang_level:'전공별 상이',
-    lang_text:'음악 실기: 없음 / 음악학·교직: B2',
-    lang_timing:'등록전',
-    lang_timing_text:'입학 등록(Immatrikulation)까지 제출. 원본 또는 공증 사본 제출.',
-    round1_type:'영상',
-    round1_text:'영상 예선 있는 전공 / 없는 전공 분리. 전공 페이지 개별 확인 필요.',
+    deadline_s:'미확인',
+    lang_level:'B1~C1 (전공별)',
+    lang_text:'전공별 B1~C1 상이 — 각 전공 Zulassungsordnung 확인 필요',
+    lang_timing:'미확인',
+    lang_timing_text:'미확인',
+    round1_type:'미확인',
+    round1_text:'미확인',
     portal:'zulassung.hmtm.de',
     portal_type:'online',
     method_text:'온라인 (zulassung.hmtm.de)',
-    fee:'50 EUR (+10 EUR 이중) / Special: 300-2,097 EUR',
-    note:'춤·연극 전공은 별도 마감일. 실기·이론 전공별 요구사항 다름',
+    fee:'50 EUR',
+    note:'URL 주의: www 없음 (hmtm.de).',
   },
   {
     id:18,
@@ -1736,16 +2122,16 @@ const SCHOOLS = [
     instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','플루트','오보에','클라리넷','바순','호른','트럼펫','트롬본','튜바','타악기','피아노','성악','작곡','오케스트라지휘','합창지휘','코레페티션'],
     deadline_w:'3월 31일',
     deadline_s:'없음',
-    lang_level:'B2',
-    lang_text:'학사(예술): B2 / 학사(KPA): C1 / 석사(예술): B1 / 석사(KPA): B2~C1',
-    lang_timing:'등록전',
-    lang_timing_text:'입학(Immatrikulation) 시 제출',
-    round1_type:'영상+현장',
-    round1_text:'2단계: 1) 영상 사전심사(Videovorauswahl) → 합격 시 2) 현장 Eignungsprüfung 진행',
+    lang_level:'미확인',
+    lang_text:'미확인',
+    lang_timing:'미확인',
+    lang_timing_text:'미확인',
+    round1_type:'미확인',
+    round1_text:'미확인',
     portal:'muvac',
     portal_type:'muvac',
     method_text:'온라인 (muvac)',
-    fee:'50 EUR',
+    fee:'50 EUR (첫 지원) / 30 EUR (추가)',
     note:'2026 신설: 실내악 석사, 반주(Lied Begleitung) 석사.',
   },
   {
@@ -1753,22 +2139,22 @@ const SCHOOLS = [
     name:'로스토크 음악연극대학',
     name_de:'Hochschule für Musik und Theater Rostock',
     city:'Rostock',
-    status:'verified',
+    status:'unverified',
     url:'https://www.hmt-rostock.de/studium/bewerbung/',
     degrees:['Bachelor','Master','Konzertexamen'],
-    instruments:['바이올린','비올라','첼로','콘트라바스','플루트','오보에','클라리넷','바순','트럼펫','트롬본','튜바','호른','색소폰(팝)','타악기','피아노','오르간','기타','일렉트릭 베이스','하프','성악','작곡','음악이론','지휘'],
+    instruments:['미확인 — 공식 홈페이지 참조'],
     deadline_w:'4월 15일',
     deadline_s:'11월 15일',
-    lang_level:'B2',
-    lang_text:'기악·성악·재즈·팝 Bachelor·Master: B2. 오케스트라지휘·코레페티션: C1. 음악학 Master: C1. 교직·연극교육: C1. 연극(Schauspiel): C2. B1 보유 시 조건부 입학 (첫 학기 내 B2 취득 필수).',
-    lang_timing:'조건부',
-    lang_timing_text:'B2 이상: 조건 없이 입학. B1: 조건부 입학, 1학기 내 B2 취득 (미취득 시 자격 소멸). B1 미만: 예비과정 최대 2학기 (800 EUR/학기). 입학 시 독일어 테스트(C-Test) 필수.',
-    round1_type:'영상',
-    round1_text:'영상 업로드 있음 (포털에서 업로드). 전공별 상이.',
-    portal:'service.hmt-rostock.de',
+    lang_level:'미확인',
+    lang_text:'미확인',
+    lang_timing:'미확인',
+    lang_timing_text:'미확인',
+    round1_type:'미확인',
+    round1_text:'미확인',
+    portal:'자체 포털',
     portal_type:'online',
-    method_text:'온라인 (service.hmt-rostock.de)',
-    fee:'미확인',
+    method_text:'온라인 (자체 포털)',
+    fee:'50 EUR',
     note:null,
   },
   {
@@ -1791,7 +2177,7 @@ const SCHOOLS = [
     portal:'자체 포털',
     portal_type:'online',
     method_text:'온라인 (자체 포털)',
-    fee:'50 EUR (24 EUR 재학생)',
+    fee:'50 EUR',
     note:'모의고사(Muster-Eignungsprüfung) 홈페이지 무료 제공.',
   },
   {
@@ -1809,7 +2195,7 @@ const SCHOOLS = [
     lang_text:'B2 (음악교육학·연구 석사: C2)',
     lang_timing:'조건부',
     lang_timing_text:'6개월 내 취득 조건부 허용 — 미취득 시 자격 소멸.',
-    round1_type:'영상+현장',
+    round1_type:'미확인',
     round1_text:'미확인',
     portal:'eportal.hmdk-stuttgart.de',
     portal_type:'post',
@@ -1833,11 +2219,11 @@ const SCHOOLS = [
     lang_timing:'조건부',
     lang_timing_text:'실기 과정: 2학기 내 B2 취득 필수 — 미취득 시 자격 소멸.',
     round1_type:'영상',
-    round1_text:'영상 예선 있음 (10~15분, 12개월 이내 촬영). 지휘·음악교육학 등 일부 전공 제외.',
+    round1_text:'영상 예선 대상: BA 음악 / BA 고악(Early Music) / BA 교회음악 B / BA Music Design.',
     portal:'자체 포털',
     portal_type:'online',
     method_text:'온라인 (자체 포털)',
-    fee:'미확인',
+    fee:'50 EUR',
     note:'매주 수요일 온라인 입시설명회 (독·영어 병행). 소규모, 기숙사 저렴.',
   },
   {
@@ -1846,20 +2232,20 @@ const SCHOOLS = [
     name_de:'Hochschule für Musik Franz Liszt Weimar',
     city:'Weimar',
     status:'partial',
-    url:'https://www.hfm-weimar.de/en/applying/how-to-apply',
+    url:'https://www.hfm-weimar.de/studium/bewerbung/',
     degrees:['Bachelor','Master','Konzertexamen'],
     instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','플루트','오보에','클라리넷','바순','호른','트럼펫','트롬본','튜바','타악기','피아노','오르간','성악','작곡','오케스트라지휘','합창지휘','교회음악','코레페티션'],
-    deadline_w:'3월 16일 (WS 2026/27 기준)',
-    deadline_s:'11월 2일',
-    lang_level:'B2',
-    lang_text:'예술·기악교육 전공: B2 (TestDaF3, DSH1, Goethe B2, telc B2). 학술·교직 전공: C1 (TestDaF4, DSH2, Goethe C1). 원본 또는 공증 사본 제출.',
-    lang_timing:'등록전',
-    lang_timing_text:'입학 등록(Immatrikulation)까지 제출.',
-    round1_type:'없음(바로현장)',
-    round1_text:'영상 예선 없음. 서류 업로드 후 바로 현장 실기. 완전 디지털 온라인 지원.',
-    portal:'his-1.hfm-weimar.de',
+    deadline_w:'음악실기: 3월 15일 / 음악학·문화경영: 7월 1일',
+    deadline_s:'미확인',
+    lang_level:'미확인',
+    lang_text:'미확인',
+    lang_timing:'미확인',
+    lang_timing_text:'미확인',
+    round1_type:'미확인',
+    round1_text:'미확인',
+    portal:'자체 포털',
     portal_type:'online',
-    method_text:'온라인 (his-1.hfm-weimar.de)',
+    method_text:'온라인 (자체 디지털 포털, WS 2024/25부터)',
     fee:'50 EUR',
     note:'WS 2024/25부터 완전 디지털화.',
   },
@@ -1874,17 +2260,17 @@ const SCHOOLS = [
     instruments:['바이올린','비올라','첼로','콘트라바스','하프','기타','플루트','오보에','클라리넷','바순','색소폰','호른','트럼펫','트롬본','튜바','타악기','피아노','오르간','성악','작곡','오케스트라지휘','합창지휘','교회음악','코레페티션'],
     deadline_w:'3월 15일',
     deadline_s:'없음',
-    lang_level:'전공별 상이',
-    lang_text:'음악 실기: TestDaF TDN3 / 교직·음악학: 동일',
-    lang_timing:'등록전',
-    lang_timing_text:'합격 후 등록(Immatrikulation) 전까지 제출 필수',
-    round1_type:'영상',
-    round1_text:'영상 사전심사(Videovorauswahl) 또는 바로 현장. 전공별 상이.',
+    lang_level:'미확인',
+    lang_text:'미확인',
+    lang_timing:'미확인',
+    lang_timing_text:'미확인',
+    round1_type:'미확인',
+    round1_text:'미확인',
     portal:'muvac',
     portal_type:'muvac',
     method_text:'온라인 (muvac)',
     fee:'50 EUR',
-    note:'성악 Master·KE와 목관악기는 영상 필수. 나머지 현장 시험.',
+    note:'URL 주의: www 없음 (hfm-wuerzburg.de).',
   },
 ];
 
@@ -1915,6 +2301,8 @@ const R1MAP = {
 
 // ════ 상태 ════
 let selInstr = new Set();
+let filterCollapsedMobile = true;
+let lastFocusedElement = null;
 
 // ── 드롭다운 ──
 function toggleDropdown(menuId, triggerId) {
@@ -1959,6 +2347,42 @@ function updateInstrTrigger() {
   }
 }
 
+function isMobileFilterMode() {
+  return window.innerWidth <= 700;
+}
+
+function setFilterCollapseState(collapsed) {
+  filterCollapsedMobile = collapsed;
+  const section = document.getElementById('filterSection');
+  const btn = document.getElementById('filterToggleBtn');
+  const btnLabel = document.querySelector('.filter-mobile-toggle-main');
+  if (!section || !btn || !btnLabel) return;
+
+  if (!isMobileFilterMode()) {
+    section.classList.remove('filter-collapsed', 'filter-expanded');
+    btn.setAttribute('aria-expanded', 'true');
+    btnLabel.textContent = '검색 필터 열기';
+    return;
+  }
+
+  section.classList.toggle('filter-collapsed', collapsed);
+  section.classList.toggle('filter-expanded', !collapsed);
+  btn.setAttribute('aria-expanded', String(!collapsed));
+  btnLabel.textContent = collapsed ? '검색 필터 열기' : '검색 필터 닫기';
+}
+
+function toggleFilterCollapse(forceState) {
+  const nextState = typeof forceState === 'boolean' ? forceState : !filterCollapsedMobile;
+  setFilterCollapseState(nextState);
+}
+
+function handleCardKeydown(event, id) {
+  if (event.key === 'Enter' || event.key === ' ') {
+    event.preventDefault();
+    openModal(id);
+  }
+}
+
 // ── 필터 적용 ──
 function applyAll() {
   const q       = document.getElementById('fSearch').value.toLowerCase();
@@ -1984,7 +2408,24 @@ function applyAll() {
   document.getElementById('cnt').textContent = result.length;
   renderCards(result);
   updateChips(q, fDegree, fLang, fTiming, fRound);
+  updateFilterToggleMeta(result.length, q, fDegree, fLang, fTiming, fRound);
   lucide.createIcons();
+}
+
+function updateFilterToggleMeta(resultCount, q, fDegree, fLang, fTiming, fRound) {
+  const meta = document.getElementById('filterToggleMeta');
+  if (!meta) return;
+  const activeCount =
+    selInstr.size +
+    (fDegree ? 1 : 0) +
+    (fLang ? 1 : 0) +
+    (fTiming ? 1 : 0) +
+    (fRound ? 1 : 0) +
+    (q ? 1 : 0);
+
+  meta.textContent = activeCount
+    ? `${activeCount}개 필터 · ${resultCount}개 학교`
+    : `전체 ${resultCount}개 학교`;
 }
 
 function matchLang(s, f) {
@@ -2027,14 +2468,14 @@ function renderCards(data) {
 
     const langColor = s.lang_level === '없음' ? 'green' : s.lang_level === '미확인' ? 'muted' : 'blue';
 
-    return `
-    <div class="card" style="animation-delay:${Math.min(i*.035,.4)}s" onclick="openModal(${s.id})">
-      <div class="card-stripe ${stripeCls}"></div>
-      <div class="card-body">
-        <div class="card-top">
-          <span class="card-city">${s.city}</span>
-          <span class="status-dot ${dotCls}" title="${s.status==='verified'?'확인됨':s.status==='partial'?'부분확인':'미확인'}"></span>
-        </div>
+	    return `
+	    <div class="card" style="animation-delay:${Math.min(i*.035,.4)}s" onclick="openModal(${s.id})" role="button" tabindex="0" aria-label="${s.name} 상세 정보 열기" onkeydown="handleCardKeydown(event, ${s.id})">
+	      <div class="card-stripe ${stripeCls}"></div>
+	      <div class="card-body">
+	        <div class="card-top">
+	          <span class="card-city">${s.city}</span>
+	          <span class="status-badge ${dotCls}">${s.status==='verified'?'확인됨':s.status==='partial'?'부분확인':'미확인'}</span>
+	        </div>
         <div class="card-name">${s.name}</div>
         <div class="card-name-de">${s.name_de}</div>
         <div class="degree-tags">${degreeTags}</div>
@@ -2052,7 +2493,7 @@ function renderCards(data) {
             <div class="ci-l">1차 전형</div>
             <div><span class="round1-badge ${r1.cls}"><i data-lucide="${r1.icon}" style="width:12px;height:12px;vertical-align:middle;"></i> ${r1.text}</span></div>
           </div>
-          <div class="ci">
+          <div class="ci ci-fee">
             <div class="ci-l">지원비</div>
             <div class="ci-v">${s.fee}</div>
           </div>
@@ -2063,8 +2504,9 @@ function renderCards(data) {
           ${match !== null
             ? `선택악기 <strong>${match}/${selInstr.size}개</strong> 매칭`
             : `전공 <strong>${s.instruments[0] === '미확인 — 공식 홈페이지 참조' ? '미확인' : s.instruments.length+'개'}</strong>`}
+          <span class="cf-fee">지원비 ${s.fee}</span>
         </span>
-        <span class="cf-r">상세 →</span>
+        <span class="cf-r">자세히 보기 →</span>
       </div>
     </div>`;
   }).join('');
@@ -2111,12 +2553,14 @@ function resetAll() {
   ['fDegree','fLang','fLangTiming','fRound1'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('fSearch').value = '';
   applyAll();
+  if (isMobileFilterMode()) setFilterCollapseState(true);
 }
 
 // ── 모달 ──
 function openModal(id) {
   const s = SCHOOLS.find(x => x.id === id);
   if (!s) return;
+  lastFocusedElement = document.activeElement;
   document.getElementById('mCity').textContent = s.city;
   document.getElementById('mName').textContent = s.name;
   document.getElementById('mNameDe').textContent = s.name_de;
@@ -2168,18 +2612,35 @@ function openModal(id) {
   document.getElementById('overlay').classList.add('open');
   lucide.createIcons();
   document.body.style.overflow = 'hidden';
+  document.querySelector('.m-close')?.focus();
 }
 
 function closeModal() {
   document.getElementById('overlay').classList.remove('open');
   document.body.style.overflow = '';
+  if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
+    lastFocusedElement.focus();
+  }
 }
 function handleOvClick(e) { if (e.target === document.getElementById('overlay')) closeModal(); }
 function switchTab(name, el) {
-  document.querySelectorAll('.m-panel').forEach(p => p.classList.remove('on'));
-  document.querySelectorAll('.m-tab').forEach(t => t.classList.remove('on'));
-  document.getElementById('mp-' + name).classList.add('on');
-  if (el) el.classList.add('on');
+  document.querySelectorAll('.m-panel').forEach(p => {
+    p.classList.remove('on');
+    p.hidden = true;
+  });
+  document.querySelectorAll('.m-tab').forEach(t => {
+    t.classList.remove('on');
+    t.setAttribute('aria-selected', 'false');
+  });
+  const activePanel = document.getElementById('mp-' + name);
+  if (activePanel) {
+    activePanel.classList.add('on');
+    activePanel.hidden = false;
+  }
+  if (el) {
+    el.classList.add('on');
+    el.setAttribute('aria-selected', 'true');
+  }
 }
 
 // ── 연락처 모달 ──
@@ -2190,9 +2651,13 @@ document.addEventListener('keydown', e => { if (e.key==='Escape') { closeModal()
 
 // 초기 렌더
 applyAll();
+setFilterCollapseState(isMobileFilterMode());
 
 // 루시드 아이콘 초기화
 document.addEventListener('DOMContentLoaded', () => lucide.createIcons());
+window.addEventListener('resize', () => {
+  setFilterCollapseState(isMobileFilterMode() ? filterCollapsedMobile : false);
+});
 </script>
 </body>
 </html>

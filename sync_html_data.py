@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-universities.json을 german_music_v4.html의 SCHOOLS 배열로 동기화하는 스크립트.
+universities.json을 search.html의 SCHOOLS 배열로 동기화하는 스크립트.
 
 용도:
   python3 sync_html_data.py
@@ -9,7 +9,7 @@ universities.json을 german_music_v4.html의 SCHOOLS 배열로 동기화하는 �
 역할:
   1. universities.json 읽기
   2. JSON 필드를 HTML 형식으로 변환
-  3. german_music_v4.html의 SCHOOLS 배열 교체
+  3. search.html의 SCHOOLS 배열 교체
 """
 
 import json
@@ -125,7 +125,7 @@ def main():
     """메인 동기화 함수."""
     # 파일 경로
     json_path = Path('universities.json')
-    html_path = Path('german_music_v4.html')
+    html_path = Path('search.html')
 
     # 1. universities.json 읽기
     print("📖 JSON 파일 읽기...")

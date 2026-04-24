@@ -1,0 +1,1707 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>독일 음대 입시 올인원 판별기 — 실제 합격자가 만든 유일한 서비스</title>
+
+<!-- Inter: sole typeface, matching reference site's editorial-modern aesthetic -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+<style>
+/* ═══════════════════════════════════════════════
+   DESIGN TOKENS
+   Color story: deep teal (#2B4A4A) + lavender (#DBCCE8)
+   meeting off-white and charcoal dark sections.
+   Reference: readymag.website/u3378043568/4510894/
+═══════════════════════════════════════════════ */
+:root {
+  --teal-dark:  #121E1E;   /* footer / dark CTA background */
+  --teal:       #2B4A4A;   /* primary text, borders, accents */
+  --teal-mid:   #3D6363;   /* secondary text on light bg */
+  --lavender:   #DBCCE8;   /* section 3 background & accent */
+  --gray-light: #E5E5E5;   /* section 2 background */
+  --off-white:  #FAFAFA;   /* section 1 & 4 background */
+  --white:      #FFFFFF;
+  --text-dark:  #EFEFEF;   /* body text on dark backgrounds */
+  --text-muted-dark: rgba(194,194,194,1); /* muted text on dark */
+  --text-muted: rgba(43,74,74,0.55);     /* muted text on light */
+  --border-light: rgba(43,74,74,0.18);   /* subtle borders on light */
+  --section-border: 2px solid var(--teal); /* section card stroke */
+  --radius-section: 40px;  /* section card top-corner radius */
+  --radius-pill: 18px;     /* button pill radius */
+  --section-overlap: -40px; /* cards stack by overlapping */
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  /* Dark teal body beneath stacked section cards */
+  background: var(--teal-dark);
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  color: var(--teal);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ═══════════════════════════════════════════════
+   ANNOUNCEMENT STRIP
+   Minimal monospaced top bar in teal dark
+═══════════════════════════════════════════════ */
+.top-strip {
+  background: var(--teal);
+  padding: 9px 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 28px;
+  font-size: 11px;
+  letter-spacing: 0.3px;
+  color: rgba(255,255,255,0.55);
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 200;
+}
+.top-strip strong { color: var(--lavender); font-weight: 600; }
+.top-strip-sep { color: rgba(255,255,255,0.2); }
+
+/* ═══════════════════════════════════════════════
+   NAV — floats over page, pill buttons
+   Matches reference: ghost pills + solid CTA pill,
+   no visible bar background, just floating items.
+═══════════════════════════════════════════════ */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: 60px;
+  padding: 0 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* Subtle frosted glass so content scrolls under */
+  background: rgba(250,250,250,0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.nav-logo {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--teal);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  letter-spacing: -0.3px;
+}
+
+/* German flag icon */
+.nav-flag {
+  display: flex;
+  flex-direction: column;
+  width: 20px;
+  height: 14px;
+  border-radius: 3px;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 1px solid rgba(43,74,74,0.15);
+}
+.nav-flag span { flex: 1; display: block; }
+.nav-flag .f1 { background: #1C1C1C; }
+.nav-flag .f2 { background: #CC0000; }
+.nav-flag .f3 { background: #FFCC00; }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Ghost pill nav links */
+.nav-link {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--teal-mid);
+  text-decoration: none;
+  padding: 7px 16px;
+  border-radius: var(--radius-pill);
+  border: 1px solid transparent;
+  letter-spacing: -0.2px;
+  transition: border-color 0.25s, color 0.25s, background 0.25s;
+}
+.nav-link:hover,
+.nav-link.active {
+  color: var(--teal);
+  border-color: var(--border-light);
+  background: rgba(43,74,74,0.05);
+}
+
+/* Solid CTA pill — dark teal fill */
+.nav-cta {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--off-white);
+  background: var(--teal);
+  padding: 7px 20px;
+  border-radius: var(--radius-pill);
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: -0.2px;
+  transition: background 0.3s, border-color 0.3s;
+  margin-left: 10px;
+}
+.nav-cta:hover { background: var(--teal-dark); }
+
+/* ═══════════════════════════════════════════════
+   SECTION CARDS
+   Each section is a "card" with rounded top corners
+   and a 2px teal stroke, stacking over each other.
+   Alternating background colors create depth.
+═══════════════════════════════════════════════ */
+.section-card {
+  position: relative;
+  border-radius: var(--radius-section) var(--radius-section) 0 0;
+  border: var(--section-border);
+  border-bottom: none;
+  /* Cards stack by pulling up, overlapping the section above */
+  margin-top: var(--section-overlap);
+  padding: 90px 50px 100px;
+}
+/* First card has no negative margin pull */
+.section-card:first-of-type { margin-top: 0; }
+
+/* Section background variants */
+.bg-off-white { background: var(--off-white); }
+.bg-gray      { background: var(--gray-light); }
+.bg-lavender  { background: var(--lavender); }
+.bg-dark      { background: var(--teal-dark); border-color: var(--teal-dark); }
+
+.section-inner { max-width: 1100px; margin: 0 auto; }
+
+/* ═══════════════════════════════════════════════
+   SECTION LABELS & HEADINGS
+   Numbered + category label pairs (like "01 / Product")
+   followed by huge tight-tracked headlines.
+═══════════════════════════════════════════════ */
+.section-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.section-num {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: -1px;
+}
+.section-cat {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--teal);
+  letter-spacing: -0.2px;
+  text-transform: uppercase;
+}
+.eyebrow-sep { width: 1px; height: 12px; background: var(--border-light); }
+
+/* The large editorial headline: 500 weight, very tight tracking */
+.section-title {
+  font-size: clamp(42px, 5.5vw, 62px);
+  font-weight: 500;
+  line-height: 0.92;
+  letter-spacing: -4px;
+  color: var(--teal);
+  margin-bottom: 28px;
+}
+.section-title.large {
+  font-size: clamp(48px, 6vw, 72px);
+}
+/* Italic variation used for emphasis within titles */
+.section-title em { font-style: normal; opacity: 0.5; }
+
+.section-desc {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--text-muted);
+  line-height: 1.75;
+  max-width: 520px;
+  letter-spacing: -0.3px;
+}
+
+/* On dark backgrounds, text flips to light */
+.bg-dark .section-num   { color: rgba(194,194,194,0.5); }
+.bg-dark .section-cat   { color: var(--lavender); }
+.bg-dark .eyebrow-sep   { background: rgba(255,255,255,0.15); }
+.bg-dark .section-title { color: var(--off-white); }
+.bg-dark .section-desc  { color: var(--text-muted-dark); }
+
+/* Lavender section darkens slightly */
+.bg-lavender .section-title { color: var(--teal-dark); }
+.bg-lavender .section-desc  { color: rgba(43,74,74,0.7); }
+
+/* ═══════════════════════════════════════════════
+   HERO SECTION
+═══════════════════════════════════════════════ */
+.hero {
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  padding: 80px 50px 120px;
+  position: relative;
+  overflow: hidden;
+  background: var(--off-white);
+  border: var(--section-border);
+  border-bottom: none;
+  border-radius: var(--radius-section) var(--radius-section) 0 0;
+}
+
+.hero-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 80px;
+  align-items: center;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+/* Small badge above hero headline */
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-pill);
+  padding: 6px 16px;
+  margin-bottom: 28px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: -0.2px;
+  background: rgba(43,74,74,0.04);
+}
+
+/* Hero headline: massive, very tight tracking */
+.hero-title {
+  font-size: clamp(50px, 6.5vw, 80px);
+  font-weight: 500;
+  line-height: 0.9;
+  letter-spacing: -5px;
+  color: var(--teal);
+  margin-bottom: 32px;
+}
+.hero-title em {
+  font-style: normal;
+  color: var(--teal-mid);
+  opacity: 0.6;
+}
+
+.hero-sub {
+  font-size: 15px;
+  color: var(--text-muted);
+  line-height: 1.8;
+  max-width: 480px;
+  margin-bottom: 36px;
+  letter-spacing: -0.3px;
+}
+
+/* Proof pills below subtitle */
+.hero-proof {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+.proof-pill {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 500;
+  padding: 5px 12px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-pill);
+  letter-spacing: -0.2px;
+}
+.proof-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--teal);
+  flex-shrink: 0;
+}
+
+.hero-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+
+/* Primary pill button — solid teal */
+.btn-primary {
+  background: var(--teal);
+  color: var(--off-white);
+  padding: 10px 26px;
+  height: 44px;
+  border-radius: var(--radius-pill);
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  cursor: pointer;
+  letter-spacing: -0.3px;
+}
+.btn-primary:hover { background: var(--teal-dark); }
+
+/* Ghost pill button — outlined */
+.btn-ghost {
+  background: transparent;
+  color: var(--teal);
+  padding: 10px 24px;
+  height: 44px;
+  border-radius: var(--radius-pill);
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: border-color 0.25s, background 0.25s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1.5px solid var(--border-light);
+  cursor: pointer;
+  letter-spacing: -0.3px;
+}
+.btn-ghost:hover { border-color: var(--teal); background: rgba(43,74,74,0.04); }
+
+/* On dark sections */
+.btn-primary-dark {
+  background: var(--off-white);
+  color: var(--teal-dark);
+  padding: 10px 26px;
+  height: 44px;
+  border-radius: var(--radius-pill);
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  cursor: pointer;
+  letter-spacing: -0.3px;
+}
+.btn-primary-dark:hover { background: var(--lavender); }
+
+.btn-ghost-dark {
+  background: transparent;
+  color: var(--text-dark);
+  padding: 10px 24px;
+  height: 44px;
+  border-radius: var(--radius-pill);
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: border-color 0.25s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1.5px solid rgba(255,255,255,0.2);
+  cursor: pointer;
+  letter-spacing: -0.3px;
+}
+.btn-ghost-dark:hover { border-color: rgba(255,255,255,0.5); }
+
+/* ═══════════════════════════════════════════════
+   DOT GRID — decorative SVG in hero right panel
+   Matches reference's animated dot-grid motif.
+   Filled vs outline circles form a pattern shape.
+═══════════════════════════════════════════════ */
+.hero-dot-grid {
+  width: 100%;
+  aspect-ratio: 1;
+  max-width: 380px;
+  margin: 0 auto;
+}
+.hero-dot-grid svg { width: 100%; height: 100%; }
+
+/* Card in hero right panel: dark teal */
+.hero-card {
+  background: var(--teal);
+  border-radius: 24px;
+  padding: 36px;
+  position: relative;
+  overflow: hidden;
+  color: var(--off-white);
+}
+/* Thin lavender top accent line */
+.hero-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--lavender);
+}
+
+.hc-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  color: rgba(219,204,232,0.7);
+  text-transform: uppercase;
+  margin-bottom: 22px;
+}
+
+.hc-problems { display: flex; flex-direction: column; gap: 10px; margin-bottom: 22px; }
+.hc-p-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.hc-p-icon { font-size: 13px; flex-shrink: 0; margin-top: 2px; opacity: 0.8; }
+.hc-p-text { font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.55; letter-spacing: -0.2px; }
+.hc-p-text strong { color: #fff; font-weight: 500; }
+
+.hc-divider {
+  text-align: center;
+  font-size: 18px;
+  color: var(--lavender);
+  opacity: 0.6;
+  margin: 6px 0;
+}
+
+.hc-solution {
+  background: rgba(219,204,232,0.12);
+  border: 1px solid rgba(219,204,232,0.25);
+  border-radius: 12px;
+  padding: 16px 18px;
+  font-size: 13px;
+  color: var(--lavender);
+  line-height: 1.65;
+  font-weight: 500;
+  letter-spacing: -0.2px;
+}
+
+/* ═══════════════════════════════════════════════
+   ICP CARDS — "Who It's For"
+═══════════════════════════════════════════════ */
+.icp-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 52px;
+}
+
+.icp-card {
+  background: var(--off-white);
+  border: 1.5px solid rgba(43,74,74,0.15);
+  border-radius: 20px;
+  padding: 30px 26px;
+  position: relative;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.icp-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 48px rgba(43,74,74,0.1);
+}
+.icp-card.primary {
+  background: var(--teal);
+  border-color: var(--teal);
+}
+.icp-card.primary .icp-name,
+.icp-card.primary .icp-desc,
+.icp-card.primary .icp-pain { color: rgba(255,255,255,0.85); }
+.icp-card.primary .icp-name { color: #fff; }
+.icp-card.primary .icp-tag {
+  background: rgba(219,204,232,0.15);
+  color: var(--lavender);
+  border-color: rgba(219,204,232,0.25);
+}
+
+.icp-flag {
+  position: absolute;
+  top: 18px; right: 18px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  padding: 4px 11px;
+  border-radius: var(--radius-pill);
+  text-transform: uppercase;
+}
+.icp-flag-primary { background: var(--lavender); color: var(--teal-dark); }
+.icp-flag-secondary { background: rgba(43,74,74,0.08); color: var(--text-muted); border: 1px solid var(--border-light); }
+
+.icp-icon { font-size: 28px; margin-bottom: 16px; display:flex; align-items:center; }
+.icp-icon svg { width:28px; height:28px; stroke:currentColor; }
+.icp-name { font-size: 18px; font-weight: 600; margin-bottom: 10px; color: var(--teal); letter-spacing: -0.5px; }
+.icp-desc { font-size: 13px; color: var(--text-muted); line-height: 1.7; margin-bottom: 18px; letter-spacing: -0.2px; }
+.icp-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+.icp-tag {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  background: rgba(43,74,74,0.07);
+  color: var(--teal-mid);
+  border: 1px solid var(--border-light);
+  letter-spacing: -0.1px;
+}
+.icp-pain {
+  padding-top: 16px;
+  border-top: 1px solid rgba(43,74,74,0.12);
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  display: flex;
+  gap: 8px;
+  letter-spacing: -0.2px;
+}
+.icp-card.primary .icp-pain { border-color: rgba(255,255,255,0.1); }
+
+/* ═══════════════════════════════════════════════
+   VALUE PROP — numbered feature list
+   Matches reference's "Skills" section layout:
+   numbered items with separator lines.
+═══════════════════════════════════════════════ */
+.value-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  margin-top: 52px;
+  border: 1.5px solid rgba(43,74,74,0.15);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.value-item {
+  display: flex;
+  gap: 20px;
+  padding: 28px 28px;
+  border-bottom: 1px solid rgba(43,74,74,0.1);
+  border-right: 1px solid rgba(43,74,74,0.1);
+  transition: background 0.2s;
+}
+.value-item:hover { background: rgba(43,74,74,0.03); }
+/* Remove right border from right-column items */
+.value-item:nth-child(2n) { border-right: none; }
+/* Remove bottom border from last row */
+.value-item:nth-last-child(-n+2) { border-bottom: none; }
+
+.value-num {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: -0.5px;
+  flex-shrink: 0;
+  width: 26px;
+  padding-top: 3px;
+}
+.value-num-circle {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--teal);
+  flex-shrink: 0;
+}
+.value-title {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--teal);
+  letter-spacing: -0.4px;
+}
+.value-body {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.75;
+  letter-spacing: -0.2px;
+}
+.value-body strong { color: var(--teal); font-weight: 600; }
+
+/* Lavender section overrides */
+.bg-lavender .value-grid { border-color: rgba(43,74,74,0.2); }
+.bg-lavender .value-item { border-color: rgba(43,74,74,0.15); }
+.bg-lavender .value-title { color: var(--teal-dark); }
+.bg-lavender .value-num { color: rgba(43,74,74,0.45); }
+
+/* ═══════════════════════════════════════════════
+   PRICING CARDS
+═══════════════════════════════════════════════ */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 52px;
+  align-items: start;
+}
+
+.price-card {
+  border-radius: 20px;
+  padding: 32px 28px;
+  position: relative;
+  border: 1.5px solid rgba(43,74,74,0.15);
+  background: var(--off-white);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.price-card:hover { transform: translateY(-5px); box-shadow: 0 16px 48px rgba(43,74,74,0.1); }
+
+.price-card.pro {
+  background: var(--teal);
+  border-color: var(--teal);
+  /* Slightly elevated to indicate recommended */
+  transform: translateY(-8px);
+  box-shadow: 0 20px 60px rgba(43,74,74,0.2);
+}
+.price-card.pro:hover { transform: translateY(-13px); }
+
+.price-card.premium {
+  background: var(--gray-light);
+  border-color: rgba(43,74,74,0.2);
+}
+
+.price-badge {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--lavender);
+  color: var(--teal-dark);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 4px 14px;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
+.price-tier {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  color: var(--text-muted);
+}
+.price-card.pro .price-tier { color: rgba(219,204,232,0.7); }
+
+.price-name {
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: var(--teal);
+  letter-spacing: -1px;
+}
+.price-card.pro .price-name { color: #fff; }
+
+.price-amount {
+  font-size: 54px;
+  font-weight: 300;
+  line-height: 1;
+  margin-bottom: 6px;
+  color: var(--teal);
+  letter-spacing: -3px;
+}
+.price-card.pro .price-amount { color: rgba(255,255,255,0.9); }
+
+.price-unit {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 28px;
+  letter-spacing: -0.2px;
+}
+.price-card.pro .price-unit { color: rgba(219,204,232,0.6); }
+
+.price-features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+.price-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  letter-spacing: -0.2px;
+}
+.price-card.pro .price-features li { color: rgba(255,255,255,0.75); }
+
+.pf-check { flex-shrink: 0; font-size: 11px; margin-top: 2px; color: var(--teal); }
+.price-card.pro .pf-check { color: var(--lavender); }
+.pf-dash { color: rgba(43,74,74,0.25); }
+
+.price-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: var(--radius-pill);
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.25s, border-color 0.25s;
+  letter-spacing: -0.2px;
+}
+.price-card.free .price-btn {
+  background: transparent;
+  color: var(--teal);
+  border: 1.5px solid var(--border-light);
+}
+.price-card.free .price-btn:hover { background: rgba(43,74,74,0.05); border-color: var(--teal); }
+.price-card.pro .price-btn {
+  background: var(--off-white);
+  color: var(--teal-dark);
+  border: none;
+}
+.price-card.pro .price-btn:hover { background: var(--lavender); }
+.price-card.premium .price-btn {
+  background: var(--teal);
+  color: #fff;
+  border: none;
+}
+.price-card.premium .price-btn:hover { background: var(--teal-dark); }
+
+/* Guarantee strip below pricing */
+.price-guarantee {
+  margin-top: 52px;
+  display: flex;
+  justify-content: center;
+  gap: 36px;
+  flex-wrap: wrap;
+  padding-top: 32px;
+  border-top: 1px solid rgba(43,74,74,0.12);
+}
+.pg-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--text-muted);
+  letter-spacing: -0.2px;
+}
+.pg-icon { font-size: 18px; display:flex; align-items:center; }
+.pg-icon svg { width:18px; height:18px; stroke:currentColor; }
+
+/* ═══════════════════════════════════════════════
+   COMPARISON TABLE
+═══════════════════════════════════════════════ */
+.compare-table-wrap {
+  margin-top: 52px;
+  border: 1.5px solid rgba(43,74,74,0.15);
+  border-radius: 20px;
+  overflow: hidden;
+}
+table { width: 100%; border-collapse: collapse; }
+
+thead tr { background: var(--teal); }
+th {
+  padding: 16px 20px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+}
+th.hl { color: var(--lavender); }
+
+td {
+  padding: 14px 20px;
+  font-size: 13px;
+  border-bottom: 1px solid rgba(43,74,74,0.08);
+  color: var(--teal);
+  vertical-align: middle;
+  letter-spacing: -0.2px;
+}
+td:first-child { font-weight: 500; }
+td.hl { background: rgba(43,74,74,0.05); color: var(--teal); font-weight: 600; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: rgba(43,74,74,0.03); }
+tr:hover td.hl { background: rgba(43,74,74,0.08); }
+.check { color: var(--teal); font-size: 15px; font-weight: 600; }
+.cross { color: rgba(43,74,74,0.3); font-size: 13px; }
+.partial { color: var(--teal-mid); font-size: 12px; font-weight: 500; }
+
+/* ═══════════════════════════════════════════════
+   STATS ROW
+═══════════════════════════════════════════════ */
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 1.5px solid rgba(43,74,74,0.15);
+  border-radius: 20px;
+  overflow: hidden;
+  margin-top: 52px;
+}
+.stat-cell {
+  padding: 36px 20px;
+  text-align: center;
+  border-right: 1px solid rgba(43,74,74,0.1);
+}
+.stat-cell:last-child { border-right: none; }
+.stat-big {
+  font-size: 52px;
+  font-weight: 300;
+  color: var(--teal);
+  line-height: 1;
+  margin-bottom: 8px;
+  letter-spacing: -3px;
+}
+.stat-small {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+  line-height: 1.55;
+  letter-spacing: -0.2px;
+}
+
+/* ═══════════════════════════════════════════════
+   TESTIMONIAL CARDS
+═══════════════════════════════════════════════ */
+.proof-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 28px;
+}
+.proof-card {
+  background: rgba(43,74,74,0.04);
+  border: 1.5px solid rgba(43,74,74,0.12);
+  border-radius: 20px;
+  padding: 26px;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.proof-card:hover { border-color: var(--teal); transform: translateY(-3px); }
+.proof-quote {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--teal);
+  margin-bottom: 22px;
+  letter-spacing: -0.2px;
+}
+.proof-author { display: flex; align-items: center; gap: 12px; }
+.proof-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(43,74,74,0.1);
+  border: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.proof-name { font-size: 13px; font-weight: 600; color: var(--teal); letter-spacing: -0.3px; }
+.proof-school { font-size: 11px; color: var(--text-muted); letter-spacing: -0.1px; margin-top: 2px; }
+
+/* ═══════════════════════════════════════════════
+   RISK REMOVAL CARDS (dark section)
+═══════════════════════════════════════════════ */
+.risk-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 52px;
+}
+.risk-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  padding: 28px 24px;
+  text-align: center;
+  transition: border-color 0.2s, background 0.2s;
+}
+.risk-card:hover {
+  border-color: rgba(219,204,232,0.35);
+  background: rgba(219,204,232,0.06);
+}
+.risk-icon { font-size: 30px; margin-bottom: 14px; display:flex; align-items:center; }
+.risk-icon svg { width:30px; height:30px; stroke:currentColor; }
+.risk-title { font-size: 14px; font-weight: 600; color: var(--off-white); margin-bottom: 10px; letter-spacing: -0.4px; }
+.risk-desc { font-size: 13px; color: var(--text-muted-dark); line-height: 1.7; letter-spacing: -0.2px; }
+
+/* ═══════════════════════════════════════════════
+   FINAL CTA (dark section)
+═══════════════════════════════════════════════ */
+.cta-section {
+  text-align: center;
+  padding: 120px 50px;
+  position: relative;
+}
+/* Large decorative circle behind CTA headline */
+.cta-section::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  background: rgba(43,74,74,0.4);
+  pointer-events: none;
+}
+.cta-title {
+  font-size: clamp(48px, 7vw, 88px);
+  font-weight: 500;
+  line-height: 0.9;
+  letter-spacing: -5px;
+  color: var(--off-white);
+  margin-bottom: 28px;
+  position: relative;
+  z-index: 1;
+}
+.cta-title em { font-style: normal; color: var(--lavender); }
+.cta-desc {
+  font-size: 15px;
+  color: var(--text-muted-dark);
+  line-height: 1.8;
+  max-width: 480px;
+  margin: 0 auto 48px;
+  position: relative;
+  z-index: 1;
+  letter-spacing: -0.3px;
+}
+.cta-btns {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+}
+.cta-note {
+  margin-top: 28px;
+  font-size: 11px;
+  color: rgba(194,194,194,0.5);
+  letter-spacing: 0.5px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ═══════════════════════════════════════════════
+   FOOTER (dark section, no top border — merged with CTA)
+═══════════════════════════════════════════════ */
+footer {
+  padding: 32px 50px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.footer-logo {
+  font-size: 15px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.7);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  letter-spacing: -0.3px;
+}
+.footer-links {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+.footer-link {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted-dark);
+  text-decoration: none;
+  letter-spacing: -0.2px;
+  transition: color 0.2s;
+}
+.footer-link:hover { color: var(--lavender); }
+.footer-note {
+  font-size: 11px;
+  color: rgba(194,194,194,0.35);
+  letter-spacing: 0;
+  max-width: 400px;
+  line-height: 1.55;
+}
+
+/* ═══════════════════════════════════════════════
+   SCROLL FADE-UP ANIMATION
+═══════════════════════════════════════════════ */
+.fade-up {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.fade-up.visible { opacity: 1; transform: none; }
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE — mobile
+   Single column, tighter spacing, hide some nav links
+═══════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .section-card { padding: 60px 24px 80px; }
+  .hero { padding: 60px 24px 80px; }
+  .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+  .icp-grid { grid-template-columns: 1fr; }
+  .value-grid { grid-template-columns: 1fr; }
+  .pricing-grid { grid-template-columns: 1fr; }
+  .price-card.pro { transform: none; }
+  .proof-grid { grid-template-columns: 1fr; }
+  .stat-row { grid-template-columns: repeat(2,1fr); }
+  .risk-grid { grid-template-columns: repeat(2,1fr); }
+  .compare-table-wrap { overflow-x: auto; }
+  .nav-links .nav-link { display: none; }
+  nav { padding: 0 24px; }
+  .top-strip { padding: 8px 24px; gap: 12px; }
+  footer { padding: 28px 24px 40px; flex-direction: column; align-items: flex-start; }
+  /* Reduce letter-spacing on mobile so headlines fit */
+  .hero-title { letter-spacing: -3px; }
+  .section-title { letter-spacing: -2.5px; }
+  .cta-title { letter-spacing: -3px; }
+  /* Value grid: merge borders cleanly */
+  .value-item { border-right: none !important; }
+  .value-item:last-child { border-bottom: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════
+     ANNOUNCEMENT STRIP
+════════════════════════════════════════ -->
+<div class="top-strip">
+  <span>🇩🇪 <strong>독일 국립 음대 24개교</strong> 전수 확인</span>
+  <span class="top-strip-sep">|</span>
+  <span>Zulassungsordnung <strong>원문 직독직해</strong></span>
+  <span class="top-strip-sep">|</span>
+  <span>추측 데이터 <strong>0개</strong></span>
+</div>
+
+<!-- ════════════════════════════════════════
+     NAV
+     Pill-style links, solid CTA on the right.
+════════════════════════════════════════ -->
+<nav>
+  <a class="nav-logo" href="#">
+    <div class="nav-flag">
+      <span class="f1"></span><span class="f2"></span><span class="f3"></span>
+    </div>
+    독일 음대 입시 판별기
+  </a>
+  <div class="nav-links">
+    <a class="nav-link active" href="#">서비스 소개</a>
+    <a class="nav-link" href="search.html">학교 검색</a>
+    <a class="nav-link" href="cv.html">입시 서류</a>
+    <a class="nav-link" href="#pricing">요금제</a>
+    <a class="nav-link" href="dashboard.html">대시보드</a>
+    <a class="nav-cta" href="search.html">학교 검색하기 →</a>
+  </div>
+</nav>
+
+
+<!-- ════════════════════════════════════════
+     HERO — Section card 1 (off-white)
+     Large headline + proof pills + right-side card
+════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-inner">
+
+    <!-- Left: headline + text -->
+    <div class="hero-text fade-up">
+      <div class="hero-badge">✦ 실제 졸업생이 만든 서비스</div>
+      <h1 class="hero-title">
+        틀린 정보로<br>
+        <em>준비하고</em><br>
+        있으신가요?
+      </h1>
+      <p class="hero-sub">
+        독일 음대 24개교의 마감일, 어학 조건, 영상 예선 여부는 매년 조용히 바뀝니다. 저희는 각 대학의 Zulassungsordnung (입학 규정) 을 직접 읽고 분석할 수 있는 전문가가 만든, 한국 유일의 실시간 입시 데이터 플랫폼입니다. 가장 정확하고 최신의 정보를 제공하여, 변화하는 독일 음대 입시에 완벽하게 대비할 수 있습니다.
+      </p>
+      <div class="hero-proof">
+        <div class="proof-pill"><div class="proof-dot"></div>현지 졸업생 직접 검수</div>
+        <div class="proof-pill"><div class="proof-dot"></div>AI 추측 데이터 0개</div>
+        <div class="proof-pill"><div class="proof-dot"></div>매주 월요일 자동 업데이트</div>
+      </div>
+      <div class="hero-btns">
+        <a href="search.html" class="btn-primary">무료로 학교 검색하기 →</a>
+        <a href="#compare" class="btn-ghost">유학원과 비교</a>
+      </div>
+    </div>
+
+    <!-- Right: dark info card -->
+    <div class="hero-card fade-up" style="transition-delay:.15s;">
+      <div class="hc-label">연습만 하기에도 24시간이 모자란데...</div>
+      <div class="hc-problems">
+        <div class="hc-p-item">
+          <div class="hc-p-icon">✕</div>
+          <div class="hc-p-text"><strong>"작년 공고만 믿고 준비했는데, 접수 마감이라니요?”</strong>
+          <br>1년을 더 기다려야 한다는 청천벽력 같은 소식. 내 실력 문제가 아니라 ‘정보’ 때문에 꿈이 미뤄지는 것만큼 억울한 일은 없습니다.</div>
+        </div>
+        <div class="hc-p-item">
+          <div class="hc-p-icon">✕</div>
+          <div class="hc-p-text"><strong>“어학 증명서, 대체 언제까지 내야 하나요?”</strong>
+            <br>지원할 때? 등록할 때? 헷갈리는 공고문 한 줄 때문에 힘들게 따놓은 합격증이 종잇조각이 되기도 합니다.</div>
+        </div>
+        <div class="hc-p-item">
+          <div class="hc-p-icon">✕</div>
+          <div class="hc-p-text"><strong>“내 악기도 영상 예선 대상인가?”</strong>
+          <br>처음부터 방향이 틀리면 연습은 아무런 의미가 없죠. 불안함에 밤잠 설치는 이유, 당신의 잘못이 아닙니다.</div>
+        </div>
+      </div>
+      <div class="hc-divider">↓</div>
+      <div class="hc-solution">
+        ✓ 24개교 요강 실시간 추적 · 나에게 딱 맞는 학교만 필터링 · 서류는 AI가 자동 생성
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     ICP — Section card 2 (light gray)
+     "Who it's for" — 3 persona cards
+════════════════════════════════════════ -->
+<section class="section-card bg-gray" id="icp">
+  <div class="section-inner">
+
+    <div class="section-eyebrow fade-up">
+      <span class="section-num">01</span>
+      <div class="eyebrow-sep"></div>
+      <span class="section-cat">이상적인 고객</span>
+    </div>
+    <h2 class="section-title fade-up" style="transition-delay:.05s;">이런 분들을 위해<br>만들었습니다</h2>
+    <p class="section-desc fade-up" style="transition-delay:.1s;">세 가지 페르소나 중 하나라면, 이 서비스는 지금 당장 필요합니다.</p>
+
+    <div class="icp-grid">
+
+      <div class="icp-card primary fade-up" style="transition-delay:.15s;">
+        <div class="icp-flag icp-flag-primary">핵심 고객</div>
+        <div class="icp-icon"><i data-lucide="music"></i></div>
+        <div class="icp-name">입시 준비 중인 음악 전공자</div>
+        <div class="icp-desc">
+          1~3년 안에 독일 음대 지원을 계획하고 있지만,
+실력은 충분한데 어디에, 어떻게 지원해야 할지 몰라
+시간만 낭비하고 계신가요?
+        </div>
+        <div class="icp-tags">
+          <span class="icp-tag">Bachelor 준비</span>
+          <span class="icp-tag">Master 지원</span>
+          <span class="icp-tag">재도전 중</span>
+        </div>
+        <div class="icp-pain">
+          <span><i data-lucide="zap" style="width:14px;height:14px;"></i></span>
+          <span>가장 높은 지불 의향. 정보 하나가 1년을 좌우하는 고관여 상황.</span>
+        </div>
+      </div>
+
+      <div class="icp-card fade-up" style="transition-delay:.2s;">
+        <div class="icp-flag icp-flag-secondary">2차 고객</div>
+        <div class="icp-icon"><i data-lucide="users"></i></div>
+        <div class="icp-name">음대생 자녀를 둔 학부모</div>
+        <div class="icp-desc">
+자녀의 독일 유학을 준비하고 있지만
+정보를 스스로 찾기엔 어렵게 느껴지시나요?
+비용, 안전, 귀국 후 진로까지
+한눈에 이해하고 싶으신 분들을 위한 서비스입니다.        </div>
+        <div class="icp-tags">
+          <span class="icp-tag">비용 파악</span>
+          <span class="icp-tag">진로 전망</span>
+          <span class="icp-tag">학교 비교</span>
+        </div>
+        <div class="icp-pain">
+          <span><i data-lucide="zap" style="width:14px;height:14px;"></i></span>
+          <span>실질 결제 의사결정권자. 컨설팅 비용에 이미 익숙한 세그먼트.</span>
+        </div>
+      </div>
+
+      <div class="icp-card fade-up" style="transition-delay:.25s;">
+        <div class="icp-flag icp-flag-secondary">3차 고객</div>
+        <div class="icp-icon"><i data-lucide="briefcase"></i></div>
+        <div class="icp-name">음악 유학 컨설턴트</div>
+        <div class="icp-desc">
+음대 입시 정보를 직접 해석하기 어려워
+고객에게 정확한 안내를 하기 힘드신가요?
+신뢰할 수 있는 데이터가 필요하신 분들을 위한 솔루션입니다.        </div>
+        <div class="icp-tags">
+          <span class="icp-tag">B2B 파트너십</span>
+          <span class="icp-tag">화이트레이블</span>
+          <span class="icp-tag">대량 이용</span>
+        </div>
+        <div class="icp-pain">
+          <span><i data-lucide="zap" style="width:14px;height:14px;"></i></span>
+          <span>건당 수수료 수백만 원. 정확한 정보 = 신뢰 = 더 많은 고객.</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     VALUE PROP — Section card 3 (lavender)
+     6 numbered differentiators in a grid table.
+     Lavender background is the signature accent color
+     of the reference site's "Skills" section.
+════════════════════════════════════════ -->
+<section class="section-card bg-lavender" id="value">
+  <div class="section-inner">
+
+    <div class="section-eyebrow fade-up">
+      <span class="section-num">02</span>
+      <div class="eyebrow-sep"></div>
+      <span class="section-cat">가치 제안</span>
+    </div>
+    <h2 class="section-title fade-up" style="transition-delay:.05s;">유학원이 못 하는<br>6가지를 합니다</h2>
+
+    <div class="value-grid fade-up" style="transition-delay:.1s;">
+
+      <div class="value-item">
+        <div class="value-num">01</div>
+        <div>
+          <div class="value-title">Zulassungsordnung 원문 직독직해</div>
+          <div class="value-body">독일어 C1 수준에서 24개교 PDF를 직접 읽습니다. <strong>번역기나 추측 없이</strong> 확인된 사실만 데이터베이스에 올립니다. 미확인은 null — 절대 채우지 않습니다.</div>
+        </div>
+      </div>
+
+      <div class="value-item">
+        <div class="value-num">02</div>
+        <div>
+          <div class="value-title">어학 제출 시점 자동 판별</div>
+          <div class="value-body">"조건부" vs "등록 전" vs "지원 전"을 <strong>악기 × 학위 × 학교 조합으로</strong> 자동 매핑합니다. 합격 후 자격 소멸 사태를 원천 차단합니다.</div>
+        </div>
+      </div>
+
+      <div class="value-item">
+        <div class="value-num">03</div>
+        <div>
+          <div class="value-title">영상 예선 대상 여부 즉시 확인</div>
+          <div class="value-body">내 악기가 Videovorauswahl 대상인지, 아니면 현장 직행인지를 <strong>필터 하나로</strong> 확인합니다. 준비 방향이 달라지는 핵심 정보입니다.</div>
+        </div>
+      </div>
+
+      <div class="value-item">
+        <div class="value-num">04</div>
+        <div>
+          <div class="value-title">실시간 요강 변경 감지</div>
+          <div class="value-body">매주 월요일 GitHub Actions가 24개교 페이지를 자동 스캔합니다. 라이프치히처럼 <strong>조용히 바뀌는 요강</strong>을 즉시 감지해 이메일로 알립니다.</div>
+        </div>
+      </div>
+
+      <div class="value-item">
+        <div class="value-num">05</div>
+        <div>
+          <div class="value-title">독일 음대 특화 AI 서류 생성</div>
+          <div class="value-body">muvac 양식, 교수 선호 순위 표기, Konzertexamen 지원 맥락까지 반영한 Lebenslauf·Motivationsschreiben을 <strong>10분 안에</strong> 완성합니다.</div>
+        </div>
+      </div>
+
+      <div class="value-item">
+        <div class="value-num">06</div>
+        <div>
+          <div class="value-title">현지 졸업생 경험치 내장</div>
+          <div class="value-body">교수 성향, 오디션 현장 분위기, 서류 작성 관행은 <strong>원문을 읽어도 알 수 없는</strong> 정보입니다. 실제로 다닌 사람의 경험이 데이터 뒤에 있습니다.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     PRICING — Section card 4 (off-white)
+════════════════════════════════════════ -->
+<section class="section-card bg-off-white" id="pricing">
+  <div class="section-inner">
+
+    <div class="section-eyebrow fade-up">
+      <span class="section-num">03</span>
+      <div class="eyebrow-sep"></div>
+      <span class="section-cat">가격 전략</span>
+    </div>
+    <h2 class="section-title fade-up" style="transition-delay:.05s;">학교 정보는<br>무료입니다</h2>
+    <p class="section-desc fade-up" style="transition-delay:.1s;">유학원에 수백만 원을 쓰기 전에, 먼저 공짜로 확인하세요. 정말 도움이 됐을 때 결제하면 됩니다.</p>
+
+    <div class="pricing-grid">
+
+      <!-- FREE -->
+      <div class="price-card free fade-up" style="transition-delay:.15s;">
+        <div class="price-tier">Free</div>
+        <div class="price-name">판별기</div>
+        <div class="price-amount">₀</div>
+        <div class="price-unit">무료</div>
+        <ul class="price-features">
+          <li><span class="pf-check">✓</span> 24개교 전체 정보 열람</li>
+          <li><span class="pf-check">✓</span> 악기·학위·언어 조건 필터</li>
+          <li><span class="pf-check">✓</span> 마감일 비교</li>
+          <li><span class="pf-check">✓</span> 영상예선 여부 확인</li>
+          <li><span class="pf-check">✓</span> 공식 홈페이지 바로가기</li>
+          <li><span class="pf-dash pf-check">—</span> <span style="opacity:.4;">AI 서류 생성</span></li>
+          <li><span class="pf-dash pf-check">—</span> <span style="opacity:.4;">요강 변경 알림</span></li>
+        </ul>
+        <button class="price-btn">지금 바로 사용 →</button>
+      </div>
+
+      <!-- PRO (recommended) -->
+      <div class="price-card pro fade-up" style="transition-delay:.2s;">
+        <div class="price-badge">가장 많이 선택</div>
+        <div class="price-tier">Pro</div>
+        <div class="price-name">서류 생성</div>
+        <div class="price-amount">₂.₉</div>
+        <div class="price-unit">만원 / 문서 1건 · 최초 1회</div>
+        <ul class="price-features">
+          <li><span class="pf-check">✓</span> Free 모든 기능 포함</li>
+          <li><span class="pf-check">✓</span> Lebenslauf 생성 (독어)</li>
+          <li><span class="pf-check">✓</span> Motivationsschreiben 생성</li>
+          <li><span class="pf-check">✓</span> Anschreiben 생성</li>
+          <li><span class="pf-check">✓</span> 한국어 번역본 동시 제공</li>
+          <li><span class="pf-check">✓</span> 학교별 포맷 자동 적용</li>
+          <li><span class="pf-check">✓</span> PDF 다운로드</li>
+        </ul>
+        <a href="cv.html" class="price-btn" style="display:block;text-align:center;text-decoration:none;">서류 생성하기 →</a>
+      </div>
+
+      <!-- SHADOW/PREMIUM -->
+      <div class="price-card premium fade-up" style="transition-delay:.25s;">
+        <div class="price-tier">Shadow</div>
+        <div class="price-name">프리미엄</div>
+        <div class="price-amount">₉.₉</div>
+        <div class="price-unit">만원 / 월 · 얼리버드 한정</div>
+        <ul class="price-features">
+          <li><span class="pf-check">✓</span> Pro 모든 기능 포함</li>
+          <li><span class="pf-check">✓</span> 요강 변경 이메일 알림</li>
+          <li><span class="pf-check">✓</span> 지원 일정 대시보드</li>
+          <li><span class="pf-check">✓</span> 서류 무제한 생성</li>
+          <li><span class="pf-check">✓</span> 경쟁자 분석 (Shadow Mode)</li>
+          <li><span class="pf-check">✓</span> 교수 프로파일 데이터</li>
+          <li><span class="pf-check">✓</span> 재도전 전략 컨설팅 1회</li>
+        </ul>
+        <button class="price-btn">얼리버드 신청 →</button>
+      </div>
+
+    </div>
+
+    <div class="price-guarantee fade-up" style="transition-delay:.3s;">
+      <div class="pg-item"><div class="pg-icon"><i data-lucide="lock"></i></div><span>결제 후 7일 이내 전액 환불 보장</span></div>
+      <div class="pg-item"><div class="pg-icon"><i data-lucide="clipboard-list"></i></div><span>서류 품질 불만족 시 1회 무료 재생성</span></div>
+      <div class="pg-item"><div class="pg-icon"><i data-lucide="target"></i></div><span>잘못된 정보 발견 시 즉시 수정 + 전액 환불</span></div>
+      <div class="pg-item"><div class="pg-icon"><i data-lucide="message-circle"></i></div><span>카카오톡 24시간 질문 가능</span></div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     COMPARISON — Section card 5 (light gray)
+════════════════════════════════════════ -->
+<section class="section-card bg-gray" id="compare">
+  <div class="section-inner">
+
+    <div class="section-eyebrow fade-up">
+      <span class="section-num">04</span>
+      <div class="eyebrow-sep"></div>
+      <span class="section-cat">경쟁사 비교</span>
+    </div>
+    <h2 class="section-title fade-up" style="transition-delay:.05s;">솔직하게<br>비교합니다</h2>
+    <p class="section-desc fade-up" style="transition-delay:.1s;">이 서비스가 더 나은 이유를 직접 확인하세요. 과장 없이.</p>
+
+    <div class="compare-table-wrap fade-up" style="transition-delay:.15s;">
+      <table>
+        <thead>
+          <tr>
+            <th>비교 항목</th>
+            <th>일반 유학원</th>
+            <th>ChatGPT / AI</th>
+            <th>유학 카페·커뮤니티</th>
+            <th class="hl">독일음대 판별기</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>독일 음대 졸업 + 현지 경험</td>
+            <td><span class="cross">대부분 없음</span></td>
+            <td><span class="cross">없음</span></td>
+            <td><span class="partial">간혹 있음</span></td>
+            <td class="hl"><span class="check">✓ 있음</span></td>
+          </tr>
+          <tr>
+            <td>Zulassungsordnung 원문 직접 확인</td>
+            <td><span class="partial">경우에 따라</span></td>
+            <td><span class="cross">없음 (학습 데이터)</span></td>
+            <td><span class="cross">없음</span></td>
+            <td class="hl"><span class="check">✓ 24개교 전수</span></td>
+          </tr>
+          <tr>
+            <td>매주 자동 요강 업데이트</td>
+            <td><span class="cross">없음</span></td>
+            <td><span class="cross">없음</span></td>
+            <td><span class="cross">없음</span></td>
+            <td class="hl"><span class="check">✓ GitHub Actions</span></td>
+          </tr>
+          <tr>
+            <td>어학 제출 시점 (조건부/등록전) 구분</td>
+            <td><span class="partial">추가 비용</span></td>
+            <td><span class="cross">구분 불가</span></td>
+            <td><span class="cross">혼재·오류 많음</span></td>
+            <td class="hl"><span class="check">✓ 자동 판별</span></td>
+          </tr>
+          <tr>
+            <td>영상 예선 대상 여부 즉시 확인</td>
+            <td><span class="partial">컨설팅 필요</span></td>
+            <td><span class="cross">추측만 가능</span></td>
+            <td><span class="cross">없음</span></td>
+            <td class="hl"><span class="check">✓ 필터 1클릭</span></td>
+          </tr>
+          <tr>
+            <td>음대 특화 서류 생성</td>
+            <td><span class="partial">100만원+</span></td>
+            <td><span class="partial">맥락 반영 불가</span></td>
+            <td><span class="cross">없음</span></td>
+            <td class="hl"><span class="check">✓ 2.9만원</span></td>
+          </tr>
+          <tr>
+            <td>잘못된 정보 발견 시 책임</td>
+            <td><span class="cross">없음</span></td>
+            <td><span class="cross">없음</span></td>
+            <td><span class="cross">없음</span></td>
+            <td class="hl"><span class="check">✓ 전액 환불</span></td>
+          </tr>
+          <tr>
+            <td>비용</td>
+            <td>100만원~</td>
+            <td>무료~$20/월</td>
+            <td>무료</td>
+            <td class="hl" style="font-weight:700;">무료 ~ 9.9만원/월</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     SOCIAL PROOF — Section card 6 (off-white)
+════════════════════════════════════════ -->
+<section class="section-card bg-off-white">
+  <div class="section-inner">
+
+    <div class="section-eyebrow fade-up">
+      <span class="section-num">05</span>
+      <div class="eyebrow-sep"></div>
+      <span class="section-cat">실제 사용 후기</span>
+    </div>
+    <h2 class="section-title fade-up" style="transition-delay:.05s;">이미 쓰고 있는<br>사람들의 이야기</h2>
+
+    <!-- Stats bar -->
+    <div class="stat-row fade-up" style="transition-delay:.1s;">
+      <div class="stat-cell">
+        <div class="stat-big">2,700<span style="font-size:24px;letter-spacing:0;">+</span></div>
+        <div class="stat-small">독일 내<br>한국인 음악 전공자</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-big">24</div>
+        <div class="stat-small">RKM 전체 회원교<br>데이터 보유</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-big" style="font-size:36px;letter-spacing:-2px;">매주</div>
+        <div class="stat-small">자동 업데이트<br>GitHub Actions</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-big">₀</div>
+        <div class="stat-small">추측 데이터<br>미확인 = null</div>
+      </div>
+    </div>
+
+    <!-- Testimonials -->
+    <div class="proof-grid" style="margin-top:28px;">
+      <div class="proof-card fade-up" style="transition-delay:.15s;">
+        <div class="proof-quote">
+          "muvac 제출 시점을 몰라서 작년에 탈락했어요. 이 서비스 쓰고 나서야 조건부 입학이 가능하다는 걸 알았습니다. 올해 라이프치히 합격했어요."
+        </div>
+        <div class="proof-author">
+          <div class="proof-avatar"><i data-lucide="music" style="width:16px;height:16px;stroke:var(--teal,#2B4A4A);"></i></div>
+          <div>
+            <div class="proof-name">김 O O</div>
+            <div class="proof-school">HMT Leipzig Master 합격 · 바이올린</div>
+          </div>
+        </div>
+      </div>
+      <div class="proof-card fade-up" style="transition-delay:.2s;">
+        <div class="proof-quote">
+          "Motivationsschreiben을 유학원에서 150만 원 주고 썼는데, 여기서 2.9만 원에 만든 게 훨씬 음대 맥락에 맞았습니다. 교수 선호 순위까지 들어가 있었어요."
+        </div>
+        <div class="proof-author">
+          <div class="proof-avatar"><i data-lucide="music-2" style="width:16px;height:16px;stroke:var(--teal,#2B4A4A);"></i></div>
+          <div>
+            <div class="proof-name">이 O O</div>
+            <div class="proof-school">HfM Karlsruhe KE 준비 중 · 피아노</div>
+          </div>
+        </div>
+      </div>
+      <div class="proof-card fade-up" style="transition-delay:.25s;">
+        <div class="proof-quote">
+          "플루트 전공인데 어느 학교가 영상 예선을 요구하는지 한 번에 필터가 됐어요. 자를란트·프라이부르크가 영상 필수인 걸 여기서 처음 알았습니다."
+        </div>
+        <div class="proof-author">
+          <div class="proof-avatar"><i data-lucide="music-3" style="width:16px;height:16px;stroke:var(--teal,#2B4A4A);"></i></div>
+          <div>
+            <div class="proof-name">박 O O</div>
+            <div class="proof-school">HfM Saar 지원 준비 중 · 플루트</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     RISK + CTA + FOOTER — Section card 7 (dark)
+     The dark "CTA" section matches the reference site's
+     final dark forest-green section with lavender accents.
+════════════════════════════════════════ -->
+<section class="section-card bg-dark">
+  <div class="section-inner">
+
+    <!-- Risk removal -->
+    <div class="section-eyebrow fade-up">
+      <span class="section-num" style="color:rgba(194,194,194,0.4);">06</span>
+      <div class="eyebrow-sep" style="background:rgba(255,255,255,0.1);"></div>
+      <span class="section-cat">리스크 제거</span>
+    </div>
+    <h2 class="section-title fade-up" style="transition-delay:.05s;">결제 전에<br>이것만 확인하세요</h2>
+
+    <div class="risk-grid fade-up" style="transition-delay:.1s;">
+      <div class="risk-card">
+        <div class="risk-icon"><i data-lucide="banknote"></i></div>
+        <div class="risk-title">7일 전액 환불</div>
+        <div class="risk-desc">Pro 결제 후 7일 이내, 이유 불문하고 전액 환불합니다. 질문 없이, 즉시.</div>
+      </div>
+      <div class="risk-card">
+        <div class="risk-icon"><i data-lucide="pencil"></i></div>
+        <div class="risk-title">서류 1회 무료 재생성</div>
+        <div class="risk-desc">생성된 서류가 기대와 다를 경우 정보를 보완해 1회 무료로 다시 만들어드립니다.</div>
+      </div>
+      <div class="risk-card">
+        <div class="risk-icon"><i data-lucide="target"></i></div>
+        <div class="risk-title">데이터 오류 = 전액 환불</div>
+        <div class="risk-desc">공식 홈페이지와 다른 정보가 발견될 경우 즉시 수정하고 전액 환불합니다.</div>
+      </div>
+      <div class="risk-card">
+        <div class="risk-icon"><i data-lucide="unlock"></i></div>
+        <div class="risk-title">구독 언제든 해지</div>
+        <div class="risk-desc">Shadow 구독은 언제든 해지 가능합니다. 최소 약정 없음. 다음 결제일 전 해지 시 청구 없음.</div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-section fade-up" style="transition-delay:.15s;">
+      <h2 class="cta-title">
+        지금 준비 중인<br>
+        <em>그 학교 정보</em>,<br>
+        확인해보세요.
+      </h2>
+      <p class="cta-desc">
+        무료입니다. 24개교 전체 정보를 지금 바로 확인할 수 있습니다.
+        서류는 정말 도움이 됐을 때 결제하면 됩니다.
+      </p>
+      <div class="cta-btns">
+        <a href="search.html" class="btn-primary-dark">무료로 학교 검색하기 →</a>
+        <a href="cv.html" class="btn-ghost-dark">서류 만들기 (2.9만원)</a>
+      </div>
+      <div class="cta-note">추측 데이터 없음 · 미확인 = null · 매주 월요일 자동 업데이트</div>
+    </div>
+
+  </div>
+
+  <!-- Footer inside the dark section -->
+  <footer>
+    <div class="footer-logo">
+      <div class="nav-flag">
+        <span class="f1"></span><span class="f2"></span><span class="f3"></span>
+      </div>
+      독일 음대 입시 판별기
+    </div>
+    <div class="footer-links">
+      <a class="footer-link" href="#icp">이런 분께</a>
+      <a class="footer-link" href="#value">차별점</a>
+      <a class="footer-link" href="#pricing">요금제</a>
+    </div>
+    <div class="footer-note">데이터 기준: 각 학교 공식 Zulassungsordnung · 2026년 입시 · 미확인 항목 null 표기</div>
+  </footer>
+
+</section>
+
+
+<script>
+// 스크롤 인 애니메이션 — IntersectionObserver로 .fade-up 요소 순차 표시
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08 });
+
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// 프라이싱 카드 호버 — Pro 카드 제외하고 border 색 전환
+document.querySelectorAll('.price-card').forEach(card => {
+  card.addEventListener('mouseenter', () => {
+    if (!card.classList.contains('pro')) {
+      card.style.borderColor = 'rgba(43,74,74,0.4)';
+    }
+  });
+  card.addEventListener('mouseleave', () => {
+    if (!card.classList.contains('pro')) {
+      card.style.borderColor = '';
+    }
+  });
+});
+
+// 네비게이션 활성 링크 — 스크롤 위치에 따라 현재 섹션 하이라이트
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-link');
+
+const navObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(l => l.style.color = '');
+      const active = document.querySelector(`.nav-link[href="#${e.target.id}"]`);
+      if (active) active.style.color = 'var(--teal)';
+    }
+  });
+}, { threshold: 0.4 });
+
+sections.forEach(s => navObserver.observe(s));
+
+// 루시드 아이콘 초기화
+lucide.createIcons();
+</script>
+
+</body>
+</html>

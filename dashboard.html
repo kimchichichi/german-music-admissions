@@ -4,223 +4,317 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>지원 일정 대시보드 — 독일 음대 입시</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@300;400;500;700&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <style>
 :root {
-  --black:   #080809;
-  --surface: #0F0F12;
-  --s2:      #161619;
-  --s3:      #1E1E23;
-  --s4:      #26262D;
-  --border:  rgba(255,255,255,0.06);
-  --gold:    #C9A84C;
-  --gold-lt: #E8C547;
-  --gold-dim:#1A1608;
-  --text:    #E8E4DC;
-  --muted:   #666;
-  --muted2:  #999;
-  --green:   #4CAF84;
-  --red:     #E05A5A;
-  --blue:    #5A8FE0;
-  --orange:  #E09A3C;
-  --purple:  #9B6FE0;
+  /* Design tokens — identical to landing.html / cv.html */
+  --teal-dark:  #121E1E;
+  --teal:       #2B4A4A;
+  --teal-mid:   #3D6363;
+  --lavender:   #DBCCE8;
+  --gray-light: #E5E5E5;
+  --off-white:  #FAFAFA;
+  --white:      #FFFFFF;
+  --border:     rgba(43,74,74,0.15);
+  --sans:       'Inter', 'Noto Sans KR', sans-serif;
+  /* 기능별 색상 */
+  --green:  #2E6B4A;
+  --red:    #B84040;
+  --blue:   #2A5298;
+  --orange: #B86A20;
+  --purple: #6B4EA0;
+  /* 레거시 별칭 — JS 인라인 스타일 var() 참조가 올바르게 해석되도록 */
+  --gold:    var(--teal);
+  --gold-lt: var(--teal-mid);
+  --gold-dim: rgba(43,74,74,0.08);
+  --black:   var(--teal-dark);
+  --surface: var(--white);
+  --s2:      var(--off-white);
+  --s3:      var(--gray-light);
+  --s4:      rgba(43,74,74,0.12);
+  --text:    var(--teal-dark);
+  --muted:   rgba(43,74,74,0.50);
+  --muted2:  rgba(43,74,74,0.35);
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
-body{background:var(--black);color:var(--text);font-family:'Noto Sans KR',sans-serif;font-weight:300;min-height:100vh;overflow-x:hidden;}
-body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(201,168,76,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,.025) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0;}
+body{background:var(--off-white);color:var(--teal-dark);font-family:var(--sans);font-weight:400;min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+
+/* ── 공유 네비 — landing.html pill style ── */
+nav.topnav {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  height: 60px;
+  padding: 0 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(250,250,250,0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(43,74,74,0.18);
+}
+.nav-logo {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--teal);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  letter-spacing: -0.3px;
+}
+.nav-flag {
+  display: flex;
+  flex-direction: column;
+  width: 20px;
+  height: 14px;
+  border-radius: 3px;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 1px solid rgba(43,74,74,0.15);
+}
+.nav-flag span { flex: 1; display: block; }
+.nav-flag .f1 { background: #1C1C1C; }
+.nav-flag .f2 { background: #CC0000; }
+.nav-flag .f3 { background: #FFCC00; }
+.nav-links { display: flex; align-items: center; gap: 6px; }
+.nav-link {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--teal-mid);
+  text-decoration: none;
+  padding: 7px 16px;
+  border-radius: 18px;
+  border: 1px solid transparent;
+  letter-spacing: -0.2px;
+  transition: border-color 0.25s, color 0.25s, background 0.25s;
+  font-family: var(--sans);
+}
+.nav-link:hover,
+.nav-link.active {
+  color: var(--teal);
+  border-color: rgba(43,74,74,0.18);
+  background: rgba(43,74,74,0.05);
+}
+.nav-cta {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--off-white);
+  background: var(--teal);
+  padding: 7px 20px;
+  border-radius: 18px;
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  font-family: var(--sans);
+  letter-spacing: -0.2px;
+  transition: background 0.3s;
+  margin-left: 10px;
+}
+.nav-cta:hover { background: var(--teal-dark); }
 
 /* ── 레이아웃 ── */
-.app{display:flex;min-height:100vh;position:relative;z-index:1;}
+.app{display:flex;min-height:calc(100vh - 60px);}
 
 /* ── 사이드바 ── */
-.sidebar{width:220px;flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:50;transition:transform .3s;}
-.sb-logo{padding:24px 20px 18px;border-bottom:1px solid var(--border);}
-.sb-logo-flag{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--gold);margin-bottom:6px;}
-.sb-logo-name{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:1px;line-height:1.1;}
-.sb-logo-name span{color:var(--gold);}
-.sb-user{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;}
-.sb-avatar{width:32px;height:32px;border-radius:50%;background:var(--gold-dim);border:1px solid rgba(201,168,76,.3);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--gold);flex-shrink:0;}
-.sb-username{font-size:12px;color:var(--muted2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.sidebar{width:220px;flex-shrink:0;background:var(--teal-dark);display:flex;flex-direction:column;position:fixed;top:60px;left:0;bottom:0;z-index:50;transition:transform .3s;}
+.sb-logo{padding:24px 20px 18px;border-bottom:1px solid rgba(255,255,255,0.08);}
+.sb-logo-flag{font-size:10px;letter-spacing:.1em;color:rgba(255,255,255,0.45);margin-bottom:8px;font-weight:600;text-transform:uppercase;}
+.sb-logo-name{font-size:16px;font-weight:700;line-height:1.25;color:#fff;}
+.sb-logo-name span{color:var(--lavender);}
+.sb-user{padding:14px 20px;border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;gap:10px;}
+.sb-avatar{width:32px;height:32px;border-radius:50%;background:rgba(219,204,232,0.12);border:1px solid rgba(219,204,232,0.3);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--lavender);flex-shrink:0;}
+.sb-username{font-size:11px;color:rgba(255,255,255,0.45);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .sb-nav{padding:12px 10px;flex:1;overflow-y:auto;}
-.sb-section{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;padding:12px 10px 6px;}
-.sb-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:3px;cursor:pointer;font-size:12px;color:var(--muted2);transition:all .2s;border:none;background:none;width:100%;text-align:left;margin-bottom:2px;}
-.sb-item:hover{background:var(--s2);color:var(--text);}
-.sb-item.active{background:var(--gold-dim);color:var(--gold);border:1px solid rgba(201,168,76,.15);}
-.sb-item .si{font-size:14px;width:18px;text-align:center;flex-shrink:0;}
-.sb-badge{margin-left:auto;background:var(--red);color:#fff;font-family:'IBM Plex Mono',monospace;font-size:8px;padding:2px 5px;border-radius:8px;}
-.sb-footer{padding:14px 20px;border-top:1px solid var(--border);}
-.sb-logout{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:1px;color:var(--muted);cursor:pointer;background:none;border:none;transition:color .2s;}
+.sb-section{font-size:9px;letter-spacing:.12em;color:rgba(255,255,255,0.25);text-transform:uppercase;padding:12px 10px 6px;font-weight:700;}
+.sb-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:8px;cursor:pointer;font-size:12px;font-weight:500;color:rgba(255,255,255,0.55);transition:all .2s;border:none;background:none;width:100%;text-align:left;margin-bottom:2px;font-family:var(--sans);}
+.sb-item:hover{background:rgba(255,255,255,0.08);color:#fff;}
+.sb-item.active{background:rgba(219,204,232,0.12);color:var(--lavender);}
+.sb-item .si{width:18px;height:18px;text-align:center;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.sb-item .si svg{width:15px;height:15px;stroke:currentColor;}
+.sb-badge{margin-left:auto;background:var(--red);color:#fff;font-size:9px;padding:2px 6px;border-radius:8px;font-weight:700;}
+.sb-footer{padding:14px 20px;border-top:1px solid rgba(255,255,255,0.08);}
+.sb-logout{font-size:11px;font-weight:600;color:rgba(255,255,255,0.35);cursor:pointer;background:none;border:none;transition:color .2s;font-family:var(--sans);}
 .sb-logout:hover{color:var(--red);}
 
 /* ── 메인 ── */
 .main{margin-left:220px;flex:1;display:flex;flex-direction:column;min-height:100vh;}
-.topbar{height:52px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 28px;position:sticky;top:0;background:rgba(8,8,9,.92);backdrop-filter:blur(12px);z-index:40;}
+.topbar{height:52px;border-bottom:1.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 28px;position:sticky;top:0;background:rgba(250,250,250,0.94);backdrop-filter:blur(12px);z-index:40;}
 .topbar-left{display:flex;align-items:center;gap:16px;}
-.topbar-title{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;}
+.topbar-title{font-size:11px;letter-spacing:.08em;color:var(--teal-mid);text-transform:uppercase;font-weight:700;}
 .topbar-right{display:flex;gap:10px;align-items:center;}
 .content{padding:28px;flex:1;}
 
 /* ── 버튼 ── */
-.btn{padding:8px 18px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;border-radius:2px;transition:all .2s;border:none;}
-.btn-gold{background:var(--gold);color:#000;font-weight:500;}
-.btn-gold:hover{opacity:.85;transform:translateY(-1px);}
-.btn-ghost{background:transparent;border:1px solid var(--s4);color:var(--muted2);}
-.btn-ghost:hover{border-color:var(--gold);color:var(--gold);}
-.btn-sm{padding:5px 12px;font-size:9px;}
-.btn-danger{background:transparent;border:1px solid rgba(224,90,90,.3);color:var(--red);}
-.btn-danger:hover{background:rgba(224,90,90,.08);}
+.btn{padding:8px 18px;font-family:var(--sans);font-size:12px;font-weight:600;cursor:pointer;border-radius:18px;transition:all .2s;border:none;}
+.btn-gold{background:var(--teal);color:#fff;}
+.btn-gold:hover{background:var(--teal-mid);transform:translateY(-1px);}
+.btn-ghost{background:transparent;border:1.5px solid var(--border);color:var(--teal-mid);}
+.btn-ghost:hover{border-color:var(--teal);color:var(--teal);}
+.btn-sm{padding:6px 14px;font-size:11px;}
+.btn-danger{background:transparent;border:1.5px solid rgba(184,64,64,.3);color:var(--red);}
+.btn-danger:hover{background:rgba(184,64,64,.06);}
 
 /* ── KPI 카드 ── */
 .kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:20px;}
-.kpi{background:var(--surface);border:1px solid var(--border);border-radius:3px;padding:18px 20px;position:relative;overflow:hidden;}
-.kpi::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
-.kpi.c-gold::after{background:var(--gold);}
+.kpi{background:var(--white);border:1.5px solid var(--border);border-radius:16px;padding:18px 20px;position:relative;overflow:hidden;}
+.kpi::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.kpi.c-gold::after{background:var(--teal);}
 .kpi.c-red::after{background:var(--red);}
 .kpi.c-green::after{background:var(--green);}
 .kpi.c-blue::after{background:var(--blue);}
 .kpi.c-purple::after{background:var(--purple);}
-.kpi-label{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:8px;}
-.kpi-val{font-family:'Bebas Neue',sans-serif;font-size:38px;line-height:1;}
-.kpi.c-gold .kpi-val{color:var(--gold);}
+.kpi-label{font-size:9px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;margin-bottom:8px;font-weight:700;}
+.kpi-val{font-size:34px;line-height:1;font-weight:700;}
+.kpi.c-gold .kpi-val{color:var(--teal);}
 .kpi.c-red .kpi-val{color:var(--red);}
 .kpi.c-green .kpi-val{color:var(--green);}
 .kpi.c-blue .kpi-val{color:var(--blue);}
 .kpi.c-purple .kpi-val{color:var(--purple);}
-.kpi-sub{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted);margin-top:4px;}
+.kpi-sub{font-size:10px;color:var(--muted);margin-top:4px;}
 
 /* ── 뷰 탭 ── */
-.view-tabs{display:flex;gap:4px;margin-bottom:20px;}
-.view-tab{padding:7px 18px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;border-radius:2px;border:1px solid var(--s4);background:transparent;color:var(--muted);transition:all .2s;}
-.view-tab:hover{color:var(--text);border-color:var(--s3);}
-.view-tab.active{background:var(--gold);border-color:var(--gold);color:#000;font-weight:500;}
+.view-tabs{display:flex;gap:6px;margin-bottom:20px;flex-wrap:wrap;}
+.view-tab{padding:7px 18px;font-size:12px;font-weight:600;cursor:pointer;border-radius:18px;border:1.5px solid var(--border);background:transparent;color:var(--muted);transition:all .2s;font-family:var(--sans);}
+.view-tab:hover{color:var(--teal);border-color:var(--teal);}
+.view-tab.active{background:var(--teal);border-color:var(--teal);color:#fff;}
 
 /* ── 패널 ── */
-.panel{background:var(--surface);border:1px solid var(--border);border-radius:3px;margin-bottom:16px;}
+.panel{background:var(--white);border:1.5px solid var(--border);border-radius:16px;margin-bottom:16px;overflow:hidden;}
 .panel-hd{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
-.panel-title{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;}
+.panel-title{font-size:11px;letter-spacing:.06em;color:var(--teal-mid);text-transform:uppercase;font-weight:700;}
 .panel-body{padding:20px;}
 
 /* ── 카드 뷰 ── */
 .cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;}
-.school-card{background:var(--s2);border:1px solid var(--border);border-radius:3px;overflow:hidden;transition:all .2s;position:relative;}
-.school-card:hover{border-color:rgba(201,168,76,.25);transform:translateY(-2px);}
-.card-top-bar{height:3px;}
+.school-card{background:var(--white);border:1.5px solid var(--border);border-radius:16px;overflow:hidden;transition:all .2s;}
+.school-card:hover{border-color:var(--teal);transform:translateY(-2px);box-shadow:0 8px 24px rgba(43,74,74,0.1);}
+.card-top-bar{height:4px;}
 .card-body{padding:18px;}
 .card-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;}
-.card-name{font-size:14px;font-weight:500;line-height:1.3;}
-.card-city{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-top:2px;}
-.rank-chip{font-family:'Bebas Neue',sans-serif;font-size:11px;padding:2px 8px;border-radius:1px;flex-shrink:0;}
-.r-S{background:var(--gold);color:#000;}
-.r-A{border:1px solid var(--blue);color:var(--blue);}
-.r-B{border:1px solid var(--green);color:var(--green);}
-.card-dday{font-family:'Bebas Neue',sans-serif;font-size:42px;line-height:1;margin:8px 0 4px;}
-.card-deadline{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:14px;}
+.card-name{font-size:14px;font-weight:600;line-height:1.3;color:var(--teal-dark);}
+.card-city{font-size:11px;color:var(--muted);margin-top:2px;}
+.card-dday{font-size:38px;line-height:1;margin:8px 0 4px;font-weight:700;}
+.card-deadline{font-size:11px;color:var(--muted);margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+.date-edit-btn{background:none;border:none;cursor:pointer;padding:0;color:var(--muted);display:inline-flex;align-items:center;opacity:.6;transition:opacity .15s;}
+.date-edit-btn:hover{opacity:1;color:var(--teal);}
+.date-edit-panel{background:rgba(0,0,0,.04);border:1px solid var(--border);border-radius:8px;padding:10px;margin-bottom:10px;display:flex;flex-direction:column;gap:6px;}
+.date-edit-panel label{font-size:10px;color:var(--muted);display:flex;align-items:center;gap:6px;}
+.date-edit-panel input[type=date]{flex:1;font-size:11px;border:1px solid var(--border);border-radius:5px;padding:3px 6px;background:#fff;font-family:var(--mono);}
+.date-edit-actions{display:flex;gap:6px;margin-top:2px;}
 .progress-wrap{margin-bottom:14px;}
-.progress-label{display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted);margin-bottom:5px;}
-.progress-bar{height:3px;background:var(--s4);border-radius:2px;overflow:hidden;}
+.progress-label{display:flex;justify-content:space-between;font-size:10px;font-weight:600;color:var(--muted);margin-bottom:5px;}
+.progress-bar{height:4px;background:var(--gray-light);border-radius:2px;overflow:hidden;}
 .progress-fill{height:100%;border-radius:2px;transition:width .5s ease;}
-.status-select{width:100%;padding:7px 10px;background:var(--s3);border:1px solid var(--s4);color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:10px;border-radius:2px;cursor:pointer;transition:border-color .2s;}
-.status-select:focus{outline:none;border-color:var(--gold);}
-.card-footer{display:flex;gap:6px;padding:10px 18px;border-top:1px solid var(--border);background:var(--s3);}
+.status-select{width:100%;padding:7px 10px;background:var(--off-white);border:1.5px solid var(--border);color:var(--teal-dark);font-family:var(--sans);font-size:12px;border-radius:10px;cursor:pointer;transition:border-color .2s;outline:none;}
+.status-select:focus{border-color:var(--teal);}
+.card-footer{display:flex;gap:6px;padding:10px 18px;border-top:1px solid var(--border);background:var(--off-white);}
 
 /* ── 타임라인 뷰 ── */
 .timeline-wrap{overflow-x:auto;padding-bottom:16px;}
-.timeline-header{display:flex;border-bottom:1px solid var(--border);padding-bottom:12px;margin-bottom:16px;}
-.timeline-school-col{width:180px;flex-shrink:0;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;padding:0 12px;}
+.timeline-header{display:flex;border-bottom:1.5px solid var(--border);padding-bottom:12px;margin-bottom:16px;}
+.timeline-school-col{width:180px;flex-shrink:0;font-size:9px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;padding:0 12px;font-weight:700;}
 .timeline-months{display:flex;flex:1;gap:0;}
-.timeline-month{flex:1;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:1px;color:var(--muted);text-transform:uppercase;min-width:60px;}
-.timeline-month.current{color:var(--gold);}
-.timeline-row{display:flex;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.03);}
+.timeline-month{flex:1;text-align:center;font-size:9px;letter-spacing:.05em;color:var(--muted);text-transform:uppercase;min-width:60px;font-weight:600;}
+.timeline-month.current{color:var(--teal);}
+.timeline-row{display:flex;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);}
 .timeline-row:last-child{border-bottom:none;}
 .timeline-school{width:180px;flex-shrink:0;padding:0 12px;}
-.timeline-school-name{font-size:12px;font-weight:500;}
-.timeline-school-sub{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted);margin-top:2px;}
+.timeline-school-name{font-size:12px;font-weight:600;color:var(--teal-dark);}
+.timeline-school-sub{font-size:10px;color:var(--muted);margin-top:2px;}
 .timeline-bars{display:flex;flex:1;gap:0;position:relative;height:32px;align-items:center;}
-.timeline-bar{position:absolute;height:20px;border-radius:2px;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:8px;font-weight:500;white-space:nowrap;overflow:hidden;transition:opacity .2s;}
-.timeline-bar:hover{opacity:.85;}
-.tbar-apply{background:rgba(90,143,224,.25);border:1px solid var(--blue);color:var(--blue);}
-.tbar-audition{background:rgba(201,168,76,.2);border:1px solid var(--gold);color:var(--gold);}
-.timeline-today{position:absolute;top:0;bottom:0;width:1px;background:var(--red);opacity:.6;z-index:10;}
-.timeline-today::before{content:'오늘';position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--red);white-space:nowrap;}
+.timeline-bar{position:absolute;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:600;white-space:nowrap;overflow:hidden;transition:opacity .2s;}
+.timeline-bar:hover{opacity:.8;}
+.tbar-apply{background:rgba(43,74,74,0.1);border:1.5px solid var(--teal);color:var(--teal);}
+.tbar-audition{background:rgba(219,204,232,0.35);border:1.5px solid var(--purple);color:var(--purple);}
+.timeline-today{position:absolute;top:0;bottom:0;width:2px;background:var(--red);opacity:.7;z-index:10;border-radius:1px;}
+.timeline-today::before{content:'오늘';position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-size:9px;font-weight:700;color:var(--red);white-space:nowrap;}
 
 /* ── 캘린더 뷰 ── */
 .cal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
 .cal-nav{display:flex;align-items:center;gap:12px;}
-.cal-month{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--gold);letter-spacing:1px;}
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--border);}
-.cal-day-label{background:var(--s2);padding:8px;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:1px;color:var(--muted);text-transform:uppercase;}
-.cal-day{background:var(--s2);min-height:90px;padding:8px;position:relative;transition:background .2s;}
-.cal-day:hover{background:var(--s3);}
-.cal-day.other-month{background:rgba(15,15,18,.5);}
-.cal-day.today{background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.2);}
-.cal-day-num{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted2);margin-bottom:4px;}
-.cal-day.today .cal-day-num{color:var(--gold);font-weight:500;}
-.cal-event{font-size:9px;padding:2px 6px;border-radius:1px;margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer;font-family:'IBM Plex Mono',monospace;}
-.ce-deadline{background:rgba(224,90,90,.2);color:var(--red);border:1px solid rgba(224,90,90,.3);}
-.ce-audition{background:rgba(201,168,76,.15);color:var(--gold);border:1px solid rgba(201,168,76,.25);}
-.ce-start{background:rgba(90,143,224,.15);color:var(--blue);border:1px solid rgba(90,143,224,.25);}
+.cal-month{font-size:24px;font-weight:700;color:var(--teal-dark);letter-spacing:-.5px;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--border);border-radius:10px;overflow:hidden;}
+.cal-day-label{background:var(--off-white);padding:8px;text-align:center;font-size:10px;letter-spacing:.05em;color:var(--muted);text-transform:uppercase;font-weight:700;}
+.cal-day{background:var(--white);min-height:80px;padding:8px;position:relative;transition:background .2s;}
+.cal-day:hover{background:var(--off-white);}
+.cal-day.other-month{background:var(--off-white);opacity:.5;}
+.cal-day.today{background:rgba(43,74,74,0.04);outline:2px solid var(--teal);outline-offset:-2px;}
+.cal-day-num{font-size:11px;font-weight:600;color:var(--muted);margin-bottom:4px;}
+.cal-day.today .cal-day-num{color:var(--teal);font-weight:700;}
+.cal-event{font-size:9px;padding:2px 6px;border-radius:4px;margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer;font-weight:600;}
+.ce-deadline{background:rgba(184,64,64,.1);color:var(--red);border:1px solid rgba(184,64,64,.2);}
+.ce-audition{background:rgba(43,74,74,.08);color:var(--teal);border:1px solid rgba(43,74,74,.15);}
+.ce-start{background:rgba(42,82,152,.08);color:var(--blue);border:1px solid rgba(42,82,152,.15);}
 
 /* ── 체크리스트 ── */
 .checklist-school{margin-bottom:20px;}
 .checklist-school-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;cursor:pointer;}
-.checklist-school-name{font-size:14px;font-weight:500;display:flex;align-items:center;gap:8px;}
-.checklist-toggle{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);}
+.checklist-school-name{font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px;color:var(--teal-dark);}
+.checklist-toggle{font-size:11px;color:var(--muted);font-weight:600;}
 .checklist-items{display:flex;flex-direction:column;gap:6px;}
-.check-item{display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--s2);border:1px solid var(--border);border-radius:2px;cursor:pointer;transition:all .2s;}
-.check-item:hover{border-color:rgba(255,255,255,.1);}
+.check-item{display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--off-white);border:1.5px solid var(--border);border-radius:10px;cursor:pointer;transition:all .2s;}
+.check-item:hover{border-color:var(--teal);}
 .check-item.done{opacity:.5;}
 .check-item.done .check-label{text-decoration:line-through;}
-.check-box{width:16px;height:16px;border:1px solid var(--s4);border-radius:2px;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.check-box{width:18px;height:18px;border:1.5px solid var(--border);border-radius:5px;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;}
 .check-item.done .check-box{background:var(--green);border-color:var(--green);}
-.check-box-inner{font-size:10px;color:#000;}
-.check-label{font-size:12px;font-weight:300;flex:1;}
-.check-tag{font-family:'IBM Plex Mono',monospace;font-size:8px;padding:2px 7px;border-radius:8px;}
-.ct-required{background:rgba(224,90,90,.15);color:var(--red);border:1px solid rgba(224,90,90,.2);}
-.ct-optional{background:rgba(90,143,224,.1);color:var(--blue);border:1px solid rgba(90,143,224,.2);}
+.check-box-inner{font-size:10px;color:#fff;font-weight:700;}
+.check-label{font-size:13px;font-weight:400;flex:1;color:var(--teal-dark);}
+.check-tag{font-size:9px;padding:2px 8px;border-radius:8px;font-weight:700;}
+.ct-required{background:rgba(184,64,64,.1);color:var(--red);border:1px solid rgba(184,64,64,.15);}
+.ct-optional{background:rgba(42,82,152,.08);color:var(--blue);border:1px solid rgba(42,82,152,.15);}
 
 /* ── 학교 추가 모달 ── */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(6px);animation:fadeIn .2s ease;}
+.modal-overlay{position:fixed;inset:0;background:rgba(18,30,30,0.6);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(8px);animation:fadeIn .2s ease;}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-.modal-box{background:var(--surface);border:1px solid rgba(201,168,76,.2);border-radius:3px;width:100%;max-width:520px;max-height:88vh;overflow-y:auto;animation:slideUp .3s ease;}
+.modal-box{background:var(--white);border:1.5px solid var(--border);border-radius:24px;width:100%;max-width:520px;max-height:88vh;overflow-y:auto;animation:slideUp .3s ease;box-shadow:0 24px 64px rgba(43,74,74,0.15);}
 @keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:none;opacity:1}}
-.modal-hd{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:var(--surface);z-index:1;}
-.modal-title{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;}
+.modal-hd{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:var(--white);z-index:1;}
+.modal-title{font-size:11px;letter-spacing:.08em;color:var(--teal-mid);text-transform:uppercase;font-weight:700;}
 .modal-body{padding:24px;}
 .modal-ft{padding:16px 24px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:10px;}
 .form-group{margin-bottom:16px;}
-.form-label{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:6px;display:block;}
-.form-input,.form-select{width:100%;padding:10px 12px;background:var(--s2);border:1px solid var(--s4);color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:12px;border-radius:2px;transition:border-color .2s;outline:none;}
-.form-input:focus,.form-select:focus{border-color:var(--gold);}
-.form-select option{background:var(--s2);}
+.form-label{font-size:10px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;margin-bottom:6px;display:block;font-weight:700;}
+.form-input,.form-select{width:100%;padding:10px 12px;background:var(--off-white);border:1.5px solid var(--border);color:var(--teal-dark);font-family:var(--sans);font-size:13px;border-radius:10px;transition:border-color .2s;outline:none;}
+.form-input:focus,.form-select:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(43,74,74,0.08);}
+.form-select option{background:var(--white);}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 
 /* ── 로그인 화면 ── */
-.login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;}
-.login-box{background:var(--surface);border:1px solid rgba(201,168,76,.2);border-radius:3px;padding:48px;width:100%;max-width:400px;}
-.login-logo{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:12px;}
-.login-title{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:1px;margin-bottom:6px;}
-.login-sub{font-size:12px;color:var(--muted);margin-bottom:32px;font-family:'IBM Plex Mono',monospace;line-height:1.6;}
-.login-divider{text-align:center;font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted);margin:20px 0;position:relative;}
+.login-screen{min-height:calc(100vh - 60px);display:flex;align-items:center;justify-content:center;padding:24px;background:var(--off-white);}
+.login-box{background:var(--white);border:1.5px solid var(--border);border-radius:24px;padding:48px;width:100%;max-width:400px;box-shadow:0 8px 40px rgba(43,74,74,0.08);}
+.login-logo{font-size:11px;letter-spacing:.1em;color:var(--teal-mid);text-transform:uppercase;margin-bottom:12px;font-weight:700;}
+.login-title{font-size:32px;font-weight:700;letter-spacing:-1.5px;margin-bottom:6px;color:var(--teal-dark);line-height:1.1;}
+.login-sub{font-size:13px;color:var(--muted);margin-bottom:32px;line-height:1.7;}
+.login-divider{text-align:center;font-size:11px;color:var(--muted);margin:20px 0;position:relative;}
 .login-divider::before,.login-divider::after{content:'';position:absolute;top:50%;width:40%;height:1px;background:var(--border);}
 .login-divider::before{left:0;}
 .login-divider::after{right:0;}
-.login-note{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted);text-align:center;margin-top:20px;line-height:1.7;}
-.btn-full{width:100%;padding:12px;font-size:11px;}
+.login-note{font-size:11px;color:var(--muted);text-align:center;margin-top:20px;line-height:1.7;}
+.auth-tabs{display:flex;margin-bottom:24px;border-bottom:1.5px solid var(--border);}
+.auth-tab{flex:1;background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-1.5px;padding:10px;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .15s;font-family:var(--sans);}
+.auth-tab.active{color:var(--teal-dark);border-bottom-color:var(--teal);}
+.auth-error{font-size:11px;color:var(--red);margin-top:8px;display:none;}
+.btn-full{width:100%;padding:12px;font-size:13px;}
 
 /* ── 알림 배너 ── */
-.alert-banner{background:rgba(224,90,90,.08);border:1px solid rgba(224,90,90,.2);border-radius:2px;padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;gap:12px;font-size:12px;}
-.alert-banner .ab-icon{font-size:16px;flex-shrink:0;}
-.alert-banner.warn{background:rgba(201,168,76,.06);border-color:rgba(201,168,76,.2);}
+.alert-banner{background:rgba(184,64,64,.06);border:1.5px solid rgba(184,64,64,.2);border-radius:12px;padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;gap:12px;font-size:12px;font-weight:500;}
+.alert-banner .ab-icon{font-size:16px;flex-shrink:0;display:flex;align-items:center;}
+.alert-banner .ab-icon svg{width:16px;height:16px;stroke:currentColor;}
+.alert-banner.warn{background:rgba(43,74,74,.04);border-color:rgba(43,74,74,.15);}
 
 /* ── 토스트 ── */
-.toast{position:fixed;bottom:24px;right:24px;z-index:300;background:var(--surface);border:1px solid var(--gold);border-radius:2px;padding:12px 18px;font-family:'IBM Plex Mono',monospace;font-size:11px;display:flex;align-items:center;gap:10px;animation:toastIn .3s ease;box-shadow:0 8px 32px rgba(0,0,0,.5);}
+.toast{position:fixed;bottom:24px;right:24px;z-index:300;background:var(--teal-dark);color:#fff;padding:12px 20px;border-radius:12px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:10px;animation:toastIn .3s ease;box-shadow:0 8px 32px rgba(18,30,30,0.3);}
 @keyframes toastIn{from{transform:translateY(12px);opacity:0}to{transform:none;opacity:1}}
 
 /* ── D-day 색상 ── */
 .dday-urgent{color:var(--red);}
 .dday-warn{color:var(--orange);}
-.dday-ok{color:var(--green);}
+.dday-ok{color:var(--teal);}
 .dday-done{color:var(--muted);}
 
 .hidden{display:none!important;}
@@ -235,34 +329,85 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 <body>
 
 <!-- ══════════════════════════════════════════
+     공유 네비
+══════════════════════════════════════════ -->
+<nav class="topnav">
+  <a class="nav-logo" href="landing.html">
+    <div class="nav-flag">
+      <span class="f1"></span><span class="f2"></span><span class="f3"></span>
+    </div>
+    독일 음대 입시 판별기
+  </a>
+  <div class="nav-links">
+    <a class="nav-link" href="landing.html">서비스 소개</a>
+    <a class="nav-link" href="search.html">학교 검색</a>
+    <a class="nav-link" href="cv.html">입시 서류</a>
+    <a class="nav-link" href="landing.html#pricing">요금제</a>
+    <a class="nav-link active" href="#">대시보드</a>
+    <a class="nav-cta" href="search.html">학교 검색하기 →</a>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════
      로그인 화면
 ══════════════════════════════════════════ -->
 <div id="loginScreen" class="login-screen">
   <div class="login-box">
-    <div class="login-logo">🇩🇪 독일 음대 판별기</div>
+    <div class="login-logo">🇩🇪 독일 음대 입시 판별기</div>
     <div class="login-title">지원 일정<br>대시보드</div>
-    <div class="login-sub">로그인하면 나만의 지원 일정이<br>어디서든 저장됩니다.</div>
 
-    <div class="form-group">
-      <label class="form-label">이메일</label>
-      <input class="form-input" id="loginEmail" type="email" placeholder="your@email.com">
+    <!-- 탭: 로그인 / 회원가입 -->
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tabLogin" onclick="showAuthTab('login')">로그인</button>
+      <button class="auth-tab" id="tabSignup" onclick="showAuthTab('signup')">회원가입</button>
     </div>
-    <div class="form-group">
-      <label class="form-label">비밀번호</label>
-      <input class="form-input" id="loginPw" type="password" placeholder="••••••••"
-        onkeydown="if(event.key==='Enter')doLogin()">
+
+    <!-- 로그인 폼 -->
+    <div id="formLogin">
+      <div class="form-group">
+        <label class="form-label">이메일</label>
+        <input class="form-input" id="loginEmail" type="email" placeholder="your@email.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">비밀번호</label>
+        <input class="form-input" id="loginPw" type="password" placeholder="••••••••"
+          onkeydown="if(event.key==='Enter')doLogin()">
+      </div>
+      <div class="auth-error" id="loginError"></div>
+      <button class="btn btn-gold btn-full" onclick="doLogin()">로그인</button>
     </div>
-    <button class="btn btn-gold btn-full" onclick="doLogin()">로그인 / 회원가입</button>
+
+    <!-- 회원가입 폼 -->
+    <div id="formSignup" class="hidden">
+      <div class="form-group">
+        <label class="form-label">이메일</label>
+        <input class="form-input" id="signupEmail" type="email" placeholder="your@email.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">비밀번호 <span style="font-weight:400;color:var(--muted)">(8자 이상)</span></label>
+        <input class="form-input" id="signupPw" type="password" placeholder="••••••••">
+      </div>
+      <div class="form-group">
+        <label class="form-label">비밀번호 확인</label>
+        <input class="form-input" id="signupPwConfirm" type="password" placeholder="••••••••">
+      </div>
+      <div class="form-group">
+        <label class="form-label">활성화 코드 <span style="font-weight:400;color:var(--muted)">— 프리미엄 결제 후 이메일로 발송</span></label>
+        <input class="form-input" id="signupCode" type="text" placeholder="XXXX-XXXX"
+          onkeydown="if(event.key==='Enter')doSignup()">
+      </div>
+      <div class="auth-error" id="signupError"></div>
+      <button class="btn btn-gold btn-full" onclick="doSignup()">회원가입</button>
+    </div>
 
     <div class="login-divider">또는</div>
 
     <button class="btn btn-ghost btn-full" onclick="demoLogin()" style="font-size:11px;">
-      🎵 데모로 둘러보기 (저장 안 됨)
+      <i data-lucide="music" style="width:14px;height:14px;vertical-align:middle;margin-right:4px;"></i> 데모로 둘러보기 (저장 안 됨)
     </button>
 
     <div class="login-note">
-      처음 이메일 입력 시 자동으로 계정이 만들어집니다.<br>
-      Supabase Auth 기반 · 비밀번호 분실 시 이메일 재설정
+      계정 정보는 이 기기 브라우저에만 저장됩니다.<br>비밀번호 분실 시 새 계정으로 다시 가입해주세요.
     </div>
   </div>
 </div>
@@ -275,8 +420,8 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
   <!-- 사이드바 -->
   <aside class="sidebar">
     <div class="sb-logo">
-      <div class="sb-logo-flag">🇩🇪 Dashboard</div>
-      <div class="sb-logo-name">독일 음대<br><span>입시 트래커</span></div>
+      <div class="sb-logo-flag">🇩🇪 독일 음대 판별기</div>
+      <div class="sb-logo-name">지원 일정<br><span>대시보드</span></div>
     </div>
     <div class="sb-user">
       <div class="sb-avatar" id="sbAvatar">?</div>
@@ -285,27 +430,30 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
     <nav class="sb-nav">
       <div class="sb-section">메인</div>
       <button class="sb-item active" onclick="setView('overview',this)">
-        <span class="si">📊</span> 전체 현황
+        <span class="si"><i data-lucide="bar-chart-2"></i></span> 전체 현황
       </button>
       <button class="sb-item" onclick="setView('cards',this)">
-        <span class="si">🏫</span> 학교별 카드
+        <span class="si"><i data-lucide="school"></i></span> 학교별 카드
       </button>
       <button class="sb-item" onclick="setView('calendar',this)">
-        <span class="si">📅</span> 캘린더
+        <span class="si"><i data-lucide="calendar"></i></span> 캘린더
       </button>
       <button class="sb-item" onclick="setView('timeline',this)">
-        <span class="si">⏱</span> 타임라인
+        <span class="si"><i data-lucide="timer"></i></span> 타임라인
       </button>
       <button class="sb-item" onclick="setView('checklist',this)">
-        <span class="si">✅</span> 서류 체크
+        <span class="si"><i data-lucide="check-square"></i></span> 서류 체크
         <span class="sb-badge" id="checkBadge">0</span>
       </button>
       <div class="sb-section">링크</div>
-      <button class="sb-item" onclick="window.open('독일음대판별기.html','_blank')">
-        <span class="si">🔍</span> 판별기
+      <button class="sb-item" onclick="window.location.href='search.html'">
+        <span class="si"><i data-lucide="search"></i></span> 학교 검색
       </button>
-      <button class="sb-item" onclick="window.open('about.html','_blank')">
-        <span class="si">ℹ️</span> 서비스 소개
+      <button class="sb-item" onclick="window.location.href='cv.html'">
+        <span class="si"><i data-lucide="file-text"></i></span> 서류 만들기
+      </button>
+      <button class="sb-item" onclick="window.location.href='landing.html'">
+        <span class="si"><i data-lucide="info"></i></span> 서비스 소개
       </button>
     </nav>
     <div class="sb-footer">
@@ -321,7 +469,7 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
       </div>
       <div class="topbar-right">
         <button class="btn btn-ghost btn-sm" onclick="openAddModal()">+ 학교 추가</button>
-        <button class="btn btn-gold btn-sm" onclick="saveAll()">💾 저장</button>
+        <button class="btn btn-gold btn-sm" onclick="saveAll()"><i data-lucide="save" style="width:13px;height:13px;vertical-align:middle;margin-right:4px;"></i> 저장</button>
       </div>
     </div>
 
@@ -329,7 +477,7 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 
       <!-- 긴급 알림 배너 -->
       <div id="urgentBanner" class="alert-banner hidden">
-        <span class="ab-icon">🚨</span>
+        <span class="ab-icon"><i data-lucide="alert-triangle"></i></span>
         <span id="urgentText"></span>
       </div>
 
@@ -344,11 +492,11 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 
       <!-- 뷰 탭 -->
       <div class="view-tabs" id="viewTabs">
-        <button class="view-tab active" onclick="switchTab('overview',this)">📊 전체 현황</button>
-        <button class="view-tab" onclick="switchTab('cards',this)">🏫 카드</button>
-        <button class="view-tab" onclick="switchTab('calendar',this)">📅 캘린더</button>
-        <button class="view-tab" onclick="switchTab('timeline',this)">⏱ 타임라인</button>
-        <button class="view-tab" onclick="switchTab('checklist',this)">✅ 체크리스트</button>
+        <button class="view-tab active" onclick="switchTab('overview',this)"><i data-lucide="bar-chart-2" style="width:13px;height:13px;vertical-align:middle;"></i> 전체 현황</button>
+        <button class="view-tab" onclick="switchTab('cards',this)"><i data-lucide="school" style="width:13px;height:13px;vertical-align:middle;"></i> 카드</button>
+        <button class="view-tab" onclick="switchTab('calendar',this)"><i data-lucide="calendar" style="width:13px;height:13px;vertical-align:middle;"></i> 캘린더</button>
+        <button class="view-tab" onclick="switchTab('timeline',this)"><i data-lucide="timer" style="width:13px;height:13px;vertical-align:middle;"></i> 타임라인</button>
+        <button class="view-tab" onclick="switchTab('checklist',this)"><i data-lucide="check-square" style="width:13px;height:13px;vertical-align:middle;"></i> 체크리스트</button>
       </div>
 
       <!-- ── 전체 현황 뷰 ── -->
@@ -358,7 +506,7 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
           <!-- D-day 긴급 목록 -->
           <div class="panel">
             <div class="panel-hd">
-              <div class="panel-title">⚡ 마감 임박</div>
+              <div class="panel-title"><i data-lucide="zap" style="width:14px;height:14px;vertical-align:middle;margin-right:5px;"></i> 마감 임박</div>
               <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted);">D-60 이내</span>
             </div>
             <div class="panel-body" id="urgentList" style="padding:0;"></div>
@@ -367,7 +515,7 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
           <!-- 이메일 알림 설정 -->
           <div class="panel">
             <div class="panel-hd">
-              <div class="panel-title">📧 이메일 알림 설정</div>
+              <div class="panel-title"><i data-lucide="mail" style="width:14px;height:14px;vertical-align:middle;margin-right:5px;"></i> 이메일 알림 설정</div>
             </div>
             <div class="panel-body">
               <div style="font-size:12px;color:var(--muted2);line-height:1.9;margin-bottom:16px;">
@@ -405,7 +553,7 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
           <!-- 전체 진행 현황 -->
           <div class="panel" style="grid-column:1/-1;">
             <div class="panel-hd">
-              <div class="panel-title">📈 전체 진행 현황</div>
+              <div class="panel-title"><i data-lucide="trending-up" style="width:14px;height:14px;vertical-align:middle;margin-right:5px;"></i> 전체 진행 현황</div>
             </div>
             <div class="panel-body" id="overviewTable" style="padding:0;"></div>
           </div>
@@ -467,7 +615,7 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
       <div id="view-checklist" class="hidden">
         <div class="panel">
           <div class="panel-hd">
-            <div class="panel-title">📋 서류 체크리스트</div>
+            <div class="panel-title"><i data-lucide="clipboard-list" style="width:14px;height:14px;vertical-align:middle;margin-right:5px;"></i> 서류 체크리스트</div>
             <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted);">학교별 제출 서류 관리</span>
           </div>
           <div class="panel-body" id="checklistBody"></div>
@@ -490,15 +638,30 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
         <label class="form-label">학교 선택</label>
         <select class="form-select" id="addSchoolSelect" onchange="fillSchoolData()">
           <option value="">— 선택하세요 —</option>
-          <option value="hmt-leipzig">HMT Leipzig (라이프치히)</option>
-          <option value="hfmt-hamburg">HfMT Hamburg (함부르크)</option>
-          <option value="hfm-berlin">HfM Hanns Eisler (베를린)</option>
-          <option value="hmtm-muenchen">HMTM München (뮌헨)</option>
-          <option value="hfm-freiburg">HfM Freiburg (프라이부르크)</option>
-          <option value="hfm-koeln">HfM Köln (쾰른)</option>
-          <option value="hfm-karlsruhe">HfM Karlsruhe (카를스루에)</option>
-          <option value="hfm-wuerzburg">HfM Würzburg (뷔르츠부르크)</option>
-          <option value="rsh-duesseldorf">RSH Düsseldorf (뒤셀도르프)</option>
+          <option value="hfm-berlin">한스 아이슬러 음악대학 (베를린)</option>
+          <option value="udk-berlin">베를린 예술대학 (베를린)</option>
+          <option value="hfk-bremen">브레멘 예술대학 (브레멘)</option>
+          <option value="hfm-detmold">데트몰트 음악대학 (데트몰트)</option>
+          <option value="hfm-dresden">드레스덴 음악대학 (드레스덴)</option>
+          <option value="rsh-duesseldorf">로베르트 슈만 음악대학 (뒤셀도르프)</option>
+          <option value="folkwang-essen">에센 폴크방 예술대학 (에센)</option>
+          <option value="hmdk-frankfurt">프랑크푸르트 음악공연예술대학 (프랑크푸르트)</option>
+          <option value="hfm-freiburg">프라이부르크 음악대학 (프라이부르크)</option>
+          <option value="hfmt-hamburg">함부르크 음악연극대학 (함부르크)</option>
+          <option value="hmtmh-hannover">하노버 음악연극미디어대학 (하노버)</option>
+          <option value="hfm-karlsruhe">카를스루에 음악대학 (카를스루에)</option>
+          <option value="hfmt-koeln">쾰른 음악무용대학 (쾰른)</option>
+          <option value="hmt-leipzig">라이프치히 음악연극대학 (라이프치히)</option>
+          <option value="mhl-luebeck">뤼베크 음악대학 (뤼베크)</option>
+          <option value="shm-mannheim">만하임 음악공연예술대학 (만하임)</option>
+          <option value="hmtm-muenchen">뮌헨 음악연극대학 (뮌헨)</option>
+          <option value="hfm-nuernberg">뉘른베르크 음악대학 (뉘른베르크)</option>
+          <option value="hmt-rostock">로스토크 음악연극대학 (로스토크)</option>
+          <option value="hfm-saar">자를란트 음악대학 (자브뤼켄)</option>
+          <option value="shm-stuttgart">슈투트가르트 음악공연예술대학 (슈투트가르트)</option>
+          <option value="hfm-trossingen">트로싱엔 음악대학 (트로싱엔)</option>
+          <option value="hfm-weimar">바이마르 프란츠 리스트 음악대학 (바이마르)</option>
+          <option value="hfm-wuerzburg">뷔르츠부르크 음악대학 (뷔르츠부르크)</option>
           <option value="custom">직접 입력...</option>
         </select>
       </div>
@@ -518,16 +681,8 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
       </div>
       <div class="form-row">
         <div class="form-group">
-          <label class="form-label">실기 시험일</label>
+          <label class="form-label">실기 시험일 <span style="font-weight:400;color:var(--muted);">(아인라둥 받은 후 입력)</span></label>
           <input class="form-input" id="addAudition" type="date">
-        </div>
-        <div class="form-group">
-          <label class="form-label">등급</label>
-          <select class="form-select" id="addRank">
-            <option value="S">S등급 (최상위)</option>
-            <option value="A" selected>A등급 (우수)</option>
-            <option value="B">B등급</option>
-          </select>
         </div>
       </div>
       <div class="form-group">
@@ -547,36 +702,126 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 // 학교 기본 데이터
 // ══════════════════════════════════════════════
 const SCHOOL_DEFAULTS = {
-  "hmt-leipzig":    { name:"HMT Leipzig",        city:"Leipzig",   rank:"S", start:"2026-01-05", deadline:"2026-01-31", audition:"2026-05-20" },
-  "hfmt-hamburg":   { name:"HfMT Hamburg",        city:"Hamburg",   rank:"S", start:"2025-12-01", deadline:"2026-01-15", audition:"2026-05-25" },
-  "hfm-berlin":     { name:"HfM Hanns Eisler",    city:"Berlin",    rank:"S", start:"2025-11-01", deadline:"2025-12-15", audition:"2026-04-20" },
-  "hmtm-muenchen":  { name:"HMTM München",         city:"München",   rank:"S", start:"2025-12-01", deadline:"2026-01-20", audition:"2026-05-15" },
-  "hfm-freiburg":   { name:"HfM Freiburg",         city:"Freiburg",  rank:"A", start:"2026-01-15", deadline:"2026-02-15", audition:"2026-06-08" },
-  "hfm-koeln":      { name:"HfM Köln",             city:"Köln",      rank:"A", start:"2025-12-01", deadline:"2026-01-20", audition:"2026-05-18" },
-  "hfm-karlsruhe":  { name:"HfM Karlsruhe",        city:"Karlsruhe", rank:"A", start:"2026-01-01", deadline:"2026-02-01", audition:"2026-06-06" },
-  "hfm-wuerzburg":  { name:"HfM Würzburg",         city:"Würzburg",  rank:"B", start:"2025-12-01", deadline:"2026-02-28", audition:"2026-05-10" },
-  "rsh-duesseldorf":{ name:"RSH Düsseldorf",       city:"Düsseldorf",rank:"A", start:"2026-01-01", deadline:"2026-03-01", audition:"2026-05-05" },
+  // 베를린
+  "hfm-berlin":      { name:"한스 아이슬러 음악대학",           city:"Berlin",      start:"2025-10-01", deadline:"2025-11-08", audition:null, lang_timing:"없음",   lang_level:null,           round1_type:"영상",      portal_type:"muvac",  fee:"60 EUR",                               fee_note:"카드 결제만 가능. 환불 불가.",         docs_common:["신분증/여권 스캔","영상 링크 (muvac 입력)","자기소개서"], docs_master:["Transcript of Records","예비졸업증명서 (미졸업자)"] },
+  "udk-berlin":      { name:"베를린 예술대학",                  city:"Berlin",      start:"2026-02-20", deadline:"2026-03-20", audition:null, lang_timing:"등록전", lang_level:"B2",            round1_type:"영상",      portal_type:"online", fee:"30~50 EUR (전공마다 다름)",             fee_note:"학기 행정비 360 EUR (독일패스 포함). 학비 없음.", docs_common:null, docs_master:null },
+  // 브레멘
+  "hfk-bremen":      { name:"브레멘 예술대학",                  city:"Bremen",      start:"2026-02-01", deadline:null, audition:null, lang_timing:null,     lang_level:null,           round1_type:"없음(바로현장)", portal_type:"online", fee:"50 EUR",                           fee_note:null,                                  docs_common:null, docs_master:null },
+  // 데트몰트
+  "hfm-detmold":     { name:"데트몰트 음악대학",                city:"Detmold",     start:"2026-02-15", deadline:"2026-03-15", audition:null, lang_timing:null,     lang_level:null,           round1_type:"영상+서류", portal_type:"muvac",  fee:"50 EUR",                               fee_note:null,                                  docs_common:null, docs_master:null },
+  // 드레스덴
+  "hfm-dresden":     { name:"드레스덴 음악대학",                city:"Dresden",     start:"2026-03-01", deadline:"2026-03-31", audition:null, lang_timing:null,     lang_level:null,           round1_type:null,        portal_type:"online", fee:"50 EUR",                               fee_note:null,                                  docs_common:null, docs_master:null },
+  // 뒤셀도르프
+  "rsh-duesseldorf": { name:"로베르트 슈만 음악대학",           city:"Düsseldorf",  start:null, deadline:"2026-03-01", audition:null, lang_timing:"등록전", lang_level:"B2",            round1_type:"영상",      portal_type:"muvac",  fee:"50 EUR (첫 지원) / 10 EUR (추가)",     fee_note:null,                                  docs_common:null, docs_master:null },
+  // 에센
+  "folkwang-essen":  { name:"에센 폴크방 예술대학",             city:"Essen",       start:"2026-01-15", deadline:"2026-03-15", audition:null, lang_timing:null,     lang_level:null,           round1_type:null,        portal_type:"online", fee:"50 EUR",                               fee_note:null,                                  docs_common:null, docs_master:null },
+  // 프랑크푸르트
+  "hmdk-frankfurt":  { name:"프랑크푸르트 음악공연예술대학",    city:"Frankfurt",   start:null,         deadline:"2026-04-01", audition:null, lang_timing:null,     lang_level:null,           round1_type:null,        portal_type:"online", fee:"50 EUR",                               fee_note:"마감 후 청구서 발송. 미납 시 접수 무효. 환불 불가.", docs_common:null, docs_master:null },
+  // 프라이부르크
+  "hfm-freiburg":    { name:"프라이부르크 음악대학",            city:"Freiburg",    start:"2026-03-01", deadline:"2026-04-01", audition:null, lang_timing:"조건부", lang_level:"DSH-1 / B1",   round1_type:null,        portal_type:"post",   fee:"50 EUR",                               fee_note:null,                                  docs_common:null, docs_master:null },
+  // 함부르크
+  "hfmt-hamburg":    { name:"함부르크 음악연극대학",            city:"Hamburg",     start:"2026-02-15", deadline:"2026-04-01", audition:null, lang_timing:"조건부", lang_level:"B2",            round1_type:null,        portal_type:"online", fee:"50 EUR",                               fee_note:null,                                  docs_common:null, docs_master:null },
+  // 하노버
+  "hmtmh-hannover":  { name:"하노버 음악연극미디어대학",        city:"Hannover",    start:"2026-02-15", deadline:"2026-03-15", audition:null, lang_timing:"등록전", lang_level:"TestDaF TDN3", round1_type:"영상+서류", portal_type:"muvac",  fee:"50 EUR (첫 지원) / 30 EUR (추가)",     fee_note:null,                                  docs_common:null, docs_master:null },
+  // 카를스루에
+  "hfm-karlsruhe":   { name:"카를스루에 음악대학",              city:"Karlsruhe",   start:"2026-03-01", deadline:"2026-04-01", audition:null, lang_timing:null,     lang_level:null,           round1_type:"영상+서류", portal_type:"post",   fee:"50 EUR",                               fee_note:null,                                  docs_common:null, docs_master:null },
+  // 쾰른
+  "hfmt-koeln":      { name:"쾰른 음악무용대학",                city:"Köln",        start:null, deadline:"2026-03-02", audition:null, lang_timing:null,     lang_level:null,           round1_type:"영상",      portal_type:"muvac",  fee:"50 EUR",                               fee_note:"여러 전공 동시지원 시 1회만 납부",    docs_common:null, docs_master:null },
+  // 라이프치히
+  "hmt-leipzig":     { name:"라이프치히 음악연극대학",          city:"Leipzig",     start:"2026-03-01", deadline:"2026-03-31", audition:null, lang_timing:"등록전", lang_level:"B2",            round1_type:null,        portal_type:"online", fee:"미확인",                               fee_note:"포털 내 계좌 정보 확인",              docs_common:null, docs_master:null },
+  // 뤼베크
+  "mhl-luebeck":     { name:"뤼베크 음악대학",                  city:"Lübeck",      start:"2026-02-01", deadline:"2026-04-01", audition:null, lang_timing:null,     lang_level:null,           round1_type:"영상+서류", portal_type:"online", fee:"50 EUR",                               fee_note:null,                                  docs_common:null, docs_master:null },
+  // 만하임
+  "shm-mannheim":    { name:"만하임 음악공연예술대학",          city:"Mannheim",    start:"2026-04-01", deadline:"2026-04-30", audition:null, lang_timing:null,     lang_level:null,           round1_type:null,        portal_type:"online", fee:"50 EUR",                               fee_note:null,                                  docs_common:null, docs_master:null },
+  // 뮌헨
+  "hmtm-muenchen":   { name:"뮌헨 음악연극대학",               city:"München",     start:"2026-01-15", deadline:"2026-03-05", audition:null, lang_timing:null,     lang_level:"B1~C1 (전공별)", round1_type:null,       portal_type:"online", fee:"50 EUR",                               fee_note:null,                                  docs_common:null, docs_master:null },
+  // 뉘른베르크
+  "hfm-nuernberg":   { name:"뉘른베르크 음악대학",             city:"Nürnberg",    start:"2026-01-15", deadline:"2026-03-31", audition:null, lang_timing:null,     lang_level:null,           round1_type:null,        portal_type:"muvac",  fee:"50 EUR (첫 지원) / 30 EUR (추가)",     fee_note:null,                                  docs_common:null, docs_master:null },
+  // 로스토크
+  "hmt-rostock":     { name:"로스토크 음악연극대학",           city:"Rostock",     start:"2026-03-01", deadline:"2026-04-15", audition:null, lang_timing:null,     lang_level:null,           round1_type:null,        portal_type:"online", fee:"50 EUR",                               fee_note:null,                                  docs_common:null, docs_master:null },
+  // 자브뤼켄
+  "hfm-saar":        { name:"자를란트 음악대학",               city:"Saarbrücken", start:"2026-01-14", deadline:"2026-03-14", audition:null, lang_timing:"등록전", lang_level:"TestDaF TDN3", round1_type:"영상",      portal_type:"online", fee:"50 EUR",                               fee_note:"재학생 24 EUR. 환불 불가.",           docs_common:null, docs_master:null },
+  // 슈투트가르트
+  "shm-stuttgart":   { name:"슈투트가르트 음악공연예술대학",   city:"Stuttgart",   start:"2026-03-02", deadline:"2026-04-01", audition:null, lang_timing:"조건부", lang_level:"B2",            round1_type:null,        portal_type:"post",   fee:"50 EUR",                               fee_note:"지원서당. 환불 불가.",                docs_common:null, docs_master:null },
+  // 트로싱엔
+  "hfm-trossingen":  { name:"트로싱엔 음악대학",               city:"Trossingen",  start:"2026-03-01", deadline:"2026-04-01", audition:null, lang_timing:"조건부", lang_level:"B2 (조건부)",  round1_type:"영상",      portal_type:"online", fee:"50 EUR",                               fee_note:null,                                  docs_common:null, docs_master:null },
+  // 바이마르
+  "hfm-weimar":      { name:"바이마르 프란츠 리스트 음악대학", city:"Weimar",      start:"2026-02-16", deadline:"2026-03-16", audition:null, lang_timing:null,     lang_level:null,           round1_type:null,        portal_type:"online", fee:"50 EUR",                               fee_note:null,                                  docs_common:null, docs_master:null },
+  // 뷔르츠부르크
+  "hfm-wuerzburg":   { name:"뷔르츠부르크 음악대학",           city:"Würzburg",    start:"2026-01-15", deadline:"2026-03-15", audition:null, lang_timing:null,     lang_level:null,           round1_type:null,        portal_type:"muvac",  fee:"50 EUR",                               fee_note:null,                                  docs_common:null, docs_master:null },
 };
 
-const CHECKLIST_TEMPLATE = [
-  { id:"passport",   label:"여권 사본",                     required:true },
-  { id:"cv",         label:"Lebenslauf (이력서)",            required:true },
-  { id:"motiv",      label:"Motivationsschreiben (자소서)", required:true },
-  { id:"video",      label:"사전 영상 (Video Prescreening)", required:false },
-  { id:"transcript", label:"성적증명서 / 학위증명서",         required:true },
-  { id:"photo",      label:"증명사진",                       required:false },
-  { id:"fee",        label:"지원비 납부",                    required:true },
-  { id:"lang",       label:"언어 증명서",                    required:false },
-];
+// 학교별 맞춤 체크리스트 생성 (universities.json 실제 데이터 기반)
+function getSchoolChecklist(school) {
+  const items = [];
+
+  // ── docs_common 데이터가 있는 학교: 실제 항목 사용 ──
+  if (school.docs_common && school.docs_common.length) {
+    school.docs_common.forEach((label, i) => {
+      items.push({ id:'doc_' + i, label, required:true });
+    });
+    // 지원비
+    const feeLabel = '지원비 납부' + (school.fee ? ' (' + school.fee + (school.fee_note ? ' — ' + school.fee_note : '') + ')' : '');
+    items.push({ id:'fee', label:feeLabel, required:true });
+    // Master 추가 서류
+    if (school.docs_master && school.docs_master.length) {
+      school.docs_master.forEach((label, i) => {
+        items.push({ id:'master_' + i, label:'[석사] ' + label, required:false });
+      });
+    }
+    // 우편 발송
+    if (school.portal_type === 'post') {
+      items.push({ id:'postal', label:'우편 발송 (서류 출력 후 등기)', required:true });
+    }
+    return items;
+  }
+
+  // ── 일반: 필드에서 파생 ──
+
+  // 공통 필수 서류
+  items.push({ id:'passport',   label:'여권 사본',                     required:true });
+  items.push({ id:'cv',         label:'Lebenslauf (이력서)',            required:true });
+  items.push({ id:'motiv',      label:'Motivationsschreiben (자소서)', required:true });
+  items.push({ id:'transcript', label:'성적증명서 / 학위증명서',         required:true });
+
+  // 지원비 (fee_note 포함)
+  let feeLabel = '지원비 납부';
+  if (school.fee) feeLabel += ' (' + school.fee + ')';
+  if (school.fee_note) feeLabel += ' — ' + school.fee_note;
+  items.push({ id:'fee', label:feeLabel, required:true });
+
+  // 사전 영상: round1_type에 "영상" 포함 시
+  const r1 = school.round1_type || '';
+  if (r1.includes('영상')) {
+    items.push({ id:'video', label:'사전 영상 (Video Prescreening)', required:true });
+  }
+
+  // 언어 증명서: lang_timing이 있고 "없음"이 아닐 때
+  const lt = school.lang_timing;
+  if (lt && lt !== '없음') {
+    const timingMap = { '지원전':'지원 전 첨부 필수', '조건부':'합격 후 제출 가능', '등록전':'등록 전 제출' };
+    let langLabel = '언어 증명서';
+    if (school.lang_level) langLabel += ' ' + school.lang_level;
+    langLabel += ' — ' + (timingMap[lt] || lt);
+    items.push({ id:'lang', label:langLabel, required: lt === '지원전' });
+  }
+
+  // 우편 발송: portal_type이 "post"일 때
+  if (school.portal_type === 'post') {
+    items.push({ id:'postal', label:'우편 발송 (서류 출력 후 등기)', required:true });
+  }
+
+  return items;
+}
 
 const STATUS_OPTIONS = [
-  { value:"watch",    label:"🔖 관심 학교",    color:"#666" },
-  { value:"plan",     label:"📝 지원 예정",    color:"#5A8FE0" },
-  { value:"prep",     label:"📂 서류 준비중",  color:"#E09A3C" },
-  { value:"submit",   label:"📤 제출 완료",    color:"#9B6FE0" },
-  { value:"wait",     label:"⏳ 결과 대기",    color:"#C9A84C" },
-  { value:"pass",     label:"🎉 합격",         color:"#4CAF84" },
-  { value:"fail",     label:"❌ 불합격",       color:"#E05A5A" },
+  { value:"watch",    label:"관심 학교",    color:"#666" },
+  { value:"plan",     label:"지원 예정",    color:"#5A8FE0" },
+  { value:"prep",     label:"서류 준비중",  color:"#E09A3C" },
+  { value:"submit",   label:"제출 완료",    color:"#9B6FE0" },
+  { value:"wait",     label:"결과 대기",    color:"#C9A84C" },
+  { value:"pass",     label:"합격",         color:"#4CAF84" },
+  { value:"fail",     label:"불합격",       color:"#E05A5A" },
 ];
 
 const STATUS_COLORS = Object.fromEntries(STATUS_OPTIONS.map(s=>[s.value,s.color]));
@@ -591,20 +836,101 @@ let calYear = new Date().getFullYear();
 let calMonth = new Date().getMonth();
 
 // ══════════════════════════════════════════════
+// 인증 헬퍼
+// ══════════════════════════════════════════════
+
+// 탭 전환 (로그인 ↔ 회원가입)
+function showAuthTab(tab) {
+  document.getElementById('formLogin').classList.toggle('hidden', tab !== 'login');
+  document.getElementById('formSignup').classList.toggle('hidden', tab !== 'signup');
+  document.getElementById('tabLogin').classList.toggle('active', tab === 'login');
+  document.getElementById('tabSignup').classList.toggle('active', tab === 'signup');
+  document.getElementById('loginError').style.display = 'none';
+  document.getElementById('signupError').style.display = 'none';
+}
+
+// 에러 메시지 표시
+function authError(elId, msg) {
+  const el = document.getElementById(elId);
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+// 비밀번호 SHA-256 해시 (Web Crypto API, 브라우저 내장)
+async function hashPw(pw) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pw));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+
+// 사용자 DB 읽기/쓰기 (localStorage에 이메일→해시 저장)
+function getUsers() { return JSON.parse(localStorage.getItem('dm_users') || '{}'); }
+function saveUsers(u) { localStorage.setItem('dm_users', JSON.stringify(u)); }
+
+// ══════════════════════════════════════════════
 // 로그인
 // ══════════════════════════════════════════════
-function doLogin() {
-  const email = document.getElementById('loginEmail').value.trim();
+async function doLogin() {
+  const email = document.getElementById('loginEmail').value.trim().toLowerCase();
   const pw    = document.getElementById('loginPw').value;
-  if (!email) { showToast('이메일을 입력해주세요','warn'); return; }
+  if (!email) { authError('loginError','이메일을 입력해주세요'); return; }
+  if (!pw)    { authError('loginError','비밀번호를 입력해주세요'); return; }
 
-  // Supabase Auth 연동 포인트
-  // 실제 구현: supabase.auth.signInWithPassword({ email, password: pw })
-  // 데모에서는 로컬스토리지 기반
-  currentUser = { email, id: btoa(email) };
+  const users = getUsers();
+  const uid   = btoa(email);
+  if (!users[uid]) {
+    authError('loginError','등록되지 않은 이메일입니다. 회원가입 탭을 이용해주세요');
+    return;
+  }
+  const hash = await hashPw(pw);
+  if (users[uid].pwHash !== hash) {
+    authError('loginError','비밀번호가 올바르지 않습니다');
+    return;
+  }
+
+  currentUser = { email, id: uid };
   localStorage.setItem('dm_user', JSON.stringify(currentUser));
   loadUserData();
   enterApp();
+}
+
+// ══════════════════════════════════════════════
+// 회원가입
+// ══════════════════════════════════════════════
+// ★ 활성화 코드: Zapier 자동발송 이메일에 이 값을 넣어 보내면 됨
+// 코드 변경 시 이 값만 수정하면 전체 적용됨
+const ACTIVATION_CODE = 'MUSIK-2026';
+
+async function doSignup() {
+  const email  = document.getElementById('signupEmail').value.trim().toLowerCase();
+  const pw     = document.getElementById('signupPw').value;
+  const pwConf = document.getElementById('signupPwConfirm').value;
+  const code   = document.getElementById('signupCode').value.trim().toUpperCase();
+  if (!email || !email.includes('@')) { authError('signupError','유효한 이메일을 입력해주세요'); return; }
+  if (pw.length < 8)  { authError('signupError','비밀번호는 8자 이상이어야 합니다'); return; }
+  if (pw !== pwConf)  { authError('signupError','비밀번호가 일치하지 않습니다'); return; }
+  if (code !== ACTIVATION_CODE) { authError('signupError','활성화 코드가 올바르지 않습니다'); return; }
+
+  const users = getUsers();
+  const uid   = btoa(email);
+  // 1인 프리미엄 플랜: 다른 계정이 이미 존재하면 추가 가입 불가
+  if (Object.keys(users).length > 0 && !users[uid]) {
+    authError('signupError','이 대시보드는 1인 전용 플랜입니다. 이미 등록된 계정이 있습니다.');
+    return;
+  }
+  if (users[uid]) {
+    authError('signupError','이미 등록된 이메일입니다. 로그인 탭을 이용해주세요');
+    return;
+  }
+
+  const hash = await hashPw(pw);
+  users[uid] = { email, pwHash: hash };
+  saveUsers(users);
+
+  currentUser = { email, id: uid };
+  localStorage.setItem('dm_user', JSON.stringify(currentUser));
+  loadUserData();
+  enterApp();
+  showToast('회원가입 완료! 환영합니다');
 }
 
 function demoLogin() {
@@ -635,6 +961,26 @@ function doLogout() {
 function loadUserData() {
   const saved = localStorage.getItem('dm_schools_' + currentUser.id);
   schools = saved ? JSON.parse(saved) : [];
+  // 구버전 데이터 마이그레이션: 누락된 필드를 기본 데이터로 보완
+  const NEW_FIELDS = ['start','deadline','audition','lang_timing','lang_level','round1_type','portal_type','fee','fee_note','docs_common','docs_master'];
+  const nameToDefault = {};
+  Object.values(SCHOOL_DEFAULTS).forEach(d => { nameToDefault[d.name] = d; });
+  let migrated = false;
+  schools.forEach(s => {
+    const def = nameToDefault[s.name]; // 이름으로 defaults 매칭
+    let changed = false;
+    NEW_FIELDS.forEach(field => {
+      if (s[field] === undefined) { // undefined = 구버전에 없던 필드
+        s[field] = def ? def[field] : null;
+        changed = true;
+      }
+    });
+    if (changed) {
+      s.checks = defaultChecks(s); // 체크리스트 재생성
+      migrated = true;
+    }
+  });
+  if (migrated) autoSave(); // 마이그레이션된 내용 바로 저장
 }
 
 function saveAll() {
@@ -654,21 +1000,26 @@ function autoSave() {
 // 샘플 데이터
 // ══════════════════════════════════════════════
 function getSampleSchools() {
+  const mk = (key, id, status, note, checked) => {
+    const s = { ...SCHOOL_DEFAULTS[key], id, status, note };
+    s.checks = checked ? allChecked(s) : defaultChecks(s);
+    return s;
+  };
   return [
-    { ...SCHOOL_DEFAULTS['hmt-leipzig'],    id:'s1', status:'prep',   note:'바이올린 전공 / 교수 연락 완료', checks: defaultChecks() },
-    { ...SCHOOL_DEFAULTS['hfmt-hamburg'],   id:'s2', status:'plan',   note:'피아노 전공', checks: defaultChecks() },
-    { ...SCHOOL_DEFAULTS['hfm-berlin'],     id:'s3', status:'submit', note:'제출 완료!', checks: allChecked() },
-    { ...SCHOOL_DEFAULTS['hfm-freiburg'],   id:'s4', status:'watch',  note:'기타 전공 고려중', checks: defaultChecks() },
-    { ...SCHOOL_DEFAULTS['hfm-wuerzburg'],  id:'s5', status:'plan',   note:'안전권 학교', checks: defaultChecks() },
+    mk('hmt-leipzig',    's1', 'prep',   '바이올린 전공 / 교수 연락 완료', false),
+    mk('hfmt-hamburg',   's2', 'plan',   '피아노 전공', false),
+    mk('hfm-berlin',     's3', 'submit', '제출 완료!', true),
+    mk('hfm-freiburg',   's4', 'watch',  '기타 전공 고려중', false),
+    mk('hfm-wuerzburg',  's5', 'plan',   '안전권 학교', false),
   ];
 }
 
-function defaultChecks() {
-  return Object.fromEntries(CHECKLIST_TEMPLATE.map(c=>[c.id, false]));
+function defaultChecks(school) {
+  return Object.fromEntries(getSchoolChecklist(school).map(c=>[c.id, false]));
 }
 
-function allChecked() {
-  return Object.fromEntries(CHECKLIST_TEMPLATE.map(c=>[c.id, true]));
+function allChecked(school) {
+  return Object.fromEntries(getSchoolChecklist(school).map(c=>[c.id, true]));
 }
 
 // ══════════════════════════════════════════════
@@ -697,10 +1048,10 @@ function ddayClass(d) {
 }
 
 function checkProgress(school) {
+  const template = getSchoolChecklist(school);
   const checks = school.checks || {};
-  const total = CHECKLIST_TEMPLATE.length;
-  const done  = Object.values(checks).filter(Boolean).length;
-  return Math.round((done / total) * 100);
+  const done = template.filter(c => checks[c.id]).length;
+  return Math.round((done / template.length) * 100);
 }
 
 function progressColor(pct) {
@@ -709,9 +1060,6 @@ function progressColor(pct) {
   return 'var(--blue)';
 }
 
-function rankColor(r) {
-  return {S:'var(--gold)',A:'var(--blue)',B:'var(--green)'}[r] || 'var(--muted)';
-}
 
 function topBarColor(status) {
   return STATUS_COLORS[status] || 'var(--s4)';
@@ -730,6 +1078,7 @@ function renderAll() {
   renderTimeline();
   renderChecklist();
   updateCheckBadge();
+  lucide.createIcons();
 }
 
 // ══════════════════════════════════════════════
@@ -886,10 +1235,21 @@ function renderCards() {
             <div class="card-name">${s.name}</div>
             <div class="card-city">${s.city||''}</div>
           </div>
-          <span class="rank-chip r-${s.rank}">${s.rank}</span>
         </div>
         <div class="card-dday ${ddayClass(d)}">${ddayLabel(d)}</div>
-        <div class="card-deadline">마감: ${s.deadline||'미입력'} ${s.audition?'· 실기: '+s.audition:''}</div>
+        <div class="card-deadline">
+          <span>${s.deadline ? '마감: '+s.deadline+(s.audition?' · 실기: '+s.audition:'') : '<span style="color:var(--orange);">날짜 미입력</span>'}</span>
+          <button class="date-edit-btn" onclick="toggleDateEdit('${s.id}')" title="날짜 편집"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+        </div>
+        <div class="date-edit-panel hidden" id="dep-${s.id}">
+          <label>시작일 <input type="date" id="de-start-${s.id}" value="${s.start||''}"></label>
+          <label>마감일 <input type="date" id="de-deadline-${s.id}" value="${s.deadline||''}"></label>
+          <label>실기일 <input type="date" id="de-audition-${s.id}" value="${s.audition||''}"></label>
+          <div class="date-edit-actions">
+            <button class="btn btn-sm" style="background:var(--teal);color:#fff;border:none;" onclick="saveDates('${s.id}')">저장</button>
+            <button class="btn btn-ghost btn-sm" onclick="toggleDateEdit('${s.id}')">취소</button>
+          </div>
+        </div>
         <div class="progress-wrap">
           <div class="progress-label">
             <span>서류 진행률</span><span>${pct}%</span>
@@ -1013,7 +1373,7 @@ function renderTimeline() {
     return `<div class="timeline-row">
       <div class="timeline-school">
         <div class="timeline-school-name">${s.name}</div>
-        <div class="timeline-school-sub">${s.city||''} · ${s.rank}등급</div>
+        <div class="timeline-school-sub">${s.city||''}</div>
       </div>
       <div class="timeline-bars" style="position:relative;width:100%;">${bars}</div>
     </div>`;
@@ -1045,7 +1405,7 @@ function renderChecklist() {
         <div class="checklist-toggle">${pct===100?'✓ 완료':'미완료'}</div>
       </div>
       <div class="checklist-items">
-        ${CHECKLIST_TEMPLATE.map(item => {
+        ${getSchoolChecklist(s).map(item => {
           const checked = s.checks?.[item.id] || false;
           return `<div class="check-item ${checked?'done':''}" onclick="toggleCheck('${s.id}','${item.id}')">
             <div class="check-box">
@@ -1061,7 +1421,9 @@ function renderChecklist() {
 }
 
 function updateCheckBadge() {
-  const total = schools.reduce((a,s)=>a+CHECKLIST_TEMPLATE.filter(c=>c.required&&!s.checks?.[c.id]).length,0);
+  const total = schools.reduce((a,s) => {
+    return a + getSchoolChecklist(s).filter(c => c.required && !s.checks?.[c.id]).length;
+  }, 0);
   document.getElementById('checkBadge').textContent = total;
   document.getElementById('checkBadge').style.display = total ? '' : 'none';
 }
@@ -1101,7 +1463,7 @@ function fillSchoolData() {
   document.getElementById('addStart').value    = d.start    || '';
   document.getElementById('addDeadline').value = d.deadline || '';
   document.getElementById('addAudition').value = d.audition || '';
-  document.getElementById('addRank').value     = d.rank     || 'A';
+
 }
 
 function addSchool() {
@@ -1110,28 +1472,37 @@ function addSchool() {
 
   if (!sel) { showToast('학교를 선택해주세요','warn'); return; }
 
-  let name, city, rank;
+  let name, city;
   if (sel === 'custom') {
     name = document.getElementById('customName').value.trim();
     if (!name) { showToast('학교명을 입력해주세요','warn'); return; }
-    city=''; rank=document.getElementById('addRank').value;
+    city='';
   } else {
     const d = SCHOOL_DEFAULTS[sel];
-    name = d.name; city = d.city; rank = d.rank;
+    name = d.name; city = d.city;
   }
 
   if (schools.find(s=>s.name===name)) { showToast('이미 추가된 학교입니다','warn'); return; }
 
+  const d = sel !== 'custom' ? SCHOOL_DEFAULTS[sel] : null;
   const school = {
-    id:       's' + Date.now(),
-    name, city, rank,
-    start:    document.getElementById('addStart').value,
+    id:          's' + Date.now(),
+    name, city,
+    start:       document.getElementById('addStart').value,
     deadline,
-    audition: document.getElementById('addAudition').value,
-    note:     document.getElementById('addNote').value,
-    status:   'plan',
-    checks:   defaultChecks(),
+    audition:    document.getElementById('addAudition').value,
+    note:        document.getElementById('addNote').value,
+    status:      'plan',
+    lang_timing:  d ? d.lang_timing  : null,
+    lang_level:   d ? d.lang_level   : null,
+    round1_type:  d ? d.round1_type  : null,
+    portal_type:  d ? d.portal_type  : null,
+    fee:          d ? d.fee          : null,
+    fee_note:     d ? d.fee_note     : null,
+    docs_common:  d ? d.docs_common  : null,
+    docs_master:  d ? d.docs_master  : null,
   };
+  school.checks = defaultChecks(school);
 
   schools.push(school);
   autoSave();
@@ -1141,6 +1512,24 @@ function addSchool() {
 
   // 폼 초기화
   ['addSchoolSelect','addStart','addDeadline','addAudition','addNote'].forEach(id=>{ document.getElementById(id).value=''; });
+}
+
+// 날짜 편집 패널 토글
+function toggleDateEdit(id) {
+  const panel = document.getElementById('dep-' + id);
+  if (panel) panel.classList.toggle('hidden');
+}
+
+// 날짜 저장 (시작·마감·실기)
+function saveDates(id) {
+  const s = schools.find(x=>x.id===id);
+  if (!s) return;
+  s.start    = document.getElementById('de-start-' + id).value    || null;
+  s.deadline = document.getElementById('de-deadline-' + id).value || null;
+  s.audition = document.getElementById('de-audition-' + id).value || null;
+  autoSave();
+  renderAll();
+  showToast('날짜 저장 완료');
 }
 
 function removeSchool(id) {
@@ -1185,8 +1574,15 @@ function switchTab(name, btn) {
   ['overview','cards','calendar','timeline','checklist'].forEach(v=>{
     document.getElementById('view-'+v).classList.toggle('hidden', v!==name);
   });
+  // 탭 버튼 활성화 싱크
   document.querySelectorAll('.view-tab').forEach(t=>t.classList.remove('active'));
   if (btn) btn.classList.add('active');
+  // 사이드바 버튼 활성화 싱크
+  const tabMap = ['overview','cards','calendar','timeline','checklist'];
+  const sbItems = document.querySelectorAll('.sb-item');
+  sbItems.forEach(i=>i.classList.remove('active'));
+  const idx = tabMap.indexOf(name);
+  if (idx >= 0 && sbItems[idx]) sbItems[idx].classList.add('active');
   currentTab = name;
 
   const titles = { overview:'전체 현황', cards:'학교별 카드', calendar:'캘린더', timeline:'타임라인', checklist:'서류 체크리스트' };
@@ -1222,9 +1618,18 @@ window.addEventListener('DOMContentLoaded', () => {
   // 저장된 로그인 복원
   const saved = localStorage.getItem('dm_user');
   if (saved) {
-    currentUser = JSON.parse(saved);
-    loadUserData();
-    enterApp();
+    const u = JSON.parse(saved);
+    // 데모 유저는 그냥 복원, 일반 유저는 dm_users에 등록된 계정인지 확인
+    const users = getUsers();
+    if (u.isDemo || users[u.id]) {
+      currentUser = u;
+      if (!u.isDemo) loadUserData();
+      else schools = getSampleSchools();
+      enterApp();
+    } else {
+      // 구버전 데이터(비밀번호 없이 저장된 세션): 재로그인 요청
+      localStorage.removeItem('dm_user');
+    }
   }
   // 알림 설정 복원
   const alertSaved = localStorage.getItem('dm_alert_' + (currentUser?.id||'demo'));
@@ -1241,6 +1646,9 @@ window.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('keydown', e => {
   if (e.key==='Escape') closeAddModal();
 });
+
+// 루시드 아이콘 초기화
+document.addEventListener('DOMContentLoaded', () => lucide.createIcons());
 </script>
 </body>
 </html>

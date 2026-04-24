@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>문의하기 — 독일 음대 입시 판별기</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Sans+KR:wght@300;400;500&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:     #0E0C09;
+  --paper:   #F5F1EA;
+  --gold:    #8B6914;
+  --gold-lt: #C9A84C;
+  --muted:   #8A8070;
+  --border:  rgba(139,105,20,0.15);
+  --surface: #EFEBE2;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: '';
+  display: block;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, var(--gold) 30%, var(--gold-lt) 50%, var(--gold) 70%, transparent 100%);
+}
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 48px;
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--gold);
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.nav-links { display: flex; gap: 32px; list-style: none; }
+.nav-links a {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--muted);
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color .2s;
+}
+.nav-links a:hover { color: var(--gold); }
+
+/* 메인 레이아웃 */
+.main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 80px 48px 100px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+
+/* 왼쪽 */
+.left-col {}
+.page-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 4px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.page-label::before {
+  content: '';
+  width: 24px;
+  height: 1px;
+  background: var(--gold);
+}
+.page-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(40px, 5vw, 64px);
+  font-weight: 300;
+  line-height: 1.1;
+  margin-bottom: 28px;
+}
+.page-title em { font-style: italic; color: var(--gold); }
+.page-desc {
+  font-size: 14px;
+  line-height: 2;
+  color: #4A4438;
+  font-weight: 300;
+  margin-bottom: 48px;
+  max-width: 440px;
+}
+
+/* 연락처 카드 */
+.contact-cards { display: flex; flex-direction: column; gap: 1px; border: 1px solid var(--border); }
+.contact-card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 22px 28px;
+  background: var(--paper);
+  transition: background .2s;
+  text-decoration: none;
+  color: inherit;
+}
+.contact-card:hover { background: var(--surface); }
+.contact-card + .contact-card { border-top: 1px solid var(--border); }
+.cc-icon { font-size: 20px; flex-shrink: 0; width: 28px; text-align: center; }
+.cc-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 2px;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.cc-value { font-size: 14px; color: var(--ink); font-weight: 400; }
+.cc-sub { font-size: 12px; color: var(--muted); font-weight: 300; margin-top: 2px; }
+.cc-arrow {
+  margin-left: auto;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  color: var(--gold-lt);
+  opacity: 0;
+  transition: opacity .2s;
+}
+.contact-card:hover .cc-arrow { opacity: 1; }
+
+/* 구분선 */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 36px 0;
+}
+.divider::before, .divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+.divider span {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--muted);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* 오른쪽: 문의 폼 */
+.form-col {}
+.form-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 36px 32px;
+}
+.form-box-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px;
+  font-weight: 400;
+  margin-bottom: 8px;
+}
+.form-box-sub {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 300;
+  margin-bottom: 32px;
+  line-height: 1.7;
+}
+
+.form-group { margin-bottom: 20px; }
+.form-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 2px;
+  color: var(--muted);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 8px;
+}
+.form-input, .form-select, .form-textarea {
+  width: 100%;
+  padding: 12px 14px;
+  background: var(--paper);
+  border: 1px solid var(--border);
+  color: var(--ink);
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 13px;
+  font-weight: 300;
+  outline: none;
+  transition: border-color .2s;
+  -webkit-appearance: none;
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  border-color: var(--gold);
+}
+.form-textarea { resize: vertical; min-height: 140px; line-height: 1.7; }
+.form-select {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238A8070' fill='none' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+}
+.form-input::placeholder, .form-textarea::placeholder { color: #B0A898; }
+
+.btn-submit {
+  width: 100%;
+  padding: 16px;
+  background: var(--gold);
+  color: var(--paper);
+  border: none;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all .2s;
+  margin-top: 8px;
+}
+.btn-submit:hover { background: var(--gold-lt); transform: translateY(-1px); }
+.btn-submit:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+
+.form-note {
+  margin-top: 16px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: var(--muted);
+  line-height: 1.8;
+  text-align: center;
+}
+
+/* 성공 메시지 */
+.success-msg {
+  display: none;
+  text-align: center;
+  padding: 48px 24px;
+}
+.success-icon { font-size: 40px; margin-bottom: 16px; }
+.success-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 300;
+  margin-bottom: 12px;
+  color: var(--gold);
+}
+.success-sub { font-size: 13px; color: var(--muted); line-height: 1.8; }
+
+/* FAQ */
+.faq { margin-top: 48px; }
+.faq-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.faq-title::before {
+  content: '';
+  width: 16px;
+  height: 1px;
+  background: var(--gold);
+}
+.faq-item {
+  border-bottom: 1px solid var(--border);
+  padding: 18px 0;
+}
+.faq-q {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  list-style: none;
+}
+.faq-q::-webkit-details-marker { display: none; }
+.faq-toggle {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 14px;
+  color: var(--gold-lt);
+  flex-shrink: 0;
+  transition: transform .2s;
+}
+details[open] .faq-toggle { transform: rotate(45deg); }
+.faq-a {
+  font-size: 13px;
+  color: #4A4438;
+  line-height: 1.9;
+  font-weight: 300;
+  padding-top: 14px;
+  max-width: 520px;
+}
+
+footer {
+  border-top: 1px solid var(--border);
+  padding: 36px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-logo {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+.footer-links { display: flex; gap: 24px; }
+.footer-links a {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color .2s;
+}
+.footer-links a:hover { color: var(--gold); }
+
+@media (max-width: 860px) {
+  nav { padding: 16px 24px; }
+  .nav-links { display: none; }
+  .main { grid-template-columns: 1fr; gap: 48px; padding: 48px 24px 80px; }
+  footer { flex-direction: column; gap: 16px; padding: 28px 24px; text-align: center; }
+  .footer-links { flex-wrap: wrap; justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="search.html" class="nav-logo">🇩🇪 독일 음대 판별기</a>
+  <ul class="nav-links">
+    <li><a href="search.html">학교 검색</a></li>
+    <li><a href="about.html">소개</a></li>
+    <li><a href="cv_builder.html">이력서 만들기</a></li>
+    <li><a href="contact.html">문의하기</a></li>
+  </ul>
+</nav>
+
+<div class="main">
+
+  <!-- 왼쪽 -->
+  <div class="left-col">
+    <div class="page-label">Contact Us</div>
+    <h1 class="page-title">
+      무엇이든<br>
+      <em>물어보세요.</em>
+    </h1>
+    <p class="page-desc">
+      데이터 오류 제보, 업데이트 요청, 입시 상담 문의 모두 환영합니다.
+      독일 음대 입시와 관련된 어떤 질문이든 성심껏 답변해 드립니다.
+    </p>
+
+    <div class="contact-cards">
+      <a class="contact-card" href="mailto:contact@germusicdb.com">
+        <div class="cc-icon">✉️</div>
+        <div>
+          <div class="cc-label">이메일</div>
+          <div class="cc-value">contact@germusicdb.com</div>
+          <div class="cc-sub">24시간 내 답변 (평일 기준)</div>
+        </div>
+        <div class="cc-arrow">→</div>
+      </a>
+      <div class="contact-card">
+        <div class="cc-icon">💬</div>
+        <div>
+          <div class="cc-label">카카오톡 오픈채팅</div>
+          <div class="cc-value">준비 중</div>
+          <div class="cc-sub">오픈 예정</div>
+        </div>
+      </div>
+      <a class="contact-card" href="https://github.com" target="_blank" rel="noopener">
+        <div class="cc-icon">🐛</div>
+        <div>
+          <div class="cc-label">데이터 오류 제보</div>
+          <div class="cc-value">GitHub Issues</div>
+          <div class="cc-sub">공식 원문 링크와 함께 제보해주세요</div>
+        </div>
+        <div class="cc-arrow">→</div>
+      </a>
+    </div>
+
+    <!-- FAQ -->
+    <div class="faq">
+      <div class="faq-title">자주 묻는 질문</div>
+
+      <div class="faq-item">
+        <details>
+          <summary class="faq-q">
+            데이터가 틀린 것 같아요 <span class="faq-toggle">+</span>
+          </summary>
+          <div class="faq-a">
+            공식 홈페이지 링크와 함께 제보해주세요. 직접 원문을 확인 후 48시간 내에 수정하겠습니다. 오류 제보 시 어느 학교의 어떤 항목이 다른지, 그리고 공식 출처 URL을 함께 남겨주시면 가장 빠르게 처리됩니다.
+          </div>
+        </details>
+      </div>
+
+      <div class="faq-item">
+        <details>
+          <summary class="faq-q">
+            정보가 언제 업데이트되나요? <span class="faq-toggle">+</span>
+          </summary>
+          <div class="faq-a">
+            GitHub Actions를 통해 매주 월요일 오전 9시(KST)에 24개 학교 홈페이지를 자동 모니터링합니다. 페이지 변경이 감지되면 즉시 확인 후 업데이트됩니다.
+          </div>
+        </details>
+      </div>
+
+      <div class="faq-item">
+        <details>
+          <summary class="faq-q">
+            AI가 생성한 이력서를 바로 제출해도 되나요? <span class="faq-toggle">+</span>
+          </summary>
+          <div class="faq-a">
+            AI 생성 서류는 초안으로만 활용하세요. 실제 제출 전에 독일어 원어민 또는 독일 음대 경험자의 교정을 반드시 거치는 것을 권장합니다. 특히 Motivationsschreiben은 교수님 스타일에 맞게 개인화가 필요합니다.
+          </div>
+        </details>
+      </div>
+
+      <div class="faq-item">
+        <details>
+          <summary class="faq-q">
+            입시 컨설팅도 받을 수 있나요? <span class="faq-toggle">+</span>
+          </summary>
+          <div class="faq-a">
+            이메일로 문의해 주세요. 상황에 따라 개인 컨설팅이 가능합니다. 지원 학교 선택, 서류 검토, muvac 지원 과정 등에 대한 도움을 드립니다.
+          </div>
+        </details>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 오른쪽: 문의 폼 -->
+  <div class="form-col">
+    <div class="form-box">
+      <div class="form-box-title">문의 남기기</div>
+      <div class="form-box-sub">이메일 전송이 번거로우시다면 여기에 남겨주세요.<br>등록된 이메일로 직접 답변 드립니다.</div>
+
+      <div id="contactForm">
+        <div class="form-group">
+          <label class="form-label">문의 유형</label>
+          <select class="form-select" id="fType">
+            <option value="">선택해주세요</option>
+            <option value="data_error">📋 데이터 오류 제보</option>
+            <option value="update">🔄 정보 업데이트 요청</option>
+            <option value="consulting">🎓 입시 상담 문의</option>
+            <option value="cv">📄 이력서 / 서류 문의</option>
+            <option value="service">⚙️ 서비스 오류 / 개선 제안</option>
+            <option value="other">💬 기타</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">이름 (닉네임 가능)</label>
+          <input class="form-input" id="fName" type="text" placeholder="홍길동">
+        </div>
+        <div class="form-group">
+          <label class="form-label">이메일 (답변 받을 주소)</label>
+          <input class="form-input" id="fEmail" type="email" placeholder="your@email.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">문의 내용</label>
+          <textarea class="form-textarea" id="fMessage" placeholder="문의 내용을 자세히 적어주세요.
+
+데이터 오류 제보 시:
+- 학교명
+- 잘못된 항목
+- 공식 출처 URL"></textarea>
+        </div>
+        <button class="btn-submit" onclick="submitForm()">
+          문의 보내기 →
+        </button>
+        <div class="form-note">
+          개인정보는 문의 응답 목적으로만 사용되며<br>
+          1년 이내 삭제됩니다. <a href="privacy.html" style="color:var(--gold);">개인정보처리방침</a>
+        </div>
+      </div>
+
+      <div class="success-msg" id="successMsg">
+        <div class="success-icon">✉️</div>
+        <div class="success-title">문의가 접수되었습니다</div>
+        <div class="success-sub">
+          평일 24시간 이내에 입력하신 이메일로 답변 드립니다.<br>
+          감사합니다.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-logo">🇩🇪 독일 음대 입시 판별기</div>
+  <div class="footer-links">
+    <a href="search.html">학교 검색</a>
+    <a href="about.html">소개</a>
+    <a href="privacy.html">개인정보처리방침</a>
+    <a href="terms.html">이용약관</a>
+    <a href="contact.html">문의하기</a>
+  </div>
+</footer>
+
+<script>
+function submitForm() {
+  const type    = document.getElementById('fType').value;
+  const name    = document.getElementById('fName').value.trim();
+  const email   = document.getElementById('fEmail').value.trim();
+  const message = document.getElementById('fMessage').value.trim();
+
+  if (!type)    { alert('문의 유형을 선택해주세요.'); return; }
+  if (!email)   { alert('이메일을 입력해주세요.'); return; }
+  if (!message) { alert('문의 내용을 입력해주세요.'); return; }
+
+  // 이메일 형식 검사
+  const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRe.test(email)) { alert('올바른 이메일 주소를 입력해주세요.'); return; }
+
+  // 실제 구현: Formspree / EmailJS / Supabase function 연동
+  // 예: fetch('https://formspree.io/f/YOUR_ID', { method:'POST', body: formData })
+  // 현재는 mailto: 폴백으로 처리
+  const subject = encodeURIComponent(`[독일음대판별기] ${type} - ${name || '익명'}`);
+  const body    = encodeURIComponent(`이름: ${name||'익명'}\n이메일: ${email}\n유형: ${type}\n\n${message}`);
+  window.open(`mailto:contact@germusicdb.com?subject=${subject}&body=${body}`, '_blank');
+
+  // 성공 메시지 표시
+  document.getElementById('contactForm').style.display = 'none';
+  document.getElementById('successMsg').style.display  = 'block';
+}
+</script>
+
+</body>
+</html>
