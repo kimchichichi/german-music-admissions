@@ -902,10 +902,63 @@ async function doLogin() {
 // ══════════════════════════════════════════════
 // 회원가입
 // ══════════════════════════════════════════════
-// ★ 활성화 코드: Zapier 자동발송 이메일에 이 값을 넣어 보내면 됨
-// 코드 변경 시 이 값만 수정하면 전체 적용됨
+
 
 async function doSignup() {
+  const email  = document.getElementById('signupEmail').value.trim().toLowerCase();
+  const pw     = document.getElementById('signupPw').value;
+  const pwConf = document.getElementById('signupPwConfirm').value;
+  const code   = document.getElementById('signupCode').value.trim();
+
+  if (!email || !email.includes('@')) { authError('signupError','유효한 이메일을 입력해주세요'); return; }
+  if (pw.length < 8)  { authError('signupError','비밀번호는 8자 이상이어야 합니다'); return; }
+  if (pw !== pwConf)  { authError('signupError','비밀번호가 일치하지 않습니다'); return; }
+  if (!code)          { authError('signupError','활성화 코드를 입력해주세요'); return; }
+
+  const users = getUsers();
+  const uid   = btoa(email);
+  if (users[uid]) { authError('signupError','이미 등록된 이메일입니다. 로그인 탭을 이용해주세요'); return; }
+
+  const btn = document.querySelector('#formSignup .btn-gold');
+  btn.disabled = true;
+  btn.textContent = '확인 중...';
+
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/validate_activation_code`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+      },
+      body: JSON.stringify({ p_code: code, p_email: email }),
+    });
+
+    const valid = await res.json();
+
+    if (!valid) {
+      authError('signupError','활성화 코드가 올바르지 않거나 이미 사용된 코드입니다');
+      return;
+    }
+
+    const hash = await hashPw(pw);
+    users[uid] = { email, pwHash: hash };
+    saveUsers(users);
+
+    currentUser = { email, id: uid };
+    localStorage.setItem('dm_user', JSON.stringify(currentUser));
+    loadUserData();
+    enterApp();
+    showToast('회원가입 완료! 환영합니다 🎵');
+
+  } catch (err) {
+    authError('signupError','네트워크 오류가 발생했습니다. 잠시 후 다시 시도해주세요');
+    console.error(err);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '회원가입';
+  }
+}
   
   const email  = document.getElementById('signupEmail').value.trim().toLowerCase();
   const pw     = document.getElementById('signupPw').value;
