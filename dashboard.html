@@ -960,38 +960,7 @@ async function doSignup() {
   }
 }
   
-  const email  = document.getElementById('signupEmail').value.trim().toLowerCase();
-  const pw     = document.getElementById('signupPw').value;
-  const pwConf = document.getElementById('signupPwConfirm').value;
-  const code   = document.getElementById('signupCode').value.trim().toUpperCase();
-  if (!email || !email.includes('@')) { authError('signupError','유효한 이메일을 입력해주세요'); return; }
-  if (pw.length < 8)  { authError('signupError','비밀번호는 8자 이상이어야 합니다'); return; }
-  if (pw !== pwConf)  { authError('signupError','비밀번호가 일치하지 않습니다'); return; }
-  if (code !== ACTIVATION_CODE) { authError('signupError','활성화 코드가 올바르지 않습니다'); return; }
-
-  const users = getUsers();
-  const uid   = btoa(email);
-  // 1인 프리미엄 플랜: 다른 계정이 이미 존재하면 추가 가입 불가
-  if (Object.keys(users).length > 0 && !users[uid]) {
-    authError('signupError','이 대시보드는 1인 전용 플랜입니다. 이미 등록된 계정이 있습니다.');
-    return;
-  }
-  if (users[uid]) {
-    authError('signupError','이미 등록된 이메일입니다. 로그인 탭을 이용해주세요');
-    return;
-  }
-
-  const hash = await hashPw(pw);
-  users[uid] = { email, pwHash: hash };
-  saveUsers(users);
-
-  currentUser = { email, id: uid };
-  localStorage.setItem('dm_user', JSON.stringify(currentUser));
-  loadUserData();
-  enterApp();
-  showToast('회원가입 완료! 환영합니다');
-}
-
+  
 function demoLogin() {
   currentUser = { email:'demo@example.com', id:'demo', isDemo:true };
   schools = getSampleSchools();
