@@ -1,7 +1,7 @@
 {
   "project": "독일 음대 입시 올인원 판별기",
   "version": "2.0",
-  "last_updated": "2026-11-02",
+  "last_updated": "2026-11-09",
   "data_policy": "확인된 정보만 수록. 미확인 항목은 null 표기. 추측 데이터 없음.",
   "source": "RKM 공식 회원목록 + 각 학교 공식 홈페이지 직접 확인",
   "total_schools": 24,
@@ -89,7 +89,7 @@
       "pdf_links": [],
       "note": "muvac 계정 사전 생성 필요. Master 성악 마감 12월 31일 주의.",
       "crawl_status": "success",
-      "last_crawled": "2026-11-02T05:23:26.537164",
+      "last_crawled": "2026-11-09T05:38:46.274201",
       "page_changed": false,
       "ai_extracted_data": null
     },
@@ -158,7 +158,7 @@
       "pdf_links": [],
       "note": "B2 미보유 시 입학 후 이론 수업 수강 제한.",
       "crawl_status": "success",
-      "last_crawled": "2026-11-02T05:23:31.049454",
+      "last_crawled": "2026-11-09T05:38:50.423568",
       "page_changed": false,
       "ai_extracted_data": null
     },
@@ -212,7 +212,7 @@
       "pdf_links": [],
       "note": "음악·미술·디자인 종합예술대학.",
       "crawl_status": "success",
-      "last_crawled": "2026-11-02T05:23:34.441145",
+      "last_crawled": "2026-11-09T05:38:53.623556",
       "page_changed": false,
       "ai_extracted_data": null
     },
@@ -255,7 +255,7 @@
       "pdf_links": [],
       "note": "겨울학기만 입학 가능.",
       "crawl_status": "success",
-      "last_crawled": "2026-11-02T05:23:39.225029",
+      "last_crawled": "2026-11-09T05:38:57.906689",
       "page_changed": false,
       "ai_extracted_data": null
     },
@@ -328,7 +328,7 @@
       "pdf_links": [],
       "note": "detmoldmusictools.de — 청음·이론 온라인 무료 연습 제공.",
       "crawl_status": "failed",
-      "last_crawled": "2026-11-02T05:23:42.167671",
+      "last_crawled": "2026-11-09T05:39:00.712275",
       "page_changed": null,
       "ai_extracted_data": null
     },
@@ -370,13 +370,13 @@
       "docs_common": null,
       "docs_master": null,
       "pdf_links": [
-        "https://www.hfmdd.de/fileadmin/user_upload/Bewerbung/Bachelor_Merkblatt_Musiktheorie_Gehoerbildung.pdf",
         "https://www.hfmdd.de/fileadmin/user_upload/Bewerbung/Bachelor_Kuenstlerisch_Klausur_Musiktheorie_Muster.pdf",
+        "https://www.hfmdd.de/fileadmin/user_upload/Bewerbung/Bachelor_Merkblatt_Musiktheorie_Gehoerbildung.pdf",
         "https://www.hfmdd.de/fileadmin/user_upload/Bewerbung/Bachelor_Kuenstlerisch_Klausur_Gehoerbildung_Muster.pdf"
       ],
       "note": "학사는 겨울학기만 시작 가능.",
       "crawl_status": "success",
-      "last_crawled": "2026-11-02T05:23:49.156108",
+      "last_crawled": "2026-11-09T05:39:08.766628",
       "page_changed": false,
       "ai_extracted_data": null
     },
@@ -444,7 +444,7 @@
       "pdf_links": [],
       "note": "학사 입학은 겨울학기만 가능.",
       "crawl_status": "failed",
-      "last_crawled": "2026-11-02T05:23:51.980263",
+      "last_crawled": "2026-11-09T05:39:11.517126",
       "page_changed": null,
       "ai_extracted_data": null
     },
@@ -488,8 +488,8 @@
         "https://www.folkwang-uni.de/fileadmin/medien/Die%20Hochschule/PDFs/Studium/Bewerbung/Fristen/2026-06-25-%C3%9Cbersicht-Folkwang-Bewerbungsfristen.pdf"
       ],
       "note": "음악·연극·디자인 종합예술대학.",
-      "crawl_status": "failed",
-      "last_crawled": "2026-11-02T05:24:06.008485",
+      "crawl_status": "success",
+      "last_crawled": "2026-11-09T05:39:16.086451",
       "page_changed": false,
       "ai_extracted_data": null
     },
@@ -533,7 +533,7 @@
       "pdf_links": [],
       "note": "재지원 시 지원비 재납부 필요.",
       "crawl_status": "success",
-      "last_crawled": "2026-11-02T05:24:11.103340",
+      "last_crawled": "2026-11-09T05:39:22.716246",
       "page_changed": false,
       "ai_extracted_data": null
     },
@@ -602,7 +602,7 @@
       "pdf_links": [],
       "note": "실기: 6월 8~13일 (겨울 2026/27).",
       "crawl_status": "success",
-      "last_crawled": "2026-11-02T05:24:14.835865",
+      "last_crawled": "2026-11-09T05:39:26.612453",
       "page_changed": false,
       "ai_extracted_data": null
     },
@@ -674,7 +674,7 @@
       ],
       "note": "실기: 6월 2~6일. Soloklasse: 6월 10~11일 / 언어조건 없음.",
       "crawl_status": "failed",
-      "last_crawled": "2026-11-02T05:24:17.262459",
+      "last_crawled": "2026-11-09T05:39:28.990296",
       "page_changed": false,
       "ai_extracted_data": null
     },
@@ -747,7 +747,7 @@
       ],
       "note": "URL 주의: www 없음 (hfm-karlsruhe.de).",
       "crawl_status": "success",
-      "last_crawled": "2026-11-02T05:24:21.125423",
+      "last_crawled": "2026-11-09T05:39:32.470200",
       "page_changed": false,
       "ai_extracted_data": null
     },
@@ -825,7 +825,7 @@
       ],
       "note": "도메인 주의: hfmt-koeln.de (hfmt.de 아님). 쾰른·아헨·부퍼탈 3캠퍼스.",
       "crawl_status": "success",
-      "last_crawled": "2026-11-02T05:24:24.806062",
+      "last_crawled": "2026-11-09T05:39:36.391772",
       "page_changed": false,
       "ai_extracted_data": null
     },
@@ -896,7 +896,7 @@
       "pdf_links": [],
       "note": null,
       "crawl_status": "success",
-      "last_crawled": "2026-11-02T05:24:28.668362",
+      "last_crawled": "2026-11-09T05:39:40.108069",
       "page_changed": false,
       "ai_extracted_data": null
     },
@@ -956,7 +956,7 @@
       "pdf_links": [],
       "note": "KE 가능: 15개 악기 확인됨. 서면(우편) 지원 불가.",
       "crawl_status": "success",
-      "last_crawled": "2026-11-02T05:24:34.287136",
+      "last_crawled": "2026-11-09T05:39:45.762672",
       "page_changed": false,
       "ai_extracted_data": null
     },
@@ -1002,7 +1002,7 @@
       ],
       "note": null,
       "crawl_status": "success",
-      "last_crawled": "2026-11-02T05:24:37.517690",
+      "last_crawled": "2026-11-09T05:39:48.904319",
       "page_changed": false,
       "ai_extracted_data": null
     },
@@ -1044,13 +1044,13 @@
       "docs_common": null,
       "docs_master": null,
       "pdf_links": [
-        "https://hmtm.de/wp-content/uploads/PDF/Leitfaden-Online-Bewerbung-Nutzung-ePayment_01-2026.pdf",
         "https://hmtm.de/wp-content/uploads/PDF/Online-Bewerbung_FAQ.pdf",
-        "https://hmtm.de/wp-content/uploads/PDF/Leitfaden_Online-Bewerbung_BZM_mit-Zahlung_2026.pdf"
+        "https://hmtm.de/wp-content/uploads/PDF/Leitfaden_Online-Bewerbung_BZM_mit-Zahlung_2026.pdf",
+        "https://hmtm.de/wp-content/uploads/PDF/Leitfaden-Online-Bewerbung-Nutzung-ePayment_01-2026.pdf"
       ],
       "note": "URL 주의: www 없음 (hmtm.de).",
       "crawl_status": "success",
-      "last_crawled": "2026-11-02T05:24:41.967561",
+      "last_crawled": "2026-11-09T05:39:55.638831",
       "page_changed": false,
       "ai_extracted_data": null
     },
@@ -1115,7 +1115,7 @@
       "pdf_links": [],
       "note": "2026 신설: 실내악 석사, 반주(Lied Begleitung) 석사.",
       "crawl_status": "success",
-      "last_crawled": "2026-11-02T05:24:46.037340",
+      "last_crawled": "2026-11-09T05:39:59.184764",
       "page_changed": false,
       "ai_extracted_data": null
     },
@@ -1157,15 +1157,15 @@
       "docs_common": null,
       "docs_master": null,
       "pdf_links": [
-        "https://www.hmt-rostock.de/storages/hmt-rostock/1_Studium/Bewerbung/Musterklausuren/Musterpruefung_MP_LA_Gym_RS_GeS.pdf",
-        "https://www.hmt-rostock.de/storages/hmt-rostock/1_Studium/Bewerbung/Musterklausuren/Musterklausur_GB_BA.pdf",
-        "https://www.hmt-rostock.de/storages/hmt-rostock/1_Studium/Bewerbung/Musterklausuren/Musterpruefung_MP_LA_SoPae_GS_Beifach.pdf",
+        "https://www.hmt-rostock.de/storages/hmt-rostock/1_Studium/Bewerbung/Musterklausuren/Musterpruefung_MP_BA.pdf",
+        "https://www.hmt-rostock.de/storages/hmt-rostock/1_Studium/Bewerbung/Eignungsp.__SoSe2027_Termine.pdf",
         "https://www.hmt-rostock.de/storages/hmt-rostock/1_Studium/Bewerbung/Musterklausuren/Musterklausur_TS_BA.pdf",
-        "https://www.hmt-rostock.de/storages/hmt-rostock/1_Studium/Bewerbung/Musterklausuren/Musterpruefung_MP_BA.pdf"
+        "https://www.hmt-rostock.de/storages/hmt-rostock/1_Studium/Bewerbung/Deutschkenntnisse.pdf",
+        "https://www.hmt-rostock.de/storages/hmt-rostock/1_Studium/Bewerbung/Musterklausuren/Musterklausur_GB_BA.pdf"
       ],
       "note": null,
       "crawl_status": "success",
-      "last_crawled": "2026-11-02T05:24:50.461032",
+      "last_crawled": "2026-11-09T05:40:03.576061",
       "page_changed": false,
       "ai_extracted_data": null
     },
@@ -1238,14 +1238,15 @@
       "docs_common": null,
       "docs_master": null,
       "pdf_links": [
-        "https://www.hfmsaar.de/files/hfm/Downloads_Dokumente/Studium/Eignungspr%C3%BCfung_Voraussetzungen/EP_Lehraemter.pdf",
-        "https://www.hfmsaar.de/files/hfm/Downloads_Dokumente/Studium/Studienberatung/DTKV-ThK-2026.pdf",
         "https://www.hfmsaar.de/files/hfm/Downloads_Dokumente/Studium/Studienberatung/muster_aufnahmepruefung_gehoerbildung_musiktheorie_schriftlich.pdf",
-        "https://www.hfmsaar.de/files/hfm/Downloads_Dokumente/Studium/Studienberatung/muster_aufnahmepruefung_gehoerbildung_musiktheorie.pdf"
+        "https://www.hfmsaar.de/files/hfm/Downloads_Dokumente/Studium/Studienberatung/muster_aufnahmepruefung_gehoerbildung_musiktheorie.pdf",
+        "https://www.hfmsaar.de/files/hfm/Downloads_Dokumente/Studium/Studienberatung/DTKV-ThK-2026.pdf",
+        "https://www.hfmsaar.de/files/hfm/Downloads_Dokumente/Studium/Eignungspr%C3%BCfung_Voraussetzungen/EP_Lehraemter.pdf",
+        "https://www.hfmsaar.de/files/hfm/Downloads_Dokumente/Studium/Studienberatung/DTKV-ThK-2027.pdf"
       ],
       "note": "모의고사(Muster-Eignungsprüfung) 홈페이지 무료 제공.",
       "crawl_status": "success",
-      "last_crawled": "2026-11-02T05:24:56.876744",
+      "last_crawled": "2026-11-09T05:40:10.543697",
       "page_changed": false,
       "ai_extracted_data": null
     },
@@ -1316,7 +1317,7 @@
       ],
       "note": null,
       "crawl_status": "success",
-      "last_crawled": "2026-11-02T05:25:01.156111",
+      "last_crawled": "2026-11-09T05:40:14.842409",
       "page_changed": false,
       "ai_extracted_data": null
     },
@@ -1388,7 +1389,7 @@
       "pdf_links": [],
       "note": "매주 수요일 온라인 입시설명회 (독·영어 병행). 소규모, 기숙사 저렴.",
       "crawl_status": "success",
-      "last_crawled": "2026-11-02T05:25:04.578460",
+      "last_crawled": "2026-11-09T05:40:18.057371",
       "page_changed": false,
       "ai_extracted_data": null
     },
@@ -1456,7 +1457,7 @@
       "pdf_links": [],
       "note": "WS 2024/25부터 완전 디지털화.",
       "crawl_status": "failed",
-      "last_crawled": "2026-11-02T05:25:07.891328",
+      "last_crawled": "2026-11-09T05:40:21.210189",
       "page_changed": null,
       "ai_extracted_data": null
     },
@@ -1525,10 +1526,10 @@
       "pdf_links": [],
       "note": "URL 주의: www 없음 (hfm-wuerzburg.de).",
       "crawl_status": "success",
-      "last_crawled": "2026-11-02T05:25:11.370887",
+      "last_crawled": "2026-11-09T05:40:24.439239",
       "page_changed": false,
       "ai_extracted_data": null
     }
   ],
-  "last_crawled": "2026-11-02T05:25:13.371477"
+  "last_crawled": "2026-11-09T05:40:26.439835"
 }

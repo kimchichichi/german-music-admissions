@@ -1,12 +1,12 @@
 {
-  "run_at": "2026-11-02T05:23:24.571828",
+  "run_at": "2026-11-09T05:38:41.853378",
   "results": {
     "total": 24,
-    "success": 19,
+    "success": 20,
     "changed": 0,
-    "failed": 5,
+    "failed": 4,
     "skipped": 0
   },
   "changed": [],
-  "duration_sec": 108
+  "duration_sec": 104
 }
